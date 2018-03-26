@@ -15,10 +15,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import util.enumeration.Category;
 
 /**
  *
@@ -32,7 +31,7 @@ public class TaskEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
     @Column(length = 32, nullable = false)
-    private String category;
+    private Category category;
     @Column(length = 32, nullable = false)
     private String description;
     @Temporal(TemporalType.TIMESTAMP)
@@ -44,7 +43,7 @@ public class TaskEntity implements Serializable {
     @Column(nullable = false)
     private boolean completed;
     @Column(nullable = false)
-    private boolean suspended;
+    private boolean complained;
     
     @ManyToOne
     private RequesterEntity requester;
@@ -58,10 +57,10 @@ public class TaskEntity implements Serializable {
     public TaskEntity(){
         this.assigned = false;
         this.completed = false;
-        this.suspended = false;
+        this.complained = false;
         
     }
-    public TaskEntity(String category, String description, Date startDateTime, Date endDateTime, RequesterEntity requester, List<HelperEntity> preferredHelpers, HelperEntity assignedHelper) {
+    public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, RequesterEntity requester, List<HelperEntity> preferredHelpers, HelperEntity assignedHelper) {
         this();
         this.category = category;
         this.description = description;
@@ -108,14 +107,14 @@ public class TaskEntity implements Serializable {
     /**
      * @return the category
      */
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
     /**
      * @param category the category to set
      */
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -190,17 +189,17 @@ public class TaskEntity implements Serializable {
     }
 
     /**
-     * @return the suspended
+     * @return the complained
      */
-    public boolean isSuspended() {
-        return suspended;
+    public boolean isComplained() {
+        return complained;
     }
 
     /**
-     * @param suspended the suspended to set
+     * @param complained the complained to set
      */
-    public void setSuspended(boolean suspended) {
-        this.suspended = suspended;
+    public void setComplained(boolean complained) {
+        this.complained = complained;
     }
 
     /**

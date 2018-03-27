@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import util.enumeration.Gender;
 
 /**
  *
@@ -20,11 +22,20 @@ public class HelperEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
     @Column(length = 32, nullable = false)
-    private String password;
+    private String firstName;
+    @Column(length = 32, nullable = false)
+    private String lastName;
+    @Column(length = 32, nullable = false, unique = true)
+    private Gender gender;
+    @Column(length = 32, nullable = false)
+    private Date dateOfBirth;
+    @Column(length = 32, nullable = false, unique = true)
+    private String email;
     @Column(length = 32, nullable = false, unique = true)
     private String phone;
+    @Column(length = 32, nullable = false, unique = true)
+    private String password;
     @Column(length = 32, nullable = false)
     private String address;
     @Column(nullable = false)
@@ -76,31 +87,73 @@ public class HelperEntity implements Serializable {
     }
 
     /**
-     * @return the name
+     * @return the firstName
      */
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
-     * @param name the name to set
+     * @param firstName the firstName to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     /**
-     * @return the password
+     * @return the lastName
      */
-    public String getPassword() {
-        return password;
+    public String getLastName() {
+        return lastName;
     }
 
     /**
-     * @param password the password to set
+     * @param lastName the lastName to set
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * @return the gender
+     */
+    public Gender getGender() {
+        return gender;
+    }
+
+    /**
+     * @param gender the gender to set
+     */
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    /**
+     * @return the dateOfBirth
+     */
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    /**
+     * @param dateOfBirth the dateOfBirth to set
+     */
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**
@@ -115,6 +168,20 @@ public class HelperEntity implements Serializable {
      */
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
@@ -228,5 +295,4 @@ public class HelperEntity implements Serializable {
     public void setPayments(List<PaymentEntity> payments) {
         this.payments = payments;
     }
-
 }

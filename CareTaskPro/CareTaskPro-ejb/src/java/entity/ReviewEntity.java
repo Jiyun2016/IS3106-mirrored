@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -22,7 +23,13 @@ public class ReviewEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @ManyToOne
+    private HelperEntity helper;
 
+    @ManyToOne
+    private RequesterEntity requester;
+    
     public Long getId() {
         return id;
     }
@@ -54,6 +61,20 @@ public class ReviewEntity implements Serializable {
     @Override
     public String toString() {
         return "entity.ReviewEntity[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the helper
+     */
+    public HelperEntity getHelper() {
+        return helper;
+    }
+
+    /**
+     * @param helper the helper to set
+     */
+    public void setHelper(HelperEntity helper) {
+        this.helper = helper;
     }
     
 }

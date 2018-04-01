@@ -85,7 +85,7 @@ public class RequesterController implements RequesterControllerLocal {
     @Override
     public RequesterEntity logoutRequester(Long id) throws RequesterNotFoundException {
         RequesterEntity requesterEntity = retrieveRequesterById(id);
-        if (requesterEntity.isLoggedIn()) {
+        if (requesterEntity.isIsLoggedIn()) {
             requesterEntity.setIsLoggedIn(false);
             em.merge(requesterEntity);
             return requesterEntity;

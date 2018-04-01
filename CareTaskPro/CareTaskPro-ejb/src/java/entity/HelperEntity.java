@@ -44,13 +44,13 @@ public class HelperEntity implements Serializable {
     private String certNum;
     @Column(nullable = false)
     private boolean isLoggedIn;
-    @OneToMany(mappedBy = "requester")
+    @OneToMany(mappedBy = "helper")
     private List<ReviewEntity> reviews;
-    @OneToMany(mappedBy = "requester")
+    @OneToMany(mappedBy = "helper")
     private List<TaskEntity> pendingTasks;
-    @OneToMany(mappedBy = "requester")
+    @OneToMany(mappedBy = "helper")
     private List<TaskEntity> completedTasks;
-    @OneToMany(mappedBy = "requester")
+    @OneToMany(mappedBy = "helper")
     private List<PaymentEntity> payments;
 
     public Long getId() {

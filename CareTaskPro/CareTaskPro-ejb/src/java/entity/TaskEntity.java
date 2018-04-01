@@ -48,6 +48,9 @@ public class TaskEntity implements Serializable {
     @ManyToOne
     private RequesterEntity requester;
     
+    @ManyToOne
+    private HelperEntity helper;
+    
     @ManyToMany
     private List<HelperEntity> preferredHelpers;
     

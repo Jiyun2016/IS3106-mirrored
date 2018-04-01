@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -22,6 +23,13 @@ public class PaymentEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @ManyToOne
+    private RequesterEntity requester;
+    
+    @ManyToOne
+    private HelperEntity helper;
+    
 
     public Long getId() {
         return id;
@@ -54,6 +62,34 @@ public class PaymentEntity implements Serializable {
     @Override
     public String toString() {
         return "entity.PaymentEntity[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the requester
+     */
+    public RequesterEntity getRequester() {
+        return requester;
+    }
+
+    /**
+     * @param requester the requester to set
+     */
+    public void setRequester(RequesterEntity requester) {
+        this.requester = requester;
+    }
+
+    /**
+     * @return the helper
+     */
+    public HelperEntity getHelper() {
+        return helper;
+    }
+
+    /**
+     * @param helper the helper to set
+     */
+    public void setHelper(HelperEntity helper) {
+        this.helper = helper;
     }
     
 }

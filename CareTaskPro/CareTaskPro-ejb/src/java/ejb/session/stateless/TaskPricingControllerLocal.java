@@ -12,6 +12,6 @@ import javax.ejb.Local;
  * @author Yap Jun Hao
  */
 @Local
-public interface SalaryControllerLocal {
+public interface TaskPricingControllerLocal {
     
 }

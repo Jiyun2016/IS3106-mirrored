@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
@@ -10,14 +5,17 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import util.enumeration.Category;
+import util.enumeration.TaskStatus;
+import util.enumeration.TimeSlot;
 
 /**
  *
@@ -34,35 +32,45 @@ public class TaskEntity implements Serializable {
     private Category category;
     @Column(length = 32, nullable = false)
     private String description;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startDateTime;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endDateTime;
+    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private boolean assigned;
+    private Date taskDate;
     @Column(nullable = false)
-    private boolean completed;
+    @Enumerated(EnumType.STRING)
+    private TimeSlot taskTimeSlot;
     @Column(nullable = false)
-    private boolean complained;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus taskStatus;
+    @Column(length = 32, nullable = false)
+    private Integer ratings;
+    @Column(length = 32, nullable = false)
+    private String reviews;
+    @Column(nullable = false)
+    private Boolean complained;
     
+    //Many tasks belong to 1 requester
     @ManyToOne
     private RequesterEntity requester;
     
+    //Many tasks belong to 1 helper
     @ManyToOne
-    private HelperEntity helper;
+    private HelperEntity chosenHelper;
     
+    /*
     @ManyToMany
     private List<HelperEntity> preferredHelpers;
     
     @ManyToOne
     private HelperEntity assignedHelper;
-
+*/
     public TaskEntity(){
-        this.assigned = false;
-        this.completed = false;
+        //this.assigned = false;
+        //this.completed = false;
         this.complained = false;
         
     }
+    
+    /*
     public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, RequesterEntity requester, List<HelperEntity> preferredHelpers, HelperEntity assignedHelper) {
         this();
         this.category = category;
@@ -73,7 +81,21 @@ public class TaskEntity implements Serializable {
         this.preferredHelpers = preferredHelpers;
         this.assignedHelper = assignedHelper;
     }
+*/
 
+    public TaskEntity(Category category, String description, Date taskDate, TimeSlot taskTimeSlot, TaskStatus taskStatus, Integer ratings, String reviews, Boolean complained, RequesterEntity requester, HelperEntity chosenHelper) {
+        this.category = category;
+        this.description = description;
+        this.taskDate = taskDate;
+        this.taskTimeSlot = taskTimeSlot;
+        this.taskStatus = taskStatus;
+        this.ratings = ratings;
+        this.reviews = reviews;
+        this.complained = complained;
+        this.requester = requester;
+        this.chosenHelper = chosenHelper;
+    }
+    
     public Long getTaskId() {
         return taskId;
     }
@@ -107,144 +129,134 @@ public class TaskEntity implements Serializable {
         return "entity.TaskEntity[ id=" + taskId + " ]";
     }
 
-    /**
-     * @return the category
-     */
     public Category getCategory() {
         return category;
     }
 
-    /**
-     * @param category the category to set
-     */
     public void setCategory(Category category) {
         this.category = category;
     }
 
-    /**
-     * @return the description
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * @param description the description to set
-     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /**
-     * @return the startDateTime
-     */
+    /*
     public Date getStartDateTime() {
         return startDateTime;
     }
 
-    /**
-     * @param startDateTime the startDateTime to set
-     */
     public void setStartDateTime(Date startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    /**
-     * @return the endDateTime
-     */
     public Date getEndDateTime() {
         return endDateTime;
     }
 
-    /**
-     * @param endDateTime the endDateTime to set
-     */
     public void setEndDateTime(Date endDateTime) {
         this.endDateTime = endDateTime;
     }
 
-    /**
-     * @return the assigned
-     */
     public boolean isAssigned() {
         return assigned;
     }
 
-    /**
-     * @param assigned the assigned to set
-     */
     public void setAssigned(boolean assigned) {
         this.assigned = assigned;
     }
 
-    /**
-     * @return the completed
-     */
     public boolean isCompleted() {
         return completed;
     }
 
-    /**
-     * @param completed the completed to set
-     */
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
 
-    /**
-     * @return the complained
-     */
-    public boolean isComplained() {
-        return complained;
-    }
-
-    /**
-     * @param complained the complained to set
-     */
-    public void setComplained(boolean complained) {
-        this.complained = complained;
-    }
-
-    /**
-     * @return the requester
-     */
-    public RequesterEntity getRequester() {
-        return requester;
-    }
-
-    /**
-     * @param requester the requester to set
-     */
-    public void setRequester(RequesterEntity requester) {
-        this.requester = requester;
-    }
-
-    /**
-     * @return the preferredHelpers
-     */
     public List<HelperEntity> getPreferredHelpers() {
         return preferredHelpers;
     }
 
-    /**
-     * @param preferredHelpers the preferredHelpers to set
-     */
     public void setPreferredHelpers(List<HelperEntity> preferredHelpers) {
         this.preferredHelpers = preferredHelpers;
     }
 
-    /**
-     * @return the assignedHelper
-     */
     public HelperEntity getAssignedHelper() {
         return assignedHelper;
     }
 
-    /**
-     * @param assignedHelper the assignedHelper to set
-     */
     public void setAssignedHelper(HelperEntity assignedHelper) {
         this.assignedHelper = assignedHelper;
     }
+*/
 
+    public Date getTaskDate() {
+        return taskDate;
+    }
+
+    public void setTaskDate(Date taskDate) {
+        this.taskDate = taskDate;
+    }
+
+    public TimeSlot getTaskTimeSlot() {
+        return taskTimeSlot;
+    }
+
+    public void setTaskTimeSlot(TimeSlot taskTimeSlot) {
+        this.taskTimeSlot = taskTimeSlot;
+    }
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public Integer getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Integer ratings) {
+        this.ratings = ratings;
+    }
+
+    public String getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(String reviews) {
+        this.reviews = reviews;
+    }
+
+    public Boolean getComplained() {
+        return complained;
+    }
+
+    public void setComplained(Boolean complained) {
+        this.complained = complained;
+    }
+
+    public RequesterEntity getRequester() {
+        return requester;
+    }
+
+    public void setRequester(RequesterEntity requester) {
+        this.requester = requester;
+    }
+
+    public HelperEntity getChosenHelper() {
+        return chosenHelper;
+    }
+
+    public void setChosenHelper(HelperEntity chosenHelper) {
+        this.chosenHelper = chosenHelper;
+    }
+    
 }

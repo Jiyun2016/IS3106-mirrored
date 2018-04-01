@@ -12,7 +12,7 @@ import javax.ejb.Stateless;
  * @author Yap Jun Hao
  */
 @Stateless
-public class SalaryController implements SalaryControllerLocal {
+public class PayrollEntity implements PayrollEntityLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

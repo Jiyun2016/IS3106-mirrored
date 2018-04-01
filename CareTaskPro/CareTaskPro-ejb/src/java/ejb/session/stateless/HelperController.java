@@ -85,7 +85,7 @@ public class HelperController implements HelperControllerLocal {
     @Override
     public HelperEntity logoutHelper(Long id) throws HelperNotFoundException {
         HelperEntity helperEntity = retrieveHelperById(id);
-        if (helperEntity.isLoggedIn()) {
+        if (helperEntity.getIsLoggedIn()) {
             helperEntity.setIsLoggedIn(false);
             em.merge(helperEntity);
             return helperEntity;

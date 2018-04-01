@@ -44,6 +44,8 @@ public class HelperEntity implements Serializable {
     private String certNum;
     @Column(nullable = false)
     private boolean isLoggedIn;
+    @Column(nullable = false)
+    private List<Date> unavailableDates;
     @OneToMany(mappedBy = "helper")
     private List<ReviewEntity> reviews;
     @OneToMany(mappedBy = "helper")
@@ -294,5 +296,19 @@ public class HelperEntity implements Serializable {
      */
     public void setPayments(List<PaymentEntity> payments) {
         this.payments = payments;
+    }
+
+    /**
+     * @return the unavailableDates
+     */
+    public List<Date> getUnavailableDates() {
+        return unavailableDates;
+    }
+
+    /**
+     * @param unavailableDates the unavailableDates to set
+     */
+    public void setUnavailableDates(List<Date> unavailableDates) {
+        this.unavailableDates = unavailableDates;
     }
 }

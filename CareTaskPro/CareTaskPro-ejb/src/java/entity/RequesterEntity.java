@@ -38,6 +38,12 @@ public class RequesterEntity implements Serializable {
     private String password;
     @Column(length = 32, nullable = false)
     private String address;
+    @Column(length = 32, nullable = false)
+    private String creditCardNum;
+    @Column(length = 32, nullable = false)
+    private String creditCardName;
+    @Column(length = 32, nullable = false)
+    private String creditCardCVC;
     @Column(nullable = false)
     private boolean isLoggedIn;
     @OneToMany(mappedBy = "requester")
@@ -262,5 +268,47 @@ public class RequesterEntity implements Serializable {
      */
     public void setPayments(List<PaymentEntity> payments) {
         this.payments = payments;
+    }
+
+    /**
+     * @return the creditCardNum
+     */
+    public String getCreditCardNum() {
+        return creditCardNum;
+    }
+
+    /**
+     * @param creditCardNum the creditCardNum to set
+     */
+    public void setCreditCardNum(String creditCardNum) {
+        this.creditCardNum = creditCardNum;
+    }
+
+    /**
+     * @return the creditCardName
+     */
+    public String getCreditCardName() {
+        return creditCardName;
+    }
+
+    /**
+     * @param creditCardName the creditCardName to set
+     */
+    public void setCreditCardName(String creditCardName) {
+        this.creditCardName = creditCardName;
+    }
+
+    /**
+     * @return the creditCardCVC
+     */
+    public String getCreditCardCVC() {
+        return creditCardCVC;
+    }
+
+    /**
+     * @param creditCardCVC the creditCardCVC to set
+     */
+    public void setCreditCardCVC(String creditCardCVC) {
+        this.creditCardCVC = creditCardCVC;
     }
 }

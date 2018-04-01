@@ -41,6 +41,12 @@ public class RequesterEntity implements Serializable {
     private String password;
     @Column(length = 32, nullable = false)
     private String address;
+    @Column(length = 32, nullable = false)
+    private String creditCardNum;
+    @Column(length = 32, nullable = false)
+    private String creditCardName;
+    @Column(length = 32, nullable = false)
+    private String creditCardCVC;
     @Column(nullable = false)
     private Boolean isLoggedIn;
     @Column(length = 32, nullable = false)
@@ -222,6 +228,7 @@ public class RequesterEntity implements Serializable {
     public void setPayments(List<PaymentEntity> payments) {
         this.payments = payments;
     }
+<<<<<<< HEAD
 */
 
     public Boolean getIsLoggedIn() {
@@ -240,18 +247,51 @@ public class RequesterEntity implements Serializable {
         this.creditCardNumber = creditCardNumber;
     }
 
+=======
+
+    /**
+     * @return the creditCardNum
+     */
+    public String getCreditCardNum() {
+        return creditCardNum;
+    }
+
+    /**
+     * @param creditCardNum the creditCardNum to set
+     */
+    public void setCreditCardNum(String creditCardNum) {
+        this.creditCardNum = creditCardNum;
+    }
+
+    /**
+     * @return the creditCardName
+     */
+>>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
     public String getCreditCardName() {
         return creditCardName;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @param creditCardName the creditCardName to set
+     */
+>>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
     public void setCreditCardName(String creditCardName) {
         this.creditCardName = creditCardName;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @return the creditCardCVC
+     */
+>>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
     public String getCreditCardCVC() {
         return creditCardCVC;
     }
 
+<<<<<<< HEAD
     public void setCreditCardCVC(String creditCardCVC) {
         this.creditCardCVC = creditCardCVC;
     }
@@ -282,4 +322,12 @@ public class RequesterEntity implements Serializable {
     
     
     
+=======
+    /**
+     * @param creditCardCVC the creditCardCVC to set
+     */
+    public void setCreditCardCVC(String creditCardCVC) {
+        this.creditCardCVC = creditCardCVC;
+    }
+>>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
 }

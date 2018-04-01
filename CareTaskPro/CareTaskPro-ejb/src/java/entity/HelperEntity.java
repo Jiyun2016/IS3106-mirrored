@@ -53,6 +53,7 @@ public class HelperEntity implements Serializable {
     @Column(length = 32, unique = true)
     private String certNum;
     @Column(nullable = false)
+<<<<<<< HEAD
     private Boolean isLoggedIn;
     @Temporal(TemporalType.DATE)
     private Date availableDate;
@@ -73,6 +74,13 @@ public class HelperEntity implements Serializable {
     private List<PayrollEntity> allowances;
     
     /*
+=======
+    private boolean isLoggedIn;
+    @Column(nullable = false)
+    private List<Date> unavailableDates;
+    @OneToMany(mappedBy = "helper")
+    private List<ReviewEntity> reviews;
+>>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
     @OneToMany(mappedBy = "helper")
     private List<TaskEntity> pendingTasks;
     @OneToMany(mappedBy = "helper")
@@ -244,6 +252,7 @@ public class HelperEntity implements Serializable {
     public void setPayments(List<PaymentEntity> payments) {
         this.payments = payments;
     }
+<<<<<<< HEAD
 */
 
     public String getOccupation() {
@@ -326,4 +335,20 @@ public class HelperEntity implements Serializable {
         this.allowances = allowances;
     }
 
+=======
+
+    /**
+     * @return the unavailableDates
+     */
+    public List<Date> getUnavailableDates() {
+        return unavailableDates;
+    }
+
+    /**
+     * @param unavailableDates the unavailableDates to set
+     */
+    public void setUnavailableDates(List<Date> unavailableDates) {
+        this.unavailableDates = unavailableDates;
+    }
+>>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
 }

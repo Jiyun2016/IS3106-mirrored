@@ -49,12 +49,12 @@ public class TaskEntity implements Serializable {
     private Boolean complained;
     
     //Many tasks belong to 1 requester
-    @ManyToOne
-    private RequesterEntity requester;
+    //@ManyToOne
+    //private RequesterEntity requester;
     
     //Many tasks belong to 1 helper
-    @ManyToOne
-    private HelperEntity chosenHelper;
+    //@ManyToOne
+    //private HelperEntity chosenHelper;
     
     /*
     @ManyToMany
@@ -83,7 +83,7 @@ public class TaskEntity implements Serializable {
     }
 */
 
-    public TaskEntity(Category category, String description, Date taskDate, TimeSlot taskTimeSlot, TaskStatus taskStatus, Integer ratings, String reviews, Boolean complained, RequesterEntity requester, HelperEntity chosenHelper) {
+    public TaskEntity(Category category, String description, Date taskDate, TimeSlot taskTimeSlot, TaskStatus taskStatus, Integer ratings, String reviews, Boolean complained) {
         this.category = category;
         this.description = description;
         this.taskDate = taskDate;
@@ -92,8 +92,8 @@ public class TaskEntity implements Serializable {
         this.ratings = ratings;
         this.reviews = reviews;
         this.complained = complained;
-        this.requester = requester;
-        this.chosenHelper = chosenHelper;
+        //this.requester = requester;
+        //this.chosenHelper = chosenHelper;
     }
     
     public Long getTaskId() {
@@ -242,7 +242,7 @@ public class TaskEntity implements Serializable {
     public void setComplained(Boolean complained) {
         this.complained = complained;
     }
-
+/*
     public RequesterEntity getRequester() {
         return requester;
     }
@@ -258,5 +258,5 @@ public class TaskEntity implements Serializable {
     public void setChosenHelper(HelperEntity chosenHelper) {
         this.chosenHelper = chosenHelper;
     }
-    
+  */  
 }

@@ -53,7 +53,6 @@ public class HelperEntity implements Serializable {
     @Column(length = 32, unique = true)
     private String certNum;
     @Column(nullable = false)
-<<<<<<< HEAD
     private Boolean isLoggedIn;
     @Temporal(TemporalType.DATE)
     private Date availableDate;
@@ -64,7 +63,8 @@ public class HelperEntity implements Serializable {
     private String bankName;
     @Column(length = 32, nullable = false)
     private String bankAccountNumber;
-    
+
+/*    
     //1 helper has many tasks
     @OneToMany(mappedBy = "requesterEntity")
     private List<TaskEntity> tasks;
@@ -72,15 +72,13 @@ public class HelperEntity implements Serializable {
     //1 helper has many allowances
     @OneToMany(mappedBy = "requesterEntity")
     private List<PayrollEntity> allowances;
-    
+  */  
     /*
-=======
     private boolean isLoggedIn;
     @Column(nullable = false)
     private List<Date> unavailableDates;
     @OneToMany(mappedBy = "helper")
     private List<ReviewEntity> reviews;
->>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
     @OneToMany(mappedBy = "helper")
     private List<TaskEntity> pendingTasks;
     @OneToMany(mappedBy = "helper")
@@ -90,9 +88,9 @@ public class HelperEntity implements Serializable {
     */
 
     public HelperEntity() {
-        tasks = new ArrayList<>();
-        allowances = new ArrayList<>();
-        isLoggedIn = false;
+        //tasks = new ArrayList<>();
+        //allowances = new ArrayList<>();
+        //isLoggedIn = false;
     }
 
     public HelperEntity(String firstName, String lastName, Gender gender, Date dateOfBirth, String email, String phone, String password, String address, String occupation, boolean isCertified, String certName, String certNum, boolean isLoggedIn, Date availableDate, TimeSlot availableTimeSlot, String bankName, String bankAccountNumber) {
@@ -252,7 +250,6 @@ public class HelperEntity implements Serializable {
     public void setPayments(List<PaymentEntity> payments) {
         this.payments = payments;
     }
-<<<<<<< HEAD
 */
 
     public String getOccupation() {
@@ -318,7 +315,7 @@ public class HelperEntity implements Serializable {
     public void setIsLoggedIn(Boolean isLoggedIn) {
         this.isLoggedIn = isLoggedIn;
     }
-
+/*
     public List<TaskEntity> getTasks() {
         return tasks;
     }
@@ -334,21 +331,14 @@ public class HelperEntity implements Serializable {
     public void setAllowances(List<PayrollEntity> allowances) {
         this.allowances = allowances;
     }
-
-=======
-
-    /**
-     * @return the unavailableDates
-     */
+*/
+    /*
     public List<Date> getUnavailableDates() {
         return unavailableDates;
     }
 
-    /**
-     * @param unavailableDates the unavailableDates to set
-     */
     public void setUnavailableDates(List<Date> unavailableDates) {
         this.unavailableDates = unavailableDates;
     }
->>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
+*/
 }

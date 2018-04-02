@@ -34,29 +34,29 @@ public class TaskPaymentEntity implements Serializable {
     private Date paidDateTime;
     
     //Many task payment transaction can be made to 1 company account 
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
-    private CompanyAccountEntity companyAccount;
+    //@ManyToOne(optional = false)
+    //@JoinColumn(nullable = false)
+    //private CompanyAccountEntity companyAccount;
     
     //Many task payment transactions is related to 1 task pricing
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
-    private RequesterEntity requester;
+    //@ManyToOne(optional = false)
+    //@JoinColumn(nullable = false)
+    //private RequesterEntity requester;
     
     //1 task payment to 1 task
-    @OneToOne
-    private TaskEntity task;
+    //@OneToOne
+    //private TaskEntity task;
 
     public TaskPaymentEntity() {
     }
 
-    public TaskPaymentEntity(BigDecimal totalAmount, Integer Quantity, Date paidDateTime, CompanyAccountEntity companyAccount, RequesterEntity requester, TaskEntity task) {
+    public TaskPaymentEntity(BigDecimal totalAmount, Integer Quantity, Date paidDateTime) {
         this.totalAmount = totalAmount;
         this.Quantity = Quantity;
         this.paidDateTime = paidDateTime;
-        this.companyAccount = companyAccount;
-        this.requester = requester;
-        this.task = task;
+        //this.companyAccount = companyAccount;
+        //this.requester = requester;
+        //this.task = task;
     }
     
     public Long getTaskPaymentId() {
@@ -115,7 +115,7 @@ public class TaskPaymentEntity implements Serializable {
     public void setPaidDateTime(Date paidDateTime) {
         this.paidDateTime = paidDateTime;
     }
-
+/*
     public CompanyAccountEntity getCompanyAccount() {
         return companyAccount;
     }
@@ -139,5 +139,5 @@ public class TaskPaymentEntity implements Serializable {
     public void setTask(TaskEntity task) {
         this.task = task;
     }
-    
+  */  
 }

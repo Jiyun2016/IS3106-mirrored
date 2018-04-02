@@ -28,10 +28,11 @@ public class AdminEntity implements Serializable {
     @Column(length = 32, nullable = false)
     private String password;
     
+    /*
     //1 Admin can have only 1 account
     @OneToOne(mappedBy = "adminEntity", optional = false)
     private CompanyAccountEntity companyAccount;
-
+*/
     public AdminEntity() {
     }
 
@@ -109,7 +110,7 @@ public class AdminEntity implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
+/*
     public CompanyAccountEntity getCompanyAccount() {
         return companyAccount;
     }
@@ -117,5 +118,5 @@ public class AdminEntity implements Serializable {
     public void setCompanyAccount(CompanyAccountEntity companyAccount) {
         this.companyAccount = companyAccount;
     }
-    
+  */  
 }

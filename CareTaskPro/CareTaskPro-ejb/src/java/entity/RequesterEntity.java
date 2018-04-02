@@ -50,21 +50,15 @@ public class RequesterEntity implements Serializable {
     @Column(nullable = false)
     private Boolean isLoggedIn;
     @Column(length = 32, nullable = false)
-    private String creditCardNumber;
-    @Column(length = 32, nullable = false)
-    private String creditCardName;
-    @Column(length = 32, nullable = false)
-    private String creditCardCVC;
-    @Column(length = 32, nullable = false)
     private String creditCardOTP;
     
     //1 requester request for many tasks
-    @OneToMany(mappedBy = "requesterEntity")
-    private List<TaskEntity> tasks;
+    //@OneToMany(mappedBy = "requesterEntity")
+    //private List<TaskEntity> tasks;
     
     //1 requester makes many payments
-    @OneToMany(mappedBy = "requesterEntity")
-    private List<TaskPaymentEntity> payments;
+    //@OneToMany(mappedBy = "requesterEntity")
+    //private List<TaskPaymentEntity> payments;
     
     /*
     @OneToMany(mappedBy = "requester")
@@ -78,12 +72,12 @@ public class RequesterEntity implements Serializable {
             */
 
     public RequesterEntity() {
-        tasks = new ArrayList<>();
-        payments = new ArrayList<>();
-        isLoggedIn = false;
+        //tasks = new ArrayList<>();
+        //payments = new ArrayList<>();
+        //isLoggedIn = false;
     }
 
-    public RequesterEntity(String firstName, String lastName, Gender gender, Date dateOfBirth, String email, String phone, String password, String address, String creditCardNumber, String creditCardName, String creditCardCVC, String creditCardOTP) {
+    public RequesterEntity(String firstName, String lastName, Gender gender, Date dateOfBirth, String email, String phone, String password, String address, String creditCardNum, String creditCardName, String creditCardCVC, String creditCardOTP) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -92,7 +86,7 @@ public class RequesterEntity implements Serializable {
         this.phone = phone;
         this.password = password;
         this.address = address;
-        this.creditCardNumber = creditCardNumber;
+        this.creditCardNum = creditCardNum;
         this.creditCardName = creditCardName;
         this.creditCardCVC = creditCardCVC;
         this.creditCardOTP = creditCardOTP;
@@ -228,7 +222,6 @@ public class RequesterEntity implements Serializable {
     public void setPayments(List<PaymentEntity> payments) {
         this.payments = payments;
     }
-<<<<<<< HEAD
 */
 
     public Boolean getIsLoggedIn() {
@@ -239,59 +232,26 @@ public class RequesterEntity implements Serializable {
         this.isLoggedIn = isLoggedIn;
     }
 
-    public String getCreditCardNumber() {
-        return creditCardNumber;
-    }
-
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
-    }
-
-=======
-
-    /**
-     * @return the creditCardNum
-     */
     public String getCreditCardNum() {
         return creditCardNum;
     }
 
-    /**
-     * @param creditCardNum the creditCardNum to set
-     */
-    public void setCreditCardNum(String creditCardNum) {
+    public void setCreditCardNumber(String creditCardNum) {
         this.creditCardNum = creditCardNum;
     }
 
-    /**
-     * @return the creditCardName
-     */
->>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
     public String getCreditCardName() {
         return creditCardName;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param creditCardName the creditCardName to set
-     */
->>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
     public void setCreditCardName(String creditCardName) {
         this.creditCardName = creditCardName;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the creditCardCVC
-     */
->>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
     public String getCreditCardCVC() {
         return creditCardCVC;
     }
-
-<<<<<<< HEAD
+    
     public void setCreditCardCVC(String creditCardCVC) {
         this.creditCardCVC = creditCardCVC;
     }
@@ -303,7 +263,7 @@ public class RequesterEntity implements Serializable {
     public void setCreditCardOTP(String creditCardOTP) {
         this.creditCardOTP = creditCardOTP;
     }
-
+/*
     public List<TaskEntity> getTasks() {
         return tasks;
     }
@@ -319,15 +279,5 @@ public class RequesterEntity implements Serializable {
     public void setPayments(List<TaskPaymentEntity> payments) {
         this.payments = payments;
     }
-    
-    
-    
-=======
-    /**
-     * @param creditCardCVC the creditCardCVC to set
-     */
-    public void setCreditCardCVC(String creditCardCVC) {
-        this.creditCardCVC = creditCardCVC;
-    }
->>>>>>> d12bdd4fd9d6bb2aa1be3b6b7d834d955c3befd5
+  */  
 }

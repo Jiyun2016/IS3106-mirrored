@@ -49,20 +49,20 @@ public class PayrollEntity implements Serializable {
     private HelperEntity helper;
 
     //1 allowance payment to 1 task
-    @OneToOne
-    private TaskEntity task;
+    //@OneToOne
+    //private TaskEntity task;
 
     public PayrollEntity() {
     }
     
-    public PayrollEntity(BigDecimal totalAmount, Integer quantity, Date paymentDateTime, CompanyAccountEntity companyAccount, PayrollRateEntity payrollRate, HelperEntity helper, TaskEntity task) {
+    public PayrollEntity(BigDecimal totalAmount, Integer quantity, Date paymentDateTime, CompanyAccountEntity companyAccount, PayrollRateEntity payrollRate, HelperEntity helper) {
         this.totalAmount = totalAmount;
         this.quantity = quantity;
         this.paymentDateTime = paymentDateTime;
         this.companyAccount = companyAccount;
         this.payrollRate = payrollRate;
         this.helper = helper;
-        this.task = task;
+        //this.task = task;
     }
 
     public Long getPayrollId() {
@@ -145,7 +145,7 @@ public class PayrollEntity implements Serializable {
     public void setHelper(HelperEntity helper) {
         this.helper = helper;
     }
-
+/*
     public TaskEntity getTask() {
         return task;
     }
@@ -154,6 +154,6 @@ public class PayrollEntity implements Serializable {
         this.task = task;
     }
     
-    
+  */  
     
 }

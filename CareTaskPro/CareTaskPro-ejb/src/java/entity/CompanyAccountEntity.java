@@ -33,17 +33,17 @@ public class CompanyAccountEntity implements Serializable {
     private AdminEntity admin;
     
     //1 company account can have many task payments
-    @OneToMany(mappedBy = "comapanyAccountEntity")
-    private List<TaskPaymentEntity> taskPayments;
+    //@OneToMany(mappedBy = "comapanyAccountEntity")
+    //private List<TaskPaymentEntity> taskPayments;
     
     //1 company account can have many payroll payments
-    @OneToMany(mappedBy = "companyAccountEntity")
-    private List<PayrollEntity> payrollPayments;
+    //@OneToMany(mappedBy = "companyAccountEntity")
+    //private List<PayrollEntity> payrollPayments;
             
     public CompanyAccountEntity() {
         balance = BigDecimal.ZERO;
-        taskPayments = new ArrayList<>();
-        payrollPayments = new ArrayList<>();
+        //taskPayments = new ArrayList<>();
+        //payrollPayments = new ArrayList<>();
     }
 
     public Long getCompanyAccountId() {
@@ -94,7 +94,7 @@ public class CompanyAccountEntity implements Serializable {
     public void setAdmin(AdminEntity admin) {
         this.admin = admin;
     }
-
+/*
     public List<TaskPaymentEntity> getTaskPayments() {
         return taskPayments;
     }
@@ -110,5 +110,5 @@ public class CompanyAccountEntity implements Serializable {
     public void setPayrollPayments(List<PayrollEntity> payrollPayments) {
         this.payrollPayments = payrollPayments;
     }
-    
+  */  
 }

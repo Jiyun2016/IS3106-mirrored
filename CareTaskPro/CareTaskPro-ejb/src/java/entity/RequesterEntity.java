@@ -1,15 +1,14 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import util.enumeration.Gender;
@@ -29,7 +28,8 @@ public class RequesterEntity implements Serializable {
     private String firstName;
     @Column(length = 32, nullable = false)
     private String lastName;
-    @Column(length = 32, nullable = false, unique = true)
+    @Column(length = 32, nullable = false)
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfBirth;
@@ -49,8 +49,6 @@ public class RequesterEntity implements Serializable {
     private String creditCardCVC;
     @Column(nullable = false)
     private Boolean isLoggedIn;
-    @Column(length = 32, nullable = false)
-    private String creditCardOTP;
     
     //1 requester request for many tasks
     //@OneToMany(mappedBy = "requesterEntity")
@@ -74,10 +72,15 @@ public class RequesterEntity implements Serializable {
     public RequesterEntity() {
         //tasks = new ArrayList<>();
         //payments = new ArrayList<>();
-        //isLoggedIn = false;
+        isLoggedIn = false;
     }
 
-    public RequesterEntity(String firstName, String lastName, Gender gender, Date dateOfBirth, String email, String phone, String password, String address, String creditCardNum, String creditCardName, String creditCardCVC, String creditCardOTP) {
+    public RequesterEntity(String firstName, String lastName, Gender gender, Date dateOfBirth, 
+            String email, String phone, String password, String address, 
+            String creditCardNum, String creditCardName, String creditCardCVC) {
+        
+        this();
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -89,7 +92,6 @@ public class RequesterEntity implements Serializable {
         this.creditCardNum = creditCardNum;
         this.creditCardName = creditCardName;
         this.creditCardCVC = creditCardCVC;
-        this.creditCardOTP = creditCardOTP;
     }
     
     public Long getrequesterId() {
@@ -256,13 +258,6 @@ public class RequesterEntity implements Serializable {
         this.creditCardCVC = creditCardCVC;
     }
 
-    public String getCreditCardOTP() {
-        return creditCardOTP;
-    }
-
-    public void setCreditCardOTP(String creditCardOTP) {
-        this.creditCardOTP = creditCardOTP;
-    }
 /*
     public List<TaskEntity> getTasks() {
         return tasks;

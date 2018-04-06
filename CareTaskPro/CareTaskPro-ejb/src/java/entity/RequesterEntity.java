@@ -1,15 +1,11 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import util.enumeration.Gender;
 
 /**
  *
@@ -21,15 +17,11 @@ public class RequesterEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long requesterId;
     @Column(length = 32, nullable = false)
     private String firstName;
     @Column(length = 32, nullable = false)
     private String lastName;
-    @Column(length = 32, nullable = false, unique = true)
-    private Gender gender;
-    @Column(length = 32, nullable = false)
-    private Date dateOfBirth;
     @Column(length = 32, nullable = false, unique = true)
     private String email;
     @Column(length = 32, nullable = false, unique = true)
@@ -38,29 +30,40 @@ public class RequesterEntity implements Serializable {
     private String password;
     @Column(length = 32, nullable = false)
     private String address;
-    @Column(nullable = false)
-    private boolean isLoggedIn;
-    @OneToMany(mappedBy = "requester")
-    private List<ReviewEntity> reviews;
-    @OneToMany(mappedBy = "requester")
-    private List<TaskEntity> pendingTasks;
-    @OneToMany(mappedBy = "requester")
-    private List<TaskEntity> completedTasks;
-    @OneToMany(mappedBy = "requester")
-    private List<PaymentEntity> payments;
+    @Column(length = 32, nullable = false)
+    private String creditCardNum;
+    @Column(length = 32, nullable = false)
+    private String creditCardName;
+    @Column(length = 32, nullable = false)
+    private String creditCardCVC;
 
-    public Long getId() {
-        return id;
+    public RequesterEntity() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public RequesterEntity(String firstName, String lastName, String email, String phone, String password, String address, String creditCardNum, String creditCardName, String creditCardCVC) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.address = address;
+        this.creditCardNum = creditCardNum;
+        this.creditCardName = creditCardName;
+        this.creditCardCVC = creditCardCVC;
+    }
+    
+    public Long getrequesterId() {
+        return getRequesterId();
+    }
+
+    public void setId(Long requesterId) {
+        this.setRequesterId(requesterId);
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (getRequesterId() != null ? getRequesterId().hashCode() : 0);
         return hash;
     }
 
@@ -71,7 +74,7 @@ public class RequesterEntity implements Serializable {
             return false;
         }
         RequesterEntity other = (RequesterEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.getRequesterId() == null && other.getRequesterId() != null) || (this.getRequesterId() != null && !this.requesterId.equals(other.requesterId))) {
             return false;
         }
         return true;
@@ -79,7 +82,21 @@ public class RequesterEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.RequesterEntity[ id=" + id + " ]";
+        return "entity.RequesterEntity[ requesterId=" + getRequesterId() + " ]";
+    }
+
+    /**
+     * @return the requesterId
+     */
+    public Long getRequesterId() {
+        return requesterId;
+    }
+
+    /**
+     * @param requesterId the requesterId to set
+     */
+    public void setRequesterId(Long requesterId) {
+        this.requesterId = requesterId;
     }
 
     /**
@@ -108,34 +125,6 @@ public class RequesterEntity implements Serializable {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    /**
-     * @return the gender
-     */
-    public Gender getGender() {
-        return gender;
-    }
-
-    /**
-     * @param gender the gender to set
-     */
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    /**
-     * @return the dateOfBirth
-     */
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    /**
-     * @param dateOfBirth the dateOfBirth to set
-     */
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
     }
 
     /**
@@ -195,72 +184,45 @@ public class RequesterEntity implements Serializable {
     }
 
     /**
-     * @return the isLoggedIn
+     * @return the creditCardNum
      */
-    public boolean isIsLoggedIn() {
-        return isLoggedIn;
+    public String getCreditCardNum() {
+        return creditCardNum;
     }
 
     /**
-     * @param isLoggedIn the isLoggedIn to set
+     * @param creditCardNum the creditCardNum to set
      */
-    public void setIsLoggedIn(boolean isLoggedIn) {
-        this.isLoggedIn = isLoggedIn;
+    public void setCreditCardNum(String creditCardNum) {
+        this.creditCardNum = creditCardNum;
     }
 
     /**
-     * @return the reviews
+     * @return the creditCardName
      */
-    public List<ReviewEntity> getReviews() {
-        return reviews;
+    public String getCreditCardName() {
+        return creditCardName;
     }
 
     /**
-     * @param reviews the reviews to set
+     * @param creditCardName the creditCardName to set
      */
-    public void setReviews(List<ReviewEntity> reviews) {
-        this.reviews = reviews;
+    public void setCreditCardName(String creditCardName) {
+        this.creditCardName = creditCardName;
     }
 
     /**
-     * @return the pendingTasks
+     * @return the creditCardCVC
      */
-    public List<TaskEntity> getPendingTasks() {
-        return pendingTasks;
+    public String getCreditCardCVC() {
+        return creditCardCVC;
     }
 
     /**
-     * @param pendingTasks the pendingTasks to set
+     * @param creditCardCVC the creditCardCVC to set
      */
-    public void setPendingTasks(List<TaskEntity> pendingTasks) {
-        this.pendingTasks = pendingTasks;
+    public void setCreditCardCVC(String creditCardCVC) {
+        this.creditCardCVC = creditCardCVC;
     }
 
-    /**
-     * @return the completedTasks
-     */
-    public List<TaskEntity> getCompletedTasks() {
-        return completedTasks;
-    }
-
-    /**
-     * @param completedTasks the completedTasks to set
-     */
-    public void setCompletedTasks(List<TaskEntity> completedTasks) {
-        this.completedTasks = completedTasks;
-    }
-
-    /**
-     * @return the payments
-     */
-    public List<PaymentEntity> getPayments() {
-        return payments;
-    }
-
-    /**
-     * @param payments the payments to set
-     */
-    public void setPayments(List<PaymentEntity> payments) {
-        this.payments = payments;
-    }
 }

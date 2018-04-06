@@ -27,6 +27,4 @@ public interface HelperControllerLocal {
 
     public HelperEntity loginHelper(String phone, String password) throws HelperNotFoundException, WrongCredentialException;
 
-    public HelperEntity logoutHelper(Long id) throws HelperNotFoundException;
-
 }

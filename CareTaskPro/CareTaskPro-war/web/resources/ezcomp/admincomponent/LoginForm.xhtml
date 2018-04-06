@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="formName" required="true" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div style="text-align: right;">
+           <h:panelGroup rendered="#{sessionScope['isLogin']}">
+
+                <h:outputText value="You are login as #{sessionScope['currentAdminEntity'].firstName} #{sessionScope['currentAdminEntity'].lastName}" />
+
+            </h:panelGroup>
+            
+            
+            <h:panelGroup rendered="#{!sessionScope['isLogin']}">
+                                
+                <h:form id="contentLoginForm">
+                    
+                    <p:growl autoUpdate="true" />
+                    
+                    <p:outputLabel for="username" value="Username"/>&nbsp;
+                    <p:inputText id="username" value="#{adminLoginManagedBean.username}" required="true" requiredMessage="Username is required">
+                        <f:validateLength minimum="4" />
+                    </p:inputText>
+                    &nbsp;
+                    <p:outputLabel for="password" value="Password"/>&nbsp;
+                    <p:password id="password" value="#{adminLoginManagedBean.password}" required="true" requiredMessage="Password is required">
+                        <f:validateLength minimum="4" />
+                    </p:password>
+                    &nbsp;
+                    <p:commandButton type="reset" value="Clear" />&nbsp;
+                    <p:commandButton value="Login" update="@form" actionListener="#{adminLoginManagedBean.login}" icon="ui-icon-key" />          
+                </h:form>
+
+            </h:panelGroup>
+            
+        </div>
+    </cc:implementation>
+</html>

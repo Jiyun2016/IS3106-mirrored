@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
@@ -10,14 +5,18 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import util.enumeration.Category;
+import util.enumeration.TaskStatus;
 
 /**
  *
@@ -30,50 +29,45 @@ public class TaskEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
+    
     @Column(length = 32, nullable = false)
     private Category category;
+    
     @Column(length = 32, nullable = false)
     private String description;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startDateTime;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endDateTime;
-    @Column(nullable = false)
-    private boolean assigned;
-    @Column(nullable = false)
-    private boolean completed;
-    @Column(nullable = false)
-    private boolean complained;
     
-    @ManyToOne
-    private RequesterEntity requester;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date startTime;
     
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date endTime;
+    
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskStatus taskStatus;
+    
+    
+   // @OneToOne
+  //  private PaymentEntity paymentEntity;
+   
     @ManyToOne
-    private HelperEntity helper;
+    private RequesterEntity requesterEntity;
     
     @ManyToMany
     private List<HelperEntity> preferredHelpers;
     
     @ManyToOne
-    private HelperEntity assignedHelper;
+    private HelperEntity helperEntity; 
+    
+    @OneToOne
+    private ReviewEntity reviewEntity;
 
-    public TaskEntity(){
-        this.assigned = false;
-        this.completed = false;
-        this.complained = false;
-        
-    }
-    public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, RequesterEntity requester, List<HelperEntity> preferredHelpers, HelperEntity assignedHelper) {
-        this();
-        this.category = category;
-        this.description = description;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-        this.requester = requester;
-        this.preferredHelpers = preferredHelpers;
-        this.assignedHelper = assignedHelper;
-    }
-
+  
+    
+   
+    
     public Long getTaskId() {
         return taskId;
     }
@@ -136,87 +130,59 @@ public class TaskEntity implements Serializable {
     }
 
     /**
-     * @return the startDateTime
+     * @return the startTime
      */
-    public Date getStartDateTime() {
-        return startDateTime;
+    public Date getStartTime() {
+        return startTime;
     }
 
     /**
-     * @param startDateTime the startDateTime to set
+     * @param startTime the startTime to set
      */
-    public void setStartDateTime(Date startDateTime) {
-        this.startDateTime = startDateTime;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     /**
-     * @return the endDateTime
+     * @return the endTime
      */
-    public Date getEndDateTime() {
-        return endDateTime;
+    public Date getEndTime() {
+        return endTime;
     }
 
     /**
-     * @param endDateTime the endDateTime to set
+     * @param endTime the endTime to set
      */
-    public void setEndDateTime(Date endDateTime) {
-        this.endDateTime = endDateTime;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     /**
-     * @return the assigned
+     * @return the taskStatus
      */
-    public boolean isAssigned() {
-        return assigned;
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
     }
 
     /**
-     * @param assigned the assigned to set
+     * @param taskStatus the taskStatus to set
      */
-    public void setAssigned(boolean assigned) {
-        this.assigned = assigned;
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     /**
-     * @return the completed
+     * @return the requesterEntity
      */
-    public boolean isCompleted() {
-        return completed;
+    public RequesterEntity getRequesterEntity() {
+        return requesterEntity;
     }
 
     /**
-     * @param completed the completed to set
+     * @param requesterEntity the requesterEntity to set
      */
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    /**
-     * @return the complained
-     */
-    public boolean isComplained() {
-        return complained;
-    }
-
-    /**
-     * @param complained the complained to set
-     */
-    public void setComplained(boolean complained) {
-        this.complained = complained;
-    }
-
-    /**
-     * @return the requester
-     */
-    public RequesterEntity getRequester() {
-        return requester;
-    }
-
-    /**
-     * @param requester the requester to set
-     */
-    public void setRequester(RequesterEntity requester) {
-        this.requester = requester;
+    public void setRequesterEntity(RequesterEntity requesterEntity) {
+        this.requesterEntity = requesterEntity;
     }
 
     /**
@@ -234,17 +200,32 @@ public class TaskEntity implements Serializable {
     }
 
     /**
-     * @return the assignedHelper
+     * @return the helperEntity
      */
-    public HelperEntity getAssignedHelper() {
-        return assignedHelper;
+    public HelperEntity getHelperEntity() {
+        return helperEntity;
     }
 
     /**
-     * @param assignedHelper the assignedHelper to set
+     * @param helperEntity the helperEntity to set
      */
-    public void setAssignedHelper(HelperEntity assignedHelper) {
-        this.assignedHelper = assignedHelper;
+    public void setHelperEntity(HelperEntity helperEntity) {
+        this.helperEntity = helperEntity;
     }
 
+    /**
+     * @return the reviewEntity
+     */
+    public ReviewEntity getReviewEntity() {
+        return reviewEntity;
+    }
+
+    /**
+     * @param reviewEntity the reviewEntity to set
+     */
+    public void setReviewEntity(ReviewEntity reviewEntity) {
+        this.reviewEntity = reviewEntity;
+    }
+
+  
 }

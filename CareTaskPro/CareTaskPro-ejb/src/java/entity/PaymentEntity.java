@@ -6,11 +6,18 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import util.enumeration.TaskStatus;
 
 /**
  *
@@ -21,28 +28,48 @@ public class PaymentEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
-    @ManyToOne
-    private RequesterEntity requester;
-    
-    @ManyToOne
-    private HelperEntity helper;
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long paymentId;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskStatus paymentStatus;
+    @Column(precision = 18, scale = 2,nullable = false)
+    private BigDecimal paymentAmount;
+    @Column(precision = 18, scale = 2,nullable = false)
+    private BigDecimal helperSalary;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date paymentTime;
+    @Column(precision = 18, scale = 2,nullable = false)
+    private BigDecimal companyRevenue;
 
-    public Long getId() {
-        return id;
+    //1 task payment to 1 task
+    //@OneToOne
+    //private TaskEntity task;
+
+    public PaymentEntity() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public PaymentEntity(TaskStatus paymentStatus, BigDecimal paymentAmount, BigDecimal helperSalary, Date paymentTime, BigDecimal companyRevenue) {
+        this.paymentStatus = paymentStatus;
+        this.paymentAmount = paymentAmount;
+        this.helperSalary = helperSalary;
+        this.paymentTime = paymentTime;
+        this.companyRevenue = companyRevenue;
+    }
+    
+    public Long getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(Long paymentId) {
+        this.paymentId = paymentId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (paymentId != null ? paymentId.hashCode() : 0);
         return hash;
     }
 
@@ -53,7 +80,7 @@ public class PaymentEntity implements Serializable {
             return false;
         }
         PaymentEntity other = (PaymentEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.paymentId == null && other.paymentId != null) || (this.paymentId != null && !this.paymentId.equals(other.paymentId))) {
             return false;
         }
         return true;
@@ -61,35 +88,47 @@ public class PaymentEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.PaymentEntity[ id=" + id + " ]";
+        return "entity.PaymentEntity[ paymentId=" + paymentId + " ]";
     }
 
-    /**
-     * @return the requester
-     */
-    public RequesterEntity getRequester() {
-        return requester;
+    public TaskStatus getPaymentStatus() {
+        return paymentStatus;
     }
 
-    /**
-     * @param requester the requester to set
-     */
-    public void setRequester(RequesterEntity requester) {
-        this.requester = requester;
+    public void setPaymentStatus(TaskStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
-    /**
-     * @return the helper
-     */
-    public HelperEntity getHelper() {
-        return helper;
+    public BigDecimal getPaymentAmount() {
+        return paymentAmount;
     }
 
-    /**
-     * @param helper the helper to set
-     */
-    public void setHelper(HelperEntity helper) {
-        this.helper = helper;
+    public void setPaymentAmount(BigDecimal paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
-    
+
+    public BigDecimal getHelperSalary() {
+        return helperSalary;
+    }
+
+    public void setHelperSalary(BigDecimal helperSalary) {
+        this.helperSalary = helperSalary;
+    }
+
+    public Date getPaymentTime() {
+        return paymentTime;
+    }
+
+    public void setPaymentTime(Date paymentTime) {
+        this.paymentTime = paymentTime;
+    }
+
+    public BigDecimal getCompanyRevenue() {
+        return companyRevenue;
+    }
+
+    public void setCompanyRevenue(BigDecimal companyRevenue) {
+        this.companyRevenue = companyRevenue;
+    }
+
 }

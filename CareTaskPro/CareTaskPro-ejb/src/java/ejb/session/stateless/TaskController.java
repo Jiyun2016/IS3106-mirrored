@@ -173,19 +173,6 @@ public class TaskController implements TaskControllerLocal {
         return taskEntity;
     }
 
-    @Override
-    public void markTaskAsCompleted(long taskId) {
-        TaskEntity taskEntity = em.find(TaskEntity.class, taskId);
-        taskEntity.setCompleted(true);
-        em.merge(taskEntity);
-    }
-    
 
-    @Override
-    public void markTaskAsComplained(long taskId) {
-        TaskEntity taskEntity = em.find(TaskEntity.class, taskId);
-        taskEntity.setComplained(true);
-        em.merge(taskEntity);
-    }
-
+  
 }

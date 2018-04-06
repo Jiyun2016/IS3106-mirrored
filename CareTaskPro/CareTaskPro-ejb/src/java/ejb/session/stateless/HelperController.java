@@ -76,22 +76,21 @@ public class HelperController implements HelperControllerLocal {
             throw new WrongCredentialException("Invalid phone or password entered!");
         }
         else {
-            helperEntity.setIsLoggedIn(true);
             em.merge(helperEntity);
             return helperEntity;
         }
     }
     
-    @Override
-    public HelperEntity logoutHelper(Long id) throws HelperNotFoundException {
-        HelperEntity helperEntity = retrieveHelperById(id);
-        if (helperEntity.isLoggedIn()) {
-            helperEntity.setIsLoggedIn(false);
-            em.merge(helperEntity);
-            return helperEntity;
-        }
-        else {
-            return helperEntity;
-        }
-    }
+//    @Override
+//    public HelperEntity logoutHelper(Long id) throws HelperNotFoundException {
+//        HelperEntity helperEntity = retrieveHelperById(id);
+//        if (helperEntity.getIsLoggedIn()) {
+//            helperEntity.setIsLoggedIn(false);
+//            em.merge(helperEntity);
+//            return helperEntity;
+//        }
+//        else {
+//            return helperEntity;
+//        }
+//    }
 }

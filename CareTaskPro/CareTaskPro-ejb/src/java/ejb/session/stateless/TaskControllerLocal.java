@@ -36,8 +36,6 @@ public interface TaskControllerLocal {
 
     public TaskEntity updateTaskEntity(TaskEntity taskEntity);
 
-    public void markTaskAsCompleted(long taskId);
-
-    public void markTaskAsComplained(long taskId);
+    
     
 }

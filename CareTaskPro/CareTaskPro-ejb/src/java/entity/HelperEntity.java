@@ -1,11 +1,17 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import util.enumeration.HelperRole;
 
 /**
  *
@@ -38,7 +44,17 @@ public class HelperEntity implements Serializable {
     private String certNum;
     @Column(length = 32, nullable = false)
     private String bankAccountNumber;
-
+   
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private HelperRole helperRole;
+    
+    @OneToMany(mappedBy = "helperEntity")
+    private List<TaskEntity> taskEntities;
+    
+    @ManyToMany
+    private List<TaskEntity> recommendedTaskEntities;
+            
     public HelperEntity() {
 
     }
@@ -197,6 +213,48 @@ public class HelperEntity implements Serializable {
 
     public void setBankAccountNumber(String bankAccountNumber) {
         this.bankAccountNumber = bankAccountNumber;
+    }
+
+    /**
+     * @return the helperRole
+     */
+    public HelperRole getHelperRole() {
+        return helperRole;
+    }
+
+    /**
+     * @param helperRole the helperRole to set
+     */
+    public void setHelperRole(HelperRole helperRole) {
+        this.helperRole = helperRole;
+    }
+
+    /**
+     * @return the taskEntities
+     */
+    public List<TaskEntity> getTaskEntities() {
+        return taskEntities;
+    }
+
+    /**
+     * @param taskEntities the taskEntities to set
+     */
+    public void setTaskEntities(List<TaskEntity> taskEntities) {
+        this.taskEntities = taskEntities;
+    }
+
+    /**
+     * @return the recommendedTaskEntities
+     */
+    public List<TaskEntity> getRecommendedTaskEntities() {
+        return recommendedTaskEntities;
+    }
+
+    /**
+     * @param recommendedTaskEntities the recommendedTaskEntities to set
+     */
+    public void setRecommendedTaskEntities(List<TaskEntity> recommendedTaskEntities) {
+        this.recommendedTaskEntities = recommendedTaskEntities;
     }
 
 }

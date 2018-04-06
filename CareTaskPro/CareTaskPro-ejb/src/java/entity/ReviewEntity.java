@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -28,9 +29,9 @@ public class ReviewEntity implements Serializable {
     @Column(length = 32, nullable = false)
     private Integer ratings;
     
-    //1 task review to 1 task
-    //@OneToOne
-    //private TaskEntity task;
+   
+    @OneToOne
+    private TaskEntity taskEntity;
 
     public ReviewEntity() {
     }

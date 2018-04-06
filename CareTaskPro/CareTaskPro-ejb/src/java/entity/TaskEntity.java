@@ -49,8 +49,8 @@ public class TaskEntity implements Serializable {
     private TaskStatus taskStatus;
     
     
-   // @OneToOne
-  //  private PaymentEntity paymentEntity;
+    @OneToOne
+    private PaymentEntity paymentEntity;
    
     @ManyToOne
     private RequesterEntity requesterEntity;
@@ -225,6 +225,20 @@ public class TaskEntity implements Serializable {
      */
     public void setReviewEntity(ReviewEntity reviewEntity) {
         this.reviewEntity = reviewEntity;
+    }
+
+    /**
+     * @return the paymentEntity
+     */
+    public PaymentEntity getPaymentEntity() {
+        return paymentEntity;
+    }
+
+    /**
+     * @param paymentEntity the paymentEntity to set
+     */
+    public void setPaymentEntity(PaymentEntity paymentEntity) {
+        this.paymentEntity = paymentEntity;
     }
 
   

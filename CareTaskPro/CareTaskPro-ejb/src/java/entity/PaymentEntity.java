@@ -15,6 +15,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import util.enumeration.TaskStatus;
@@ -43,9 +44,9 @@ public class PaymentEntity implements Serializable {
     @Column(precision = 18, scale = 2,nullable = false)
     private BigDecimal companyRevenue;
 
-    //1 task payment to 1 task
-    //@OneToOne
-    //private TaskEntity task;
+   
+    @OneToOne
+    private TaskEntity taskEntity;
 
     public PaymentEntity() {
     }
@@ -129,6 +130,20 @@ public class PaymentEntity implements Serializable {
 
     public void setCompanyRevenue(BigDecimal companyRevenue) {
         this.companyRevenue = companyRevenue;
+    }
+
+    /**
+     * @return the taskEntity
+     */
+    public TaskEntity getTaskEntity() {
+        return taskEntity;
+    }
+
+    /**
+     * @param taskEntity the taskEntity to set
+     */
+    public void setTaskEntity(TaskEntity taskEntity) {
+        this.taskEntity = taskEntity;
     }
 
 }

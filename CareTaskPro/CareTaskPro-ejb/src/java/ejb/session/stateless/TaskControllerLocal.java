@@ -36,6 +36,6 @@ public interface TaskControllerLocal {
 
     public TaskEntity updateTaskEntity(TaskEntity taskEntity);
 
-    
-    
+    public TaskEntity createNewTask(TaskEntity taskEntity);
+
 }

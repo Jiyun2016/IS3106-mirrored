@@ -48,7 +48,7 @@ public class HelperResource {
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAllProducts() {
+    public Response retrieveAllHelpers() {
         try {
             return Response.status(Status.OK).entity(new RetrieveAllHelpersRsp(helperControllerLocal.retrieveAllHelpers())).build();
         } 
@@ -126,7 +126,7 @@ public class HelperResource {
     @DELETE
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteProduct(@PathParam("helperId") Long helperId) {
+    public Response deleteHelper(@PathParam("helperId") Long helperId) {
         try {
             helperControllerLocal.deleteHelper(helperId);
             

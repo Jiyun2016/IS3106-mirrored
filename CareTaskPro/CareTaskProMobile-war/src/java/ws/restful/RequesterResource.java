@@ -48,7 +48,7 @@ public class RequesterResource {
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAllProducts() {
+    public Response retrieveAllRequesters() {
         try {
             return Response.status(Status.OK).entity(new RetrieveAllRequestersRsp(requesterControllerLocal.retrieveAllRequesters())).build();
         } 
@@ -126,7 +126,7 @@ public class RequesterResource {
     @DELETE
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteProduct(@PathParam("requesterId") Long requesterId) {
+    public Response deleteRequester(@PathParam("requesterId") Long requesterId) {
         try {
             requesterControllerLocal.deleteRequester(requesterId);
             

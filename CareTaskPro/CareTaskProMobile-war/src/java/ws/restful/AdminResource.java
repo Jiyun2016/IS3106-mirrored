@@ -123,7 +123,7 @@ public class AdminResource {
 //    @DELETE
 //    @Consumes(MediaType.TEXT_PLAIN)
 //    @Produces(MediaType.APPLICATION_JSON)
-//    public Response deleteProduct(@PathParam("adminId") Long adminId) {
+//    public Response deleteAdmin(@PathParam("adminId") Long adminId) {
 //        try {
 //            adminControllerLocal.deleteAdmin(adminId);
 //            

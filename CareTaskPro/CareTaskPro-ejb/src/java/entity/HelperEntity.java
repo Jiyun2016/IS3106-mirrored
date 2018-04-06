@@ -1,18 +1,11 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import util.enumeration.Gender;
-import util.enumeration.TimeSlot;
 
 /**
  *
@@ -29,11 +22,6 @@ public class HelperEntity implements Serializable {
     private String firstName;
     @Column(length = 32, nullable = false)
     private String lastName;
-    @Column(length = 32, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
     @Column(length = 32, nullable = false, unique = true)
     private String email;
     @Column(length = 32, nullable = false, unique = true)
@@ -42,71 +30,29 @@ public class HelperEntity implements Serializable {
     private String password;
     @Column(length = 32, nullable = false)
     private String address;
-    @Column(length = 32, nullable = false)
-    private String occupation;
     @Column(nullable = false)
     private Boolean isCertified;
-    @Column(length = 32, nullable = false)
+    @Column(length = 32)
     private String certName;
-    @Column(length = 32, unique = true)
+    @Column(length = 32)
     private String certNum;
-    @Column(nullable = false)
-    private Boolean isLoggedIn;
-    @Temporal(TemporalType.DATE)
-    private Date availableDate;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TimeSlot availableTimeSlot;
-    @Column(length = 32, nullable = false)
-    private String bankName;
     @Column(length = 32, nullable = false)
     private String bankAccountNumber;
 
-/*    
-    //1 helper has many tasks
-    @OneToMany(mappedBy = "requesterEntity")
-    private List<TaskEntity> tasks;
-    
-    //1 helper has many allowances
-    @OneToMany(mappedBy = "requesterEntity")
-    private List<PayrollEntity> allowances;
-  */  
-    /*
-    private boolean isLoggedIn;
-    @Column(nullable = false)
-    private List<Date> unavailableDates;
-    @OneToMany(mappedBy = "helper")
-    private List<ReviewEntity> reviews;
-    @OneToMany(mappedBy = "helper")
-    private List<TaskEntity> pendingTasks;
-    @OneToMany(mappedBy = "helper")
-    private List<TaskEntity> completedTasks;
-    @OneToMany(mappedBy = "helper")
-    private List<PaymentEntity> payments;
-    */
-
     public HelperEntity() {
-        //tasks = new ArrayList<>();
-        //allowances = new ArrayList<>();
-        //isLoggedIn = false;
+
     }
 
-    public HelperEntity(String firstName, String lastName, Gender gender, Date dateOfBirth, String email, String phone, String password, String address, String occupation, boolean isCertified, String certName, String certNum, boolean isLoggedIn, Date availableDate, TimeSlot availableTimeSlot, String bankName, String bankAccountNumber) {
+    public HelperEntity(String firstName, String lastName, String email, String phone, String password, String address, Boolean isCertified, String certName, String certNum, String bankAccountNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phone = phone;
         this.password = password;
         this.address = address;
-        this.occupation = occupation;
         this.isCertified = isCertified;
         this.certName = certName;
         this.certNum = certNum;
-        this.availableDate = availableDate;
-        this.availableTimeSlot = availableTimeSlot;
-        this.bankName = bankName;
         this.bankAccountNumber = bankAccountNumber;
     }
 
@@ -121,7 +67,7 @@ public class HelperEntity implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (helperId != null ? helperId.hashCode() : 0);
+        hash += (getHelperId() != null ? getHelperId().hashCode() : 0);
         return hash;
     }
 
@@ -132,7 +78,7 @@ public class HelperEntity implements Serializable {
             return false;
         }
         HelperEntity other = (HelperEntity) object;
-        if ((this.helperId == null && other.helperId != null) || (this.helperId != null && !this.helperId.equals(other.helperId))) {
+        if ((this.getHelperId() == null && other.getHelperId() != null) || (this.getHelperId() != null && !this.helperId.equals(other.helperId))) {
             return false;
         }
         return true;
@@ -140,203 +86,147 @@ public class HelperEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.HelperEntity[ helperId=" + helperId + " ]";
+        return "entity.HelperEntity[ helperId=" + getHelperId() + " ]";
     }
 
+    /**
+     * @return the firstName
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * @param firstName the firstName to set
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * @return the lastName
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * @param lastName the lastName to set
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
+    /**
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * @param email the email to set
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * @return the phone
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * @param phone the phone to set
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * @param password the password to set
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * @return the address
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * @param address the address to set
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
-    public String getCertNum() {
-        return certNum;
-    }
-
-    public void setCertNum(String certNum) {
-        this.certNum = certNum;
-    }
-    
-    /*
-    
-    public List<ReviewEntity> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<ReviewEntity> reviews) {
-        this.reviews = reviews;
-    }
-
-    public List<TaskEntity> getPendingTasks() {
-        return pendingTasks;
-    }
-
-    public void setPendingTasks(List<TaskEntity> pendingTasks) {
-        this.pendingTasks = pendingTasks;
-    }
-
-    public List<TaskEntity> getCompletedTasks() {
-        return completedTasks;
-    }
-
-    public void setCompletedTasks(List<TaskEntity> completedTasks) {
-        this.completedTasks = completedTasks;
-    }
-
-    public List<PaymentEntity> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(List<PaymentEntity> payments) {
-        this.payments = payments;
-    }
-*/
-
-    public String getOccupation() {
-        return occupation;
-    }
-
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
-    }
-
-    public String getCertName() {
-        return certName;
-    }
-
-    public void setCertName(String certName) {
-        this.certName = certName;
-    }
-
-    public Date getAvailableDate() {
-        return availableDate;
-    }
-
-    public void setAvailableDate(Date availableDate) {
-        this.availableDate = availableDate;
-    }
-
-    public TimeSlot getAvailableTimeSlot() {
-        return availableTimeSlot;
-    }
-
-    public void setAvailableTimeSlot(TimeSlot availableTimeSlot) {
-        this.availableTimeSlot = availableTimeSlot;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getBankAccountNumber() {
-        return bankAccountNumber;
-    }
-
-    public void setBankAccountNumber(String bankAccountNumber) {
-        this.bankAccountNumber = bankAccountNumber;
-    }
-
+    /**
+     * @return the isCertified
+     */
     public Boolean getIsCertified() {
         return isCertified;
     }
 
+    /**
+     * @param isCertified the isCertified to set
+     */
     public void setIsCertified(Boolean isCertified) {
         this.isCertified = isCertified;
     }
 
-    public Boolean getIsLoggedIn() {
-        return isLoggedIn;
+    /**
+     * @return the certName
+     */
+    public String getCertName() {
+        return certName;
     }
 
-    public void setIsLoggedIn(Boolean isLoggedIn) {
-        this.isLoggedIn = isLoggedIn;
-    }
-/*
-    public List<TaskEntity> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<TaskEntity> tasks) {
-        this.tasks = tasks;
+    /**
+     * @param certName the certName to set
+     */
+    public void setCertName(String certName) {
+        this.certName = certName;
     }
 
-    public List<PayrollEntity> getAllowances() {
-        return allowances;
+    /**
+     * @return the certNum
+     */
+    public String getCertNum() {
+        return certNum;
     }
 
-    public void setAllowances(List<PayrollEntity> allowances) {
-        this.allowances = allowances;
-    }
-*/
-    /*
-    public List<Date> getUnavailableDates() {
-        return unavailableDates;
+    /**
+     * @param certNum the certNum to set
+     */
+    public void setCertNum(String certNum) {
+        this.certNum = certNum;
     }
 
-    public void setUnavailableDates(List<Date> unavailableDates) {
-        this.unavailableDates = unavailableDates;
+    /**
+     * @return the bankAccountNumber
+     */
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
     }
-*/
+
+    /**
+     * @param bankAccountNumber the bankAccountNumber to set
+     */
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
 }

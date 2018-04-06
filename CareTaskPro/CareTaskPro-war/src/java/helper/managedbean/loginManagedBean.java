@@ -31,7 +31,7 @@ public class loginManagedBean {
     @EJB
     private HelperControllerLocal helperControllerLocal;
     
-    private String phone;
+    private Integer phone;
     private String password;
 
     
@@ -57,14 +57,14 @@ public class loginManagedBean {
     /**
      * @return the phone
      */
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
     /**
      * @param phone the phone to set
      */
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 

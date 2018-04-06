@@ -58,7 +58,7 @@ public class HelperController implements HelperControllerLocal {
     }
     
     @Override
-    public HelperEntity retrieveHelperByPhone(String phone) throws HelperNotFoundException {
+    public HelperEntity retrieveHelperByPhone(Integer phone) throws HelperNotFoundException {
         Query query = em.createQuery("SELECT h FROM HelperEntity h WHERE h.phone = :helperPhone")
                 .setParameter("helperPhone", phone);
         if (query.getResultList().isEmpty()) {
@@ -70,7 +70,7 @@ public class HelperController implements HelperControllerLocal {
     }
     
     @Override
-    public HelperEntity loginHelper(String phone, String password) throws HelperNotFoundException, WrongCredentialException {
+    public HelperEntity loginHelper(Integer phone, String password) throws HelperNotFoundException, WrongCredentialException {
         HelperEntity helperEntity = retrieveHelperByPhone(phone);
         if (!helperEntity.getPassword().equals(password)) {
             throw new WrongCredentialException("Invalid phone or password entered!");

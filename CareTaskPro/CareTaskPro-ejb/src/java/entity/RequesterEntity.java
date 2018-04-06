@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import util.enumeration.Gender;
 
 /**
  *
@@ -25,42 +28,50 @@ public class RequesterEntity implements Serializable {
     private String firstName;
     @Column(length = 32, nullable = false)
     private String lastName;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     @Column(length = 32, nullable = false, unique = true)
     private String email;
-    @Column(length = 32, nullable = false, unique = true)
-    private String phone;
+    @Column(length = 18, nullable = false, unique = true)
+    private Integer phone;
     @Column(length = 32, nullable = false)
     private String password;
     @Column(length = 32, nullable = false)
     private String address;
-    @Column(length = 32, nullable = false)
-    private String creditCardNum;
+    @Column(length = 16, nullable = false, unique = true)
+    private Integer creditCardNum;
     @Column(length = 32, nullable = false)
     private String creditCardName;
-    @Column(length = 32, nullable = false)
-    private String creditCardCVC;
+    @Column(length = 2, nullable = false)
+    private Integer creditCardExpiryMonth;
+    @Column(length = 4, nullable = false)
+    private Integer creditCardExpiryYear;
+    @Column(length = 3, nullable = false)
+    private Integer creditCardCVC;
     
     @OneToMany(mappedBy = "requesterEntity")
     private List<TaskEntity> taskEntities;
 
     public RequesterEntity() {
-        this.taskEntities = new ArrayList<TaskEntity>();
+        this.taskEntities = new ArrayList<>();
     }
 
-    public RequesterEntity(String firstName, String lastName, String email, String phone, String password, String address, String creditCardNum, String creditCardName, String creditCardCVC) {
-        this();
-        
+    public RequesterEntity(String firstName, String lastName, Gender gender, String email, Integer phone, String password, String address, String creditCardName ,Integer creditCardNum, Integer creditCardExpiryMonth, Integer creditCardExpiryYear, Integer creditCardCVC) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.gender = gender;
         this.email = email;
         this.phone = phone;
         this.password = password;
         this.address = address;
-        this.creditCardNum = creditCardNum;
         this.creditCardName = creditCardName;
+        this.creditCardNum = creditCardNum;
+        this.creditCardExpiryMonth = creditCardExpiryMonth;
+        this.creditCardExpiryYear = creditCardExpiryYear;
         this.creditCardCVC = creditCardCVC;
     }
-    
+
     public Long getrequesterId() {
         return getRequesterId();
     }
@@ -94,144 +105,116 @@ public class RequesterEntity implements Serializable {
         return "entity.RequesterEntity[ requesterId=" + getRequesterId() + " ]";
     }
 
-    /**
-     * @return the requesterId
-     */
     public Long getRequesterId() {
         return requesterId;
     }
 
-    /**
-     * @param requesterId the requesterId to set
-     */
     public void setRequesterId(Long requesterId) {
         this.requesterId = requesterId;
     }
 
-    /**
-     * @return the firstName
-     */
     public String getFirstName() {
         return firstName;
     }
 
-    /**
-     * @param firstName the firstName to set
-     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    /**
-     * @return the lastName
-     */
     public String getLastName() {
         return lastName;
     }
 
-    /**
-     * @param lastName the lastName to set
-     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    /**
-     * @return the email
-     */
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * @return the phone
-     */
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    /**
-     * @param phone the phone to set
-     */
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
-    /**
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * @param password the password to set
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * @return the address
-     */
     public String getAddress() {
         return address;
     }
 
-    /**
-     * @param address the address to set
-     */
     public void setAddress(String address) {
         this.address = address;
     }
 
-    /**
-     * @return the creditCardNum
-     */
-    public String getCreditCardNum() {
+    public Integer getCreditCardNum() {
         return creditCardNum;
     }
 
-    /**
-     * @param creditCardNum the creditCardNum to set
-     */
-    public void setCreditCardNum(String creditCardNum) {
+    public void setCreditCardNum(Integer creditCardNum) {
         this.creditCardNum = creditCardNum;
     }
 
-    /**
-     * @return the creditCardName
-     */
     public String getCreditCardName() {
         return creditCardName;
     }
 
-    /**
-     * @param creditCardName the creditCardName to set
-     */
     public void setCreditCardName(String creditCardName) {
         this.creditCardName = creditCardName;
     }
+    
+    public Integer getCreditCardExpiryMonth() {
+        return creditCardExpiryMonth;
+    }
 
-    /**
-     * @return the creditCardCVC
-     */
-    public String getCreditCardCVC() {
+    public void setCreditCardExpiryMonth(Integer creditCardExpiryMonth) {
+        this.creditCardExpiryMonth = creditCardExpiryMonth;
+    }
+
+    public Integer getCreditCardExpiryYear() {
+        return creditCardExpiryYear;
+    }
+
+    public void setCreditCardExpiryYear(Integer creditCardExpiryYear) {
+        this.creditCardExpiryYear = creditCardExpiryYear;
+    }
+
+    public Integer getCreditCardCVC() {
         return creditCardCVC;
     }
 
-    /**
-     * @param creditCardCVC the creditCardCVC to set
-     */
-    public void setCreditCardCVC(String creditCardCVC) {
+    public void setCreditCardCVC(Integer creditCardCVC) {
         this.creditCardCVC = creditCardCVC;
+    }
+
+    public List<TaskEntity> getTaskEntities() {
+        return taskEntities;
+    }
+
+    public void setTaskEntities(List<TaskEntity> taskEntities) {
+        this.taskEntities = taskEntities;
     }
 
 }

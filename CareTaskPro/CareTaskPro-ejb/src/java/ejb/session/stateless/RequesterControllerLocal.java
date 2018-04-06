@@ -23,8 +23,8 @@ public interface RequesterControllerLocal {
 
     public List<RequesterEntity> retrieveAllRequesters();
 
-    public RequesterEntity retrieveRequesterByPhone(String phone) throws RequesterNotFoundException;
+    public RequesterEntity retrieveRequesterByPhone(Integer phone) throws RequesterNotFoundException;
 
-    public RequesterEntity loginRequester(String phone, String password) throws RequesterNotFoundException, WrongCredentialException;
+    public RequesterEntity loginRequester(Integer phone, String password) throws RequesterNotFoundException, WrongCredentialException;
 
 }

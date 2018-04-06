@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ejb.session.singleton;
 
 import ejb.session.stateless.AdminControllerLocal;
@@ -19,6 +14,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.enumeration.Gender;
 
 /**
  *
@@ -66,15 +62,15 @@ public class DataInitSessionBean {
     }
     
     private void initializeRequesterData() {
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName1", "lastName1", "email1", "phone1", "password1", "address1", "creditCardNum1", "creditCardName1", "creditCardCVC1"));
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName2", "lastName2", "email2", "phone2", "password2", "address2", "creditCardNum2", "creditCardName2", "creditCardCVC2"));
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName3", "lastName3", "email3", "phone3", "password3", "address3", "creditCardNum3", "creditCardName3", "creditCardCVC3"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName1", "lastName1", Gender.MALE, "email1", 61119111, "password1", "address1", "creditCardName1", 5541 , 1, 2021, 001));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName2", "lastName2", Gender.FEMALE, "email2", 62229222, "password2", "address2", "creditCardName2", 5542, 2, 2022, 002));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName3", "lastName3", Gender.MALE,"email3", 63339333, "password3", "address3", "creditCardName3", 5543, 3, 2023, 003));
     }
-    
+
     private void initializeHelperData() {
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName1", "lastName1", "email1", "phone1", "password1", "address1", false, "creditCardNum1", "certName1", "certNum1"));
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName2", "lastName2", "email2", "phone2", "password2", "address2", false, "creditCardNum2", "certName2", "certNum2"));
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName3", "lastName3", "email3", "phone3", "password3", "address3", true, "creditCardNum3", "certName3", "certNum3"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName1", "lastName1", Gender.MALE, "email1", 91116111, "password1", "address1", false, "certName1", "certNum1", "bankAcct1"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName2", "lastName2", Gender.FEMALE, "email2", 92226222, "password2", "address2", false, "certName2", "certNum2", "bankAcct2"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName3", "lastName3", Gender.MALE, "email3", 93336333, "password3", "address3", true, "certName3", "certNum3", "bankAcct3"));
     }
 
 }

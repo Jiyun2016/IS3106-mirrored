@@ -56,9 +56,9 @@ public class RequesterController implements RequesterControllerLocal {
         Query query = em.createQuery("SELECT h FROM RequesterEntity h");
         return query.getResultList();
     }
-    
+
     @Override
-    public RequesterEntity retrieveRequesterByPhone(String phone) throws RequesterNotFoundException {
+    public RequesterEntity retrieveRequesterByPhone(Integer phone) throws RequesterNotFoundException {
         Query query = em.createQuery("SELECT r FROM RequesterEntity r WHERE r.phone = :requesterPhone")
                 .setParameter("requesterPhone", phone);
         if (query.getResultList().isEmpty()) {
@@ -68,9 +68,9 @@ public class RequesterController implements RequesterControllerLocal {
             return (RequesterEntity)query.getResultList().get(0);
         }
     }
-    
+
     @Override
-    public RequesterEntity loginRequester(String phone, String password) throws RequesterNotFoundException, WrongCredentialException {
+    public RequesterEntity loginRequester(Integer phone, String password) throws RequesterNotFoundException, WrongCredentialException {
         RequesterEntity requesterEntity = retrieveRequesterByPhone(phone);
         if (!requesterEntity.getPassword().equals(password)) {
             throw new WrongCredentialException("Invalid phone or password entered!");

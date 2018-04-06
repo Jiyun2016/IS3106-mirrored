@@ -22,14 +22,14 @@ public class ReviewEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
     @Column(length = 32, nullable = false)
     private String reviewRemarks;
-    @Column(length = 32, nullable = false)
+    @Column(length = 1, nullable = false)
     private Integer ratings;
     
-    @OneToOne
+    @OneToOne(optional = false)
     private TaskEntity taskEntity;
 
     public ReviewEntity() {
@@ -88,7 +88,13 @@ public class ReviewEntity implements Serializable {
     public void setRatings(Integer ratings) {
         this.ratings = ratings;
     }
-    
-    
+
+    public TaskEntity getTaskEntity() {
+        return taskEntity;
+    }
+
+    public void setTaskEntity(TaskEntity taskEntity) {
+        this.taskEntity = taskEntity;
+    }
     
 }

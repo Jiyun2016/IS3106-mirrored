@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
@@ -44,7 +39,7 @@ public class PaymentEntity implements Serializable {
     @Column(precision = 18, scale = 2,nullable = false)
     private BigDecimal companyRevenue;
  
-    @OneToOne
+    @OneToOne(optional = false)
     private TaskEntity taskEntity;
 
     public PaymentEntity() {
@@ -131,16 +126,10 @@ public class PaymentEntity implements Serializable {
         this.companyRevenue = companyRevenue;
     }
 
-    /**
-     * @return the taskEntity
-     */
     public TaskEntity getTaskEntity() {
         return taskEntity;
     }
 
-    /**
-     * @param taskEntity the taskEntity to set
-     */
     public void setTaskEntity(TaskEntity taskEntity) {
         this.taskEntity = taskEntity;
     }

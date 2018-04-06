@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import util.enumeration.Gender;
 import util.enumeration.HelperRole;
 
 /**
@@ -29,10 +30,13 @@ public class HelperEntity implements Serializable {
     private String firstName;
     @Column(length = 32, nullable = false)
     private String lastName;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     @Column(length = 32, nullable = false, unique = true)
     private String email;
-    @Column(length = 32, nullable = false, unique = true)
-    private String phone;
+    @Column(length = 8, nullable = false, unique = true)
+    private Integer phone;
     @Column(length = 32, nullable = false)
     private String password;
     @Column(length = 32, nullable = false)
@@ -45,27 +49,25 @@ public class HelperEntity implements Serializable {
     private String certNum;
     @Column(length = 32, nullable = false)
     private String bankAccountNumber;
-   
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private HelperRole helperRole;
     
     @OneToMany(mappedBy = "helperEntity")
     private List<TaskEntity> taskEntities;
-    
     @ManyToMany
     private List<TaskEntity> recommendedTaskEntities;
             
     public HelperEntity() {
-        this.taskEntities = new ArrayList<TaskEntity>();
-        this.recommendedTaskEntities = new ArrayList<TaskEntity>();
+        taskEntities = new ArrayList<>();
+        recommendedTaskEntities = new ArrayList<>();
     }
 
-    public HelperEntity(String firstName, String lastName, String email, String phone, String password, String address, Boolean isCertified, String certName, String certNum, String bankAccountNumber) {
-        this();
-        
+    public HelperEntity(String firstName, String lastName, Gender gender, String email, Integer phone, String password, String address, Boolean isCertified, String certName, String certNum, String bankAccountNumber) {
+
         this.firstName = firstName;
         this.lastName = lastName;
+        this.gender = gender;
         this.email = email;
         this.phone = phone;
         this.password = password;
@@ -116,72 +118,50 @@ public class HelperEntity implements Serializable {
         return "entity.HelperEntity[ helperId=" + getHelperId() + " ]";
     }
 
-    /**
-     * @return the firstName
-     */
     public String getFirstName() {
         return firstName;
     }
 
-    /**
-     * @param firstName the firstName to set
-     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    /**
-     * @return the lastName
-     */
     public String getLastName() {
         return lastName;
     }
 
-    /**
-     * @param lastName the lastName to set
-     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    /**
-     * @return the email
-     */
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+    
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * @return the phone
-     */
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    /**
-     * @param phone the phone to set
-     */
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
-    /**
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * @param password the password to set
-     */
     public void setPassword(String password) {
         this.password = password;
     }
@@ -226,44 +206,26 @@ public class HelperEntity implements Serializable {
         this.bankAccountNumber = bankAccountNumber;
     }
 
-    /**
-     * @return the helperRole
-     */
     public HelperRole getHelperRole() {
         return helperRole;
     }
 
-    /**
-     * @param helperRole the helperRole to set
-     */
     public void setHelperRole(HelperRole helperRole) {
         this.helperRole = helperRole;
     }
 
-    /**
-     * @return the taskEntities
-     */
     public List<TaskEntity> getTaskEntities() {
         return taskEntities;
     }
 
-    /**
-     * @param taskEntities the taskEntities to set
-     */
     public void setTaskEntities(List<TaskEntity> taskEntities) {
         this.taskEntities = taskEntities;
     }
 
-    /**
-     * @return the recommendedTaskEntities
-     */
     public List<TaskEntity> getRecommendedTaskEntities() {
         return recommendedTaskEntities;
     }
 
-    /**
-     * @param recommendedTaskEntities the recommendedTaskEntities to set
-     */
     public void setRecommendedTaskEntities(List<TaskEntity> recommendedTaskEntities) {
         this.recommendedTaskEntities = recommendedTaskEntities;
     }

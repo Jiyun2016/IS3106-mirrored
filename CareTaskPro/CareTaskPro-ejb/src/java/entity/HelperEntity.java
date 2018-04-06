@@ -159,72 +159,42 @@ public class HelperEntity implements Serializable {
         this.password = password;
     }
 
-    /**
-     * @return the address
-     */
     public String getAddress() {
         return address;
     }
 
-    /**
-     * @param address the address to set
-     */
     public void setAddress(String address) {
         this.address = address;
     }
 
-    /**
-     * @return the isCertified
-     */
     public Boolean getIsCertified() {
         return isCertified;
     }
 
-    /**
-     * @param isCertified the isCertified to set
-     */
     public void setIsCertified(Boolean isCertified) {
         this.isCertified = isCertified;
     }
 
-    /**
-     * @return the certName
-     */
     public String getCertName() {
         return certName;
     }
 
-    /**
-     * @param certName the certName to set
-     */
     public void setCertName(String certName) {
         this.certName = certName;
     }
 
-    /**
-     * @return the certNum
-     */
     public String getCertNum() {
         return certNum;
     }
 
-    /**
-     * @param certNum the certNum to set
-     */
     public void setCertNum(String certNum) {
         this.certNum = certNum;
     }
 
-    /**
-     * @return the bankAccountNumber
-     */
     public String getBankAccountNumber() {
         return bankAccountNumber;
     }
 
-    /**
-     * @param bankAccountNumber the bankAccountNumber to set
-     */
     public void setBankAccountNumber(String bankAccountNumber) {
         this.bankAccountNumber = bankAccountNumber;
     }

@@ -5,15 +5,13 @@
  */
 package ejb.session.stateless;
 
-import javax.ejb.Stateless;
+import javax.ejb.Local;
 
 /**
  *
  * @author Yap Jun Hao
  */
-@Stateless
-public class PayrollRateController implements PayrollRateControllerLocal {
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+@Local
+public interface ReviewControllerLocal {
+    
 }

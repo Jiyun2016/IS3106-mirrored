@@ -10,10 +10,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
-import javax.xml.bind.JAXBElement;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import util.exception.HelperNotFoundException;
 import ws.restful.datamodel.CreateHelperReq;
 import ws.restful.datamodel.CreateHelperRsp;
@@ -21,6 +26,7 @@ import ws.restful.datamodel.ErrorRsp;
 import ws.restful.datamodel.RetrieveAllHelpersRsp;
 import ws.restful.datamodel.RetrieveHelperRsp;
 import ws.restful.datamodel.UpdateHelperReq;
+import javax.xml.bind.JAXBElement;
 
 /**
  * REST Web Service
@@ -79,7 +85,7 @@ public class HelperResource {
             try {
                 CreateHelperReq createHelperReq = jaxbCreateHelperReq.getValue();               
                 HelperEntity helper = helperControllerLocal.createNewHelper(createHelperReq.getHelper());
-                CreateHelperRsp createHelperRsp = new CreateHelperRsp(helper.gethelperId());
+                CreateHelperRsp createHelperRsp = new CreateHelperRsp(helper.getHelperId());
                 
                 return Response.status(Response.Status.OK).entity(createHelperRsp).build();
             } 

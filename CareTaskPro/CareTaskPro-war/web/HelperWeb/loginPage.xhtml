@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>LOGIN PAGE</title>
+    </h:head>
+    <h:body>
+        <p:layout>
+            <p:layoutUnit position="north">
+                <h:outputText style="margin-left: 20px; font-size: 28px; font-family: fantasy" value="HomeCare by you" />
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <h:panelGroup rendered="#{!sessionScope['isLogin']}">
+                                
+                <h:form id="contentLoginForm">
+                    <p:panelGrid>
+                    <p:growl autoUpdate="true" />
+                    
+                    <p:outputLabel for="phone" value="Phone Number"/>&nbsp;
+                    <p:inputText id="phone" value="#{loginManagedBean.phone}" required="true" requiredMessage="Phone number is required">
+                        <f:validateLength minimum="6" />
+                    </p:inputText>
+                    &nbsp;
+                    <p:outputLabel for="password" value="Password"/>&nbsp;
+                    <p:password id="password" value="#{loginManagedBean.password}" required="true" requiredMessage="Password is required">
+                        <f:validateLength minimum="4" />
+                    </p:password>
+                    &nbsp;
+                    <p:commandButton type="reset" value="Clear" />&nbsp;
+                    <p:commandButton value="Login" update="@form" actionListener="#{loginManagedBean.login}" icon="ui-icon-key" />          
+                    </p:panelGrid>
+                </h:form>
+
+            </h:panelGroup>
+                
+                
+            </p:layoutUnit>
+                     
+            
+            
+            
+        </p:layout>
+            
+    </h:body>
+</html>
+

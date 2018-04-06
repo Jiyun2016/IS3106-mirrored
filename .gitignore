@@ -7,3 +7,7 @@
 /CareTaskPro/CareTaskPro-ejb/dist/
 /CareTaskPro/CareTaskPro-war/build/
 /CareTaskPro/CareTaskPro-war/dist/
+.DS_Store
+CareTaskPro/.DS_Store
+CareTaskPro/src/.DS_Store
+CareTaskPro-ejb/setup/glassfish-resources.xml

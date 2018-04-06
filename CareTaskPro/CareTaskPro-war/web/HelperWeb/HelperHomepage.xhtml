@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/helperTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"    
+                xmlns:h="http://java.sun.com/jsf/html"                 
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        
+    </h:head>
+    
+
+    <ui:define name="center" >
+    
+        <p:layout>
+            <p:layoutUnit position="west" size="200" style="border: none">
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <h2>  Provide care</h2>
+                <h3>  to someone who needs it</h3>
+                <br></br>
+                <h3>  Train your expertise</h3>
+                <h3>  and spread your love...</h3>
+                <br></br>
+                <br></br>
+            <p:button outcome="ViewAvailableTasks" value="Provide Care Now"/>
+            </p:layoutUnit>
+        
+      
+        <p:layoutUnit position="center" style="border: none">
+        <img style="height:100%; width:100%" src="/CareTaskPro-war/images/homepagephoto.jpg"></img>
+        </p:layoutUnit>
+        </p:layout>
+    </ui:define>
+
+   
+
+</ui:composition>

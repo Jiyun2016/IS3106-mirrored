@@ -30,6 +30,7 @@ public class TaskController implements TaskControllerLocal {
         return taskEntity;
     }
 
+    @Override
     public TaskEntity retrieveTaskById(long taskId) throws TaskEntityNotFoundException {
         TaskEntity taskEntity = em.find(TaskEntity.class, taskId);
         if (taskEntity != null) {
@@ -39,6 +40,7 @@ public class TaskController implements TaskControllerLocal {
         }
     }
 
+    @Override
     public List<TaskEntity> retrieveTaskInProcessByAssignedHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
         tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.assignedHelper.id = :helperId AND t.assigned = true AND t.completed = false")
@@ -56,6 +58,7 @@ public class TaskController implements TaskControllerLocal {
 
     }
 
+    @Override
     public List<TaskEntity> retrieveTaskCompletedByHelperId(long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
@@ -74,6 +77,7 @@ public class TaskController implements TaskControllerLocal {
 
     }
 
+    @Override
     public List<TaskEntity> retrieveTaskByPreferredHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
@@ -92,6 +96,7 @@ public class TaskController implements TaskControllerLocal {
 
     }
 
+    @Override
     public List<TaskEntity> retrieveTaskByCategory(Category category) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
@@ -110,6 +115,7 @@ public class TaskController implements TaskControllerLocal {
 
     }
 
+    @Override
     public List<TaskEntity> retrieveTaskAssigned() throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
@@ -126,6 +132,7 @@ public class TaskController implements TaskControllerLocal {
 
     }
 
+    @Override
     public List<TaskEntity> retrieveTaskNotAssigned() throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
@@ -142,6 +149,7 @@ public class TaskController implements TaskControllerLocal {
 
     }
 
+    @Override
     public List<TaskEntity> retrieveTaskComplained() throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
@@ -158,10 +166,13 @@ public class TaskController implements TaskControllerLocal {
 
     }
 
+    @Override
     public TaskEntity updateTaskEntity(TaskEntity taskEntity) {
         em.merge(taskEntity);
         em.refresh(taskEntity);
         return taskEntity;
     }
 
+
+  
 }

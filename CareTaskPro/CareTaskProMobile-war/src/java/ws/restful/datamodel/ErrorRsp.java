@@ -32,4 +32,5 @@ public class ErrorRsp {
     public void setMessage(String message) {
         this.message = message;
     }
+    
 }

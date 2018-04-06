@@ -6,10 +6,11 @@
 package ejb.session.singleton;
 
 import ejb.session.stateless.AdminControllerLocal;
+import ejb.session.stateless.HelperControllerLocal;
 import ejb.session.stateless.RequesterControllerLocal;
 import entity.AdminEntity;
+import entity.HelperEntity;
 import entity.RequesterEntity;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -18,7 +19,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import util.enumeration.Gender;
 
 /**
  *
@@ -34,6 +34,8 @@ public class DataInitSessionBean {
     private AdminControllerLocal adminControllerLocal;
     @EJB(name = "RequesterControllerLocal")
     private RequesterControllerLocal requesterControllerLocal;    
+    @EJB(name = "HelperControllerLocal")
+    private HelperControllerLocal helperControllerLocal;   
     
     @PersistenceContext(unitName = "CareTaskPro-ejbPU")
     private EntityManager em;
@@ -59,9 +61,15 @@ public class DataInitSessionBean {
     }
     
     private void initializeRequesterData() {
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName1", "lastName1", Gender.MALE, new Date(), "email1", "phone1", "password1", "address1", "creditCardNum1", "creditCardName1", "creditCardCVC1"));
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName2", "lastName2", Gender.FEMALE, new Date(), "email2", "phone2", "password2", "address2", "creditCardNum2", "creditCardName2", "creditCardCVC2"));
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName3", "lastName3", Gender.FEMALE, new Date(), "email3", "phone3", "password3", "address3", "creditCardNum3", "creditCardName3", "creditCardCVC3"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName1", "lastName1", "email1", "phone1", "password1", "address1", "creditCardNum1", "creditCardName1", "creditCardCVC1"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName2", "lastName2", "email2", "phone2", "password2", "address2", "creditCardNum2", "creditCardName2", "creditCardCVC2"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName3", "lastName3", "email3", "phone3", "password3", "address3", "creditCardNum3", "creditCardName3", "creditCardCVC3"));
+    }
+    
+    private void initializeHelperData() {
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName1", "lastName1", "email1", "phone1", "password1", "address1", false, "creditCardNum1", "certName1", "certNum1"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName2", "lastName2", "email2", "phone2", "password2", "address2", false, "creditCardNum2", "certName2", "certNum2"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName3", "lastName3", "email3", "phone3", "password3", "address3", true, "creditCardNum3", "certName3", "certNum3"));
     }
 
 }

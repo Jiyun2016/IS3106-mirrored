@@ -76,22 +76,21 @@ public class RequesterController implements RequesterControllerLocal {
             throw new WrongCredentialException("Invalid phone or password entered!");
         }
         else {
-            requesterEntity.setIsLoggedIn(true);
             em.merge(requesterEntity);
             return requesterEntity;
         }
     }
     
-    @Override
-    public RequesterEntity logoutRequester(Long id) throws RequesterNotFoundException {
-        RequesterEntity requesterEntity = retrieveRequesterById(id);
-        if (requesterEntity.getIsLoggedIn()) {
-            requesterEntity.setIsLoggedIn(false);
-            em.merge(requesterEntity);
-            return requesterEntity;
-        }
-        else {
-            return requesterEntity;
-        }
-    }
+//    @Override
+//    public RequesterEntity logoutRequester(Long id) throws RequesterNotFoundException {
+//        RequesterEntity requesterEntity = retrieveRequesterById(id);
+//        if (requesterEntity.getIsLoggedIn()) {
+//            requesterEntity.setIsLoggedIn(false);
+//            em.merge(requesterEntity);
+//            return requesterEntity;
+//        }
+//        else {
+//            return requesterEntity;
+//        }
+//    }
 }

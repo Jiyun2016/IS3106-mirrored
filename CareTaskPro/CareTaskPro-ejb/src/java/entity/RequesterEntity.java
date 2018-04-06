@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,9 +44,12 @@ public class RequesterEntity implements Serializable {
     private List<TaskEntity> taskEntities;
 
     public RequesterEntity() {
+        this.taskEntities = new ArrayList<TaskEntity>();
     }
 
     public RequesterEntity(String firstName, String lastName, String email, String phone, String password, String address, String creditCardNum, String creditCardName, String creditCardCVC) {
+        this();
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

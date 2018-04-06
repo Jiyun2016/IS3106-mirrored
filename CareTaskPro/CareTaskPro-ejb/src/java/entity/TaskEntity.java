@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -48,7 +49,6 @@ public class TaskEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
     
-    
     @OneToOne
     private PaymentEntity paymentEntity;
    
@@ -64,10 +64,20 @@ public class TaskEntity implements Serializable {
     @OneToOne
     private ReviewEntity reviewEntity;
 
-  
-    
-   
-    
+    public TaskEntity() {
+        this.preferredHelpers = new ArrayList<HelperEntity>();
+    }
+
+    public TaskEntity(Category category, String description, Date startTime, Date endTime, TaskStatus taskStatus) {
+        this();
+        
+        this.category = category;
+        this.description = description;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.taskStatus = taskStatus;
+    }
+
     public Long getTaskId() {
         return taskId;
     }

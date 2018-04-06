@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -56,10 +57,13 @@ public class HelperEntity implements Serializable {
     private List<TaskEntity> recommendedTaskEntities;
             
     public HelperEntity() {
-
+        this.taskEntities = new ArrayList<TaskEntity>();
+        this.recommendedTaskEntities = new ArrayList<TaskEntity>();
     }
 
     public HelperEntity(String firstName, String lastName, String email, String phone, String password, String address, Boolean isCertified, String certName, String certNum, String bankAccountNumber) {
+        this();
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -70,6 +74,13 @@ public class HelperEntity implements Serializable {
         this.certName = certName;
         this.certNum = certNum;
         this.bankAccountNumber = bankAccountNumber;
+        
+        if(isCertified) {
+            this.helperRole = HelperRole.PROFESSIONAL;
+        }
+        else {
+            this.helperRole = HelperRole.NONPROFESSIONAL;
+        }
     }
 
     public Long getHelperId() {

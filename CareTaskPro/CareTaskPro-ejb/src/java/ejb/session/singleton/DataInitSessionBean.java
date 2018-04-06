@@ -52,6 +52,11 @@ public class DataInitSessionBean {
         if (allRequester == null || allRequester.isEmpty()) {
             initializeRequesterData();
         }
+        
+        List<HelperEntity> allHelper = helperControllerLocal.retrieveAllHelpers();
+        if (allHelper == null || allHelper.isEmpty()) {
+            initializeHelperData();
+        }
     }
 
     private void initializeAdminData() {

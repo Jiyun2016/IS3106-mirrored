@@ -29,7 +29,6 @@ public class ReviewEntity implements Serializable {
     @Column(length = 32, nullable = false)
     private Integer ratings;
     
-   
     @OneToOne
     private TaskEntity taskEntity;
 

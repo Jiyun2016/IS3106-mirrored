@@ -43,8 +43,7 @@ public class PaymentEntity implements Serializable {
     private Date paymentTime;
     @Column(precision = 18, scale = 2,nullable = false)
     private BigDecimal companyRevenue;
-
-   
+ 
     @OneToOne
     private TaskEntity taskEntity;
 

@@ -14,6 +14,7 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import util.exception.AdminEntityNotFoundException;
+import util.exception.AdminPasswordChangeException;
 import util.exception.InvalidLoginCredentialException;
 
 /**
@@ -82,6 +83,36 @@ public class AdminController implements AdminControllerLocal {
             throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
         }
     }
+    
+    @Override
+    public void updateEmployee(AdminEntity adminEntity) 
+    {
+        em.merge(adminEntity);
+    }
+    
+    
+    @Override
+    public void deleteEmployee(String username) throws AdminEntityNotFoundException
+    {
+        AdminEntity adminToRemove = retrieveAdminByUsername(username);
+        em.remove(adminToRemove);
+    }
+    
+    @Override
+    public void changePassword(AdminEntity adminEntity, String currentPassword, String newPassword) throws AdminEntityNotFoundException, AdminPasswordChangeException
+    {
+        
+        if(adminEntity.getPassword().equals(currentPassword))
+        {
+            adminEntity.setPassword(newPassword);
+            em.merge(adminEntity);
+        }
+        else
+        {
+            throw new AdminPasswordChangeException("Current Password is invalid");
+        }
+    }
+            
   
 
     

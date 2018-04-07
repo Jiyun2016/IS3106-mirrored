@@ -5,7 +5,9 @@
  */
 package ejb.session.stateless;
 
+import entity.ReviewEntity;
 import javax.ejb.Local;
+import util.exception.ReviewNotFoundException;
 
 /**
  *
@@ -13,5 +15,13 @@ import javax.ejb.Local;
  */
 @Local
 public interface ReviewControllerLocal {
+
+    public ReviewEntity createNewReview(ReviewEntity reviewEntity);
+
+    public ReviewEntity retrieveReviewById(long reviewId) throws ReviewNotFoundException;
+
+    public ReviewEntity updateReview(ReviewEntity reviewEntity);
+
+    public void deleteReview(Long reviewId) throws ReviewNotFoundException;
     
 }

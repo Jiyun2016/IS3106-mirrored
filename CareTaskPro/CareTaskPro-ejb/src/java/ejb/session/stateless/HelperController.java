@@ -77,6 +77,7 @@ public class HelperController implements HelperControllerLocal {
         }
         else {
             em.merge(helperEntity);
+            em.flush();
             return helperEntity;
         }
     }

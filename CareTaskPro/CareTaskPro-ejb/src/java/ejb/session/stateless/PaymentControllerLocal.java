@@ -5,7 +5,9 @@
  */
 package ejb.session.stateless;
 
+import entity.PaymentEntity;
 import javax.ejb.Local;
+import util.exception.PaymentNotFoundException;
 
 /**
  *
@@ -13,5 +15,15 @@ import javax.ejb.Local;
  */
 @Local
 public interface PaymentControllerLocal {
+
+    public PaymentEntity createNewPayment(PaymentEntity paymentEntity);
+
+    public PaymentEntity retrievePaymentById(long paymentId) throws PaymentNotFoundException;
+
+    public PaymentEntity updateReview(PaymentEntity paymentEntity);
+
+    public void deleteReview(Long paymentId) throws PaymentNotFoundException;
+
+    public void persist(Object object);
     
 }

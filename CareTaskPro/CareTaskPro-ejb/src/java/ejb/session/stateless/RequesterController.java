@@ -77,6 +77,7 @@ public class RequesterController implements RequesterControllerLocal {
         }
         else {
             em.merge(requesterEntity);
+            em.flush();
             return requesterEntity;
         }
     }

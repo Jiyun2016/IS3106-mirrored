@@ -9,6 +9,7 @@ import entity.AdminEntity;
 import java.util.List;
 import javax.ejb.Local;
 import util.exception.AdminEntityNotFoundException;
+import util.exception.AdminPasswordChangeException;
 import util.exception.InvalidLoginCredentialException;
 
 /**
@@ -25,5 +26,11 @@ public interface AdminControllerLocal {
     public AdminEntity adminLogin(String username, String inPassword) throws InvalidLoginCredentialException;
 
     public AdminEntity retrieveAdminByUsername(String username) throws AdminEntityNotFoundException;
+
+    public void updateEmployee(AdminEntity adminEntity);
+
+    public void deleteEmployee(String username) throws AdminEntityNotFoundException;
+
+    public void changePassword(AdminEntity adminEntity, String currentPassword, String newPassword) throws AdminEntityNotFoundException, AdminPasswordChangeException;
     
 }

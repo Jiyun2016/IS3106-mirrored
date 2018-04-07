@@ -6,24 +6,22 @@
 package ejb.session.stateless;
 
 import entity.PaymentEntity;
+import entity.TaskEntity;
+import java.util.List;
 import javax.ejb.Local;
-import util.exception.PaymentNotFoundException;
+import util.exception.PaymentEntityNotFoundException;
 
 /**
  *
- * @author Yap Jun Hao
+ * @author panjiyun
  */
 @Local
 public interface PaymentControllerLocal {
 
-    public PaymentEntity createNewPayment(PaymentEntity paymentEntity);
+    public PaymentEntity createPaymentEntity(TaskEntity taskEntity);
 
-    public PaymentEntity retrievePaymentById(long paymentId) throws PaymentNotFoundException;
+    public List<PaymentEntity> retrievePaymentByHelperId(long helperId) throws PaymentEntityNotFoundException;
 
-    public PaymentEntity updateReview(PaymentEntity paymentEntity);
-
-    public void deleteReview(Long paymentId) throws PaymentNotFoundException;
-
-    public void persist(Object object);
+    public List<PaymentEntity> retrievePaymentByRequesterId(long requesterId) throws PaymentEntityNotFoundException;
     
 }

@@ -5,12 +5,18 @@
  */
 package ejb.session.stateless;
 
+import entity.HelperEntity;
 import entity.TaskEntity;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.constant.TimeConstant;
 import util.enumeration.Category;
+import util.enumeration.TaskStatus;
 import util.exception.TaskEntityNotFoundException;
 
 /**
@@ -20,13 +26,24 @@ import util.exception.TaskEntityNotFoundException;
 @Stateless
 public class TaskController implements TaskControllerLocal {
 
+    @EJB
+    private NoResponderAutoCloseTimerSessionBeanLocal noResponderAutoCloseTimerSessionBean;
+
     @PersistenceContext(unitName = "CareTaskPro-ejbPU")
     private EntityManager em;
 
+    @Resource
+    private EJBContext eJBContext;
+
+    @Override
     public TaskEntity createNewTask(TaskEntity taskEntity) {
         em.persist(taskEntity);
         em.flush();
         em.refresh(taskEntity);
+
+        long durationBeforeCancel = taskEntity.getStartDateTime().getTime() - TimeConstant.TIME_BUFFER_FOR_CANCEL - System.currentTimeMillis();
+        noResponderAutoCloseTimerSessionBean.createNoResponderAutoCloseTimer(taskEntity.getTaskId(), durationBeforeCancel);
+
         return taskEntity;
     }
 
@@ -119,7 +136,28 @@ public class TaskController implements TaskControllerLocal {
     public List<TaskEntity> retrieveTaskAssigned() throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
-        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.assigned = true").getResultList();
+        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
+                .setParameter("inStatus", TaskStatus.ASSIGNED)
+                .getResultList();
+
+        if (tasks != null && !tasks.isEmpty()) {
+            for (TaskEntity t : tasks) {
+                t.getTaskId();
+            }
+            return tasks;
+        } else {
+            throw new TaskEntityNotFoundException("No task is assigned");
+        }
+
+    }
+    
+    @Override
+     public List<TaskEntity> retrieveTaskNotAssigned() throws TaskEntityNotFoundException {
+        List<TaskEntity> tasks;
+
+        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
+                .setParameter("inStatus", TaskStatus.PENDING)
+                .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
             for (TaskEntity t : tasks) {
@@ -133,27 +171,12 @@ public class TaskController implements TaskControllerLocal {
     }
 
     @Override
-    public List<TaskEntity> retrieveTaskNotAssigned() throws TaskEntityNotFoundException {
-        List<TaskEntity> tasks;
-
-        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.assigned = false").getResultList();
-
-        if (tasks != null && !tasks.isEmpty()) {
-            for (TaskEntity t : tasks) {
-                t.getTaskId();
-            }
-            return tasks;
-        } else {
-            throw new TaskEntityNotFoundException("No task is not assigned");
-        }
-
-    }
-
-    @Override
     public List<TaskEntity> retrieveTaskComplained() throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
-        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.complained = true").getResultList();
+        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
+                .setParameter("inStatus", TaskStatus.COMPLAINED)
+                .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
             for (TaskEntity t : tasks) {
@@ -161,7 +184,7 @@ public class TaskController implements TaskControllerLocal {
             }
             return tasks;
         } else {
-            throw new TaskEntityNotFoundException("No task is complained");
+            throw new TaskEntityNotFoundException("No task is assigned");
         }
 
     }
@@ -173,6 +196,17 @@ public class TaskController implements TaskControllerLocal {
         return taskEntity;
     }
 
+    @Override
+    public TaskEntity assignHelperToTask(long HelperId, long taskId) {
+        HelperEntity helper = em.find(HelperEntity.class, HelperId);
+        TaskEntity task = em.find(TaskEntity.class, taskId);
+        task.setHelperEntity(helper);
+        task.setTaskStatus(TaskStatus.ASSIGNED);
+        helper.getTaskEntities().add(task);
+        em.merge(task);
+        em.merge(helper);
+        
+        return task;
+    }
 
-  
 }

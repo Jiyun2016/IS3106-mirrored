@@ -15,6 +15,7 @@ import javax.ejb.Local;
 @Local
 public interface AutoPaymentTransactionTimerSessionBeanLocal {
 
-    public void createPaymentTransactionTimer(long taskId, Date expiration);
+
+    public void createPaymentTransactionTimer(long taskId, long duration);
     
 }

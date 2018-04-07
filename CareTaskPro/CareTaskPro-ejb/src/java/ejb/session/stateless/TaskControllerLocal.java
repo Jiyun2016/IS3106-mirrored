@@ -38,4 +38,6 @@ public interface TaskControllerLocal {
 
     public TaskEntity createNewTask(TaskEntity taskEntity);
 
+    public TaskEntity assignHelperToTask(long HelperId, long taskId);
+
 }

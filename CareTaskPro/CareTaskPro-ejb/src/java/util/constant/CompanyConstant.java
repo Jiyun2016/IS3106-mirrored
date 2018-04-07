@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb.session.stateless;
+package util.constant;
 
-import java.util.Date;
-import javax.ejb.Local;
+import java.math.BigDecimal;
 
 /**
  *
  * @author panjiyun
  */
-@Local
-public interface NoResponderAutoCloseTimerSessionBeanLocal {
-
-
-    public void createNoResponderAutoCloseTimer(long taskId, long duration);
+public class CompanyConstant {
+    public static final BigDecimal COMPANY_CHARGE_PERCENTAGE = new BigDecimal(0.05);
     
 }

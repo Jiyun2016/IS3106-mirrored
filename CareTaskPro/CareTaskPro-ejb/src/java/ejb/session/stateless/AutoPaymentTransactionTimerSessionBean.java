@@ -5,6 +5,8 @@
  */
 package ejb.session.stateless;
 
+import entity.PaymentEntity;
+import entity.TaskEntity;
 import java.util.Date;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -15,6 +17,8 @@ import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.enumeration.PaymentStatus;
+import util.enumeration.TaskStatus;
 
 /**
  *
@@ -26,7 +30,7 @@ public class AutoPaymentTransactionTimerSessionBean implements AutoPaymentTransa
 
     @Resource
     private SessionContext sessionContext;
-    
+
     @PersistenceContext(unitName = "CareTaskPro-ejbPU")
     private EntityManager em;
 
@@ -34,26 +38,31 @@ public class AutoPaymentTransactionTimerSessionBean implements AutoPaymentTransa
     }
 
     @Override
-    public void createPaymentTransactionTimer(long taskId, Date expiration) {
+    public void createPaymentTransactionTimer(long taskId, long duration) {
 
         TimerService timerService = sessionContext.getTimerService();
 
-        timerService.createSingleActionTimer(expiration, new TimerConfig(taskId, true));
+        timerService.createSingleActionTimer(duration, new TimerConfig(taskId, true));
     }
 
     @Timeout
     public void handleTimeout(Timer timer) {
         System.out.println("********** PaymentTransactionTimer.handleTimeout(): the task to complete payment transaction is " + timer.getInfo().toString());
-        long auctionListId = Long.parseLong(timer.getInfo().toString());
         
-        //transction
-        //...
+        long taskId = Long.parseLong(timer.getInfo().toString());
+        TaskEntity taskEntity = em.find(TaskEntity.class, taskId);
+        PaymentEntity paymentEntity = taskEntity.getPaymentEntity();
+        long paymentId = paymentEntity.getPaymentId();
         
-        //notify requester,helper
-        //...
+        paymentEntity.setPaymentStatus(PaymentStatus.COMPLETED);
+        em.merge(paymentEntity);
+        taskEntity.setTaskStatus(TaskStatus.COMPLETED);
+        em.merge(taskEntity);
+        
+        System.out.println("********** PaymentTransactionTimer.handleTimeout(): payment with id " + paymentId +" is "+ paymentEntity.getPaymentStatus().toString());
+        System.out.println("********** PaymentTransactionTimer.handleTimeout(): task with id " + taskId +" is "+ taskEntity.getTaskStatus().toString());
+
 
     }
-
-    
 
 }

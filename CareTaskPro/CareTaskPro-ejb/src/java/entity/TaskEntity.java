@@ -37,10 +37,10 @@ public class TaskEntity implements Serializable {
     private String description;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private Date startTime;
+    private Date startDateTime;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private Date endTime;
+    private Date endDateTime;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
@@ -59,18 +59,22 @@ public class TaskEntity implements Serializable {
     private ReviewEntity reviewEntity;
 
     public TaskEntity() {
-        preferredHelpers = new ArrayList<>();
+        this.preferredHelpers = new ArrayList<>();
+        this.paymentEntity = new PaymentEntity();
+        this.reviewEntity = new ReviewEntity();
     }
 
-    public TaskEntity(Category category, String description, Date startTime, Date endTime, TaskStatus taskStatus) {
-        this();
-        
+    public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, TaskStatus taskStatus,  RequesterEntity requesterEntity,  HelperEntity helperEntity) {
         this.category = category;
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
         this.taskStatus = taskStatus;
+        this.requesterEntity = requesterEntity;
+        this.helperEntity = helperEntity;
     }
+
+    
 
     public Long getTaskId() {
         return taskId;
@@ -121,20 +125,20 @@ public class TaskEntity implements Serializable {
         this.description = description;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setStartDateTime(Date startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Date getEndDateTime() {
+        return endDateTime;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setEndDateTime(Date endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     public TaskStatus getTaskStatus() {

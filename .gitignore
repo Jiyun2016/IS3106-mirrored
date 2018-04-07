@@ -11,3 +11,4 @@
 CareTaskPro/.DS_Store
 CareTaskPro/src/.DS_Store
 CareTaskPro-ejb/setup/glassfish-resources.xml
+/CareTaskPro/CareTaskProMobile-war/dist/

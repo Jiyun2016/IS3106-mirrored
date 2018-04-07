@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import util.enumeration.PaymentStatus;
 import util.enumeration.TaskStatus;
 
 /**
@@ -28,7 +29,7 @@ public class PaymentEntity implements Serializable {
     private Long paymentId;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TaskStatus paymentStatus;
+    private PaymentStatus paymentStatus;
     @Column(precision = 18, scale = 2,nullable = false)
     private BigDecimal paymentAmount;
     @Column(precision = 18, scale = 2,nullable = false)
@@ -45,7 +46,8 @@ public class PaymentEntity implements Serializable {
     public PaymentEntity() {
     }
 
-    public PaymentEntity(TaskStatus paymentStatus, BigDecimal paymentAmount, BigDecimal helperSalary, Date paymentTime, BigDecimal companyRevenue) {
+    public PaymentEntity(TaskEntity taskEntity, PaymentStatus paymentStatus, BigDecimal paymentAmount, BigDecimal helperSalary, Date paymentTime, BigDecimal companyRevenue) {
+        this.taskEntity = taskEntity;
         this.paymentStatus = paymentStatus;
         this.paymentAmount = paymentAmount;
         this.helperSalary = helperSalary;
@@ -86,11 +88,11 @@ public class PaymentEntity implements Serializable {
         return "entity.PaymentEntity[ paymentId=" + paymentId + " ]";
     }
 
-    public TaskStatus getPaymentStatus() {
+    public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(TaskStatus paymentStatus) {
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 

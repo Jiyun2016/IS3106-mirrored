@@ -1,19 +1,21 @@
 package util.enumeration;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author panjiyun
  */
 public enum HelperRole {
-    PROFESSIONAL(20), NONPROFESSIONAL(15);
+    PROFESSIONAL(new BigDecimal(20.00)), NONPROFESSIONAL(new BigDecimal(15.00));
 
-    private int chargeRate;
+    private BigDecimal chargeRate;
     
-    private HelperRole(int chargeRate) {
+    private HelperRole(BigDecimal  chargeRate) {
     this.chargeRate = chargeRate;
   }
 
-    public int getChargeRate()
+    public BigDecimal  getChargeRate()
     {
        return chargeRate;
     }

@@ -6,6 +6,7 @@
 package ejb.session.stateless;
 
 import entity.HelperEntity;
+import entity.PaymentEntity;
 import entity.TaskEntity;
 import java.util.List;
 import javax.annotation.Resource;
@@ -25,6 +26,9 @@ import util.exception.TaskEntityNotFoundException;
  */
 @Stateless
 public class TaskController implements TaskControllerLocal {
+
+    @EJB(name = "PaymentControllerLocal")
+    private PaymentControllerLocal paymentControllerLocal;
 
     @EJB
     private NoResponderAutoCloseTimerSessionBeanLocal noResponderAutoCloseTimerSessionBean;
@@ -205,6 +209,20 @@ public class TaskController implements TaskControllerLocal {
         helper.getTaskEntities().add(task);
         em.merge(task);
         em.merge(helper);
+        PaymentEntity payment = paymentControllerLocal.createPaymentEntity(task);
+        em.refresh(task);
+        
+        return task;
+    }
+    
+    @Override
+    public TaskEntity setTaskAsComplained(long taskId) {
+        
+        TaskEntity task = em.find(TaskEntity.class, taskId);
+        task.setTaskStatus(TaskStatus.COMPLAINED);
+        
+        em.merge(task);
+        em.refresh(task);
         
         return task;
     }

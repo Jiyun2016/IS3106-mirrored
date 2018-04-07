@@ -40,4 +40,6 @@ public interface TaskControllerLocal {
 
     public TaskEntity assignHelperToTask(long HelperId, long taskId);
 
+    public TaskEntity setTaskAsComplained(long taskId);
+
 }

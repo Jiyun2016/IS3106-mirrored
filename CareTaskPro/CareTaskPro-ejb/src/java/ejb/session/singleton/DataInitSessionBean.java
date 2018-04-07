@@ -50,7 +50,7 @@ public class DataInitSessionBean {
 
     @PostConstruct
     public void postConstruct() {
-        initializeTaskData2();
+
 
 //        List<AdminEntity> allAdmin = adminControllerLocal.retrieveAllAdmin();
 //        if (allAdmin == null || allAdmin.isEmpty()) {

@@ -20,10 +20,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
-import util.exception.InvalidLoginCredentialException;
 import util.exception.RequesterNotFoundException;
 import util.exception.TaskEntityNotFoundException;
-import util.exception.WrongCredentialException;
+import util.exception.InvalidLoginCredentialException;
 
 /**
  *
@@ -44,7 +43,7 @@ public class RequesterHomeManagedBean {
 
     
 
-    private Integer phone;
+    private String phone;
     private String password;
     private String username;
 
@@ -59,7 +58,7 @@ public class RequesterHomeManagedBean {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentRequesterEntity", currentRequesterEntity);
             FacesContext.getCurrentInstance().getExternalContext().redirect("requesterHome.xhtml");
 
-        } catch (RequesterNotFoundException | WrongCredentialException ex ) {
+        } catch (RequesterNotFoundException | InvalidLoginCredentialException ex ) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid login credential: " + ex.getMessage(), null));
         }
     }
@@ -95,14 +94,14 @@ public class RequesterHomeManagedBean {
     /**
      * @return the phone
      */
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
     /**
      * @param phone the phone to set
      */
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

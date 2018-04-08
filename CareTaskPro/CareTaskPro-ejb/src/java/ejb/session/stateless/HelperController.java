@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import util.exception.HelperNotFoundException;
-import util.exception.WrongCredentialException;
+import util.exception.InvalidLoginCredentialException;
 
 /**
  *
@@ -58,7 +58,7 @@ public class HelperController implements HelperControllerLocal {
     }
     
     @Override
-    public HelperEntity retrieveHelperByPhone(Integer phone) throws HelperNotFoundException {
+    public HelperEntity retrieveHelperByPhone(String phone) throws HelperNotFoundException {
         Query query = em.createQuery("SELECT h FROM HelperEntity h WHERE h.phone = :helperPhone")
                 .setParameter("helperPhone", phone);
         if (query.getResultList().isEmpty()) {
@@ -70,28 +70,14 @@ public class HelperController implements HelperControllerLocal {
     }
     
     @Override
-    public HelperEntity loginHelper(Integer phone, String password) throws HelperNotFoundException, WrongCredentialException {
+    public HelperEntity loginHelper(String phone, String password) throws HelperNotFoundException, InvalidLoginCredentialException {
         HelperEntity helperEntity = retrieveHelperByPhone(phone);
         if (!helperEntity.getPassword().equals(password)) {
-            throw new WrongCredentialException("Invalid phone or password entered!");
+            throw new InvalidLoginCredentialException("Invalid phone or password entered!");
         }
         else {
-            em.merge(helperEntity);
-            em.flush();
             return helperEntity;
         }
     }
-    
-//    @Override
-//    public HelperEntity logoutHelper(Long id) throws HelperNotFoundException {
-//        HelperEntity helperEntity = retrieveHelperById(id);
-//        if (helperEntity.getIsLoggedIn()) {
-//            helperEntity.setIsLoggedIn(false);
-//            em.merge(helperEntity);
-//            return helperEntity;
-//        }
-//        else {
-//            return helperEntity;
-//        }
-//    }
+
 }

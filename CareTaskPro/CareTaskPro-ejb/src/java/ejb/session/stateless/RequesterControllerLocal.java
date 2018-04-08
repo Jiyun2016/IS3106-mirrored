@@ -3,8 +3,8 @@ package ejb.session.stateless;
 import entity.RequesterEntity;
 import java.util.List;
 import javax.ejb.Local;
+import util.exception.InvalidLoginCredentialException;
 import util.exception.RequesterNotFoundException;
-import util.exception.WrongCredentialException;
 
 /**
  *
@@ -23,8 +23,8 @@ public interface RequesterControllerLocal {
 
     public List<RequesterEntity> retrieveAllRequesters();
 
-    public RequesterEntity retrieveRequesterByPhone(Integer phone) throws RequesterNotFoundException;
+    public RequesterEntity retrieveRequesterByPhone(String phone) throws RequesterNotFoundException;
 
-    public RequesterEntity loginRequester(Integer phone, String password) throws RequesterNotFoundException, WrongCredentialException;
+    public RequesterEntity loginRequester(String phone, String password) throws RequesterNotFoundException, InvalidLoginCredentialException;
 
 }

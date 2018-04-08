@@ -36,7 +36,7 @@ public class HelperEntity implements Serializable {
     @Column(length = 32, nullable = false, unique = true)
     private String email;
     @Column(length = 8, nullable = false, unique = true)
-    private Integer phone;
+    private String phone;
     @Column(length = 32, nullable = false)
     private String password;
     @Column(length = 32, nullable = false)
@@ -63,8 +63,9 @@ public class HelperEntity implements Serializable {
         recommendedTaskEntities = new ArrayList<>();
     }
 
-    public HelperEntity(String firstName, String lastName, Gender gender, String email, Integer phone, String password, String address, Boolean isCertified, String certName, String certNum, String bankAccountNumber) {
-
+    public HelperEntity(String firstName, String lastName, Gender gender, String email, String phone, String password, String address, Boolean isCertified, String certName, String certNum, String bankAccountNumber) {
+        this();
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -76,7 +77,7 @@ public class HelperEntity implements Serializable {
         this.certName = certName;
         this.certNum = certNum;
         this.bankAccountNumber = bankAccountNumber;
-        
+
         if(isCertified) {
             this.helperRole = HelperRole.PROFESSIONAL;
         }
@@ -150,11 +151,11 @@ public class HelperEntity implements Serializable {
         this.email = email;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

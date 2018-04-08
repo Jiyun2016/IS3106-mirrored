@@ -8,7 +8,6 @@
 
     <!-- INTERFACE -->
     <cc:interface>
-        <cc:attribute name="formName" required="true" />
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
@@ -16,7 +15,7 @@
         <div style="text-align: right;">
            <h:panelGroup rendered="#{sessionScope['isLogin']}">
 
-                <h:outputText value="You are login as #{sessionScope['currentAdminEntity'].firstName} #{sessionScope['currentAdminEntity'].lastName}" />
+                <h:outputText value="You are login as #{sessionScope['currentRequesterEntity'].firstName} #{sessionScope['currentRequesterEntity'].lastName}" />
 
             </h:panelGroup>
             
@@ -27,18 +26,18 @@
                     
                     <p:growl autoUpdate="true" />
                     
-                    <p:outputLabel for="username" value="Username"/>&nbsp;
-                    <p:inputText id="username" value="#{adminLoginManagedBean.username}" required="true" requiredMessage="Username is required">
+                    <p:outputLabel for="phone" value="Phone Number"/>&nbsp;
+                    <p:inputText id="phone" value="#{requesterHomeManagedBean.phone}" required="true" requiredMessage="Phone Number is required">
                         <f:validateLength minimum="4" />
                     </p:inputText>
                     &nbsp;
                     <p:outputLabel for="password" value="Password"/>&nbsp;
-                    <p:password id="password" value="#{adminLoginManagedBean.password}" required="true" requiredMessage="Password is required">
+                    <p:password id="password" value="#{requesterHomeManagedBean.password}" required="true" requiredMessage="Password is required">
                         <f:validateLength minimum="4" />
                     </p:password>
                     &nbsp;
                     <p:commandButton type="reset" value="Clear" />&nbsp;
-                    <p:commandButton value="Login" update="@form" actionListener="#{adminLoginManagedBean.login}" icon="ui-icon-key" />          
+                    <p:commandButton value="Login" update="@form" actionListener="#{requesterHomeManagedBean.login}" icon="ui-icon-key" />          
                 </h:form>
 
             </h:panelGroup>

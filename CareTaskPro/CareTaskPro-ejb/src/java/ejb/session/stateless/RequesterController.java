@@ -60,7 +60,7 @@ public class RequesterController implements RequesterControllerLocal {
     @Override
     public RequesterEntity retrieveRequesterByPhone(Integer phone) throws RequesterNotFoundException {
         Query query = em.createQuery("SELECT r FROM RequesterEntity r WHERE r.phone = :requesterPhone")
-                .setParameter("requesterPhone", phone);
+                .setParameter("requesterPhone", phone.toString());
         if (query.getResultList().isEmpty()) {
             throw new RequesterNotFoundException("Requester with phone " + phone + " does not exist!");
         }

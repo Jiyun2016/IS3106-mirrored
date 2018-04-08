@@ -22,7 +22,7 @@ public interface TaskControllerLocal {
 
     public List<TaskEntity> retrieveTaskInProcessByAssignedHelperId(Long helperId) throws TaskEntityNotFoundException;
 
-    public List<TaskEntity> retrieveTaskCompletedByHelperId(long helperId) throws TaskEntityNotFoundException;
+    public List<TaskEntity> retrieveTaskCompletedByHelperId(Long helperId) throws TaskEntityNotFoundException;
 
     public List<TaskEntity> retrieveTaskByPreferredHelperId(Long helperId) throws TaskEntityNotFoundException;
 
@@ -38,8 +38,8 @@ public interface TaskControllerLocal {
 
     public TaskEntity createNewTask(TaskEntity taskEntity);
 
-    public TaskEntity assignHelperToTask(long HelperId, long taskId);
+    public TaskEntity assignHelperToTask(Long HelperId, Long taskId);
 
-    public TaskEntity setTaskAsComplained(long taskId);
+    public TaskEntity setTaskAsComplained(Long taskId);
 
 }

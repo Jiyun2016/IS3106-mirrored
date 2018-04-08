@@ -65,7 +65,7 @@ public class TaskController implements TaskControllerLocal {
     public List<TaskEntity> retrieveTaskInProcessByAssignedHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
         tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.assignedHelper.id = :helperId AND t.assigned = true AND t.completed = false")
-                .setParameter("helperId", helperId)
+                .setParameter("helperId", helperId.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -80,11 +80,11 @@ public class TaskController implements TaskControllerLocal {
     }
 
     @Override
-    public List<TaskEntity> retrieveTaskCompletedByHelperId(long helperId) throws TaskEntityNotFoundException {
+    public List<TaskEntity> retrieveTaskCompletedByHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.assignedHelper.id = :helperId AND t.completed = true")
-                .setParameter("helperId", helperId)
+                .setParameter("helperId", helperId.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -141,7 +141,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.ASSIGNED)
+                .setParameter("inStatus", TaskStatus.ASSIGNED.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -160,7 +160,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.PENDING)
+                .setParameter("inStatus", TaskStatus.PENDING.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -179,7 +179,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.COMPLAINED)
+                .setParameter("inStatus", TaskStatus.COMPLAINED.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -201,7 +201,7 @@ public class TaskController implements TaskControllerLocal {
     }
 
     @Override
-    public TaskEntity assignHelperToTask(long HelperId, long taskId) {
+    public TaskEntity assignHelperToTask(Long HelperId, Long taskId) {
         HelperEntity helper = em.find(HelperEntity.class, HelperId);
         TaskEntity task = em.find(TaskEntity.class, taskId);
         task.setHelperEntity(helper);
@@ -216,7 +216,7 @@ public class TaskController implements TaskControllerLocal {
     }
     
     @Override
-    public TaskEntity setTaskAsComplained(long taskId) {
+    public TaskEntity setTaskAsComplained(Long taskId) {
         
         TaskEntity task = em.find(TaskEntity.class, taskId);
         task.setTaskStatus(TaskStatus.COMPLAINED);

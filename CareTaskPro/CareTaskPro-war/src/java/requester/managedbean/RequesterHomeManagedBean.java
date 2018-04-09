@@ -44,7 +44,7 @@ public class RequesterHomeManagedBean {
 
     
 
-    private Integer phone;
+    private String phone;
     private String password;
     private String username;
 
@@ -53,13 +53,13 @@ public class RequesterHomeManagedBean {
 
     public void login(ActionEvent event) throws IOException {
         try {
-            RequesterEntity currentRequesterEntity = requesterControllerLocal.loginRequester(getPhone(), password);
+            RequesterEntity currentRequesterEntity = requesterControllerLocal.loginRequester(phone, password);
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentRequesterEntity", currentRequesterEntity);
             FacesContext.getCurrentInstance().getExternalContext().redirect("requesterHome.xhtml");
 
-        } catch (RequesterNotFoundException | WrongCredentialException ex ) {
+        } catch (Exception ex ) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid login credential: " + ex.getMessage(), null));
         }
     }
@@ -95,14 +95,14 @@ public class RequesterHomeManagedBean {
     /**
      * @return the phone
      */
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
     /**
      * @param phone the phone to set
      */
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

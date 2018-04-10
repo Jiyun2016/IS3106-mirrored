@@ -18,7 +18,7 @@ import util.exception.TaskEntityNotFoundException;
 @Local
 public interface TaskControllerLocal {
 
-    public TaskEntity retrieveTaskById(long taskId) throws TaskEntityNotFoundException;
+    public TaskEntity retrieveTaskById(Long taskId) throws TaskEntityNotFoundException;
 
     public List<TaskEntity> retrieveTaskInProcessByAssignedHelperId(Long helperId) throws TaskEntityNotFoundException;
 

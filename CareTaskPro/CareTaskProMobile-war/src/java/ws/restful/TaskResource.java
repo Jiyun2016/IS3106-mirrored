@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.JAXBElement;
+import util.enumeration.Category;
 import util.exception.TaskEntityNotFoundException;
 import ws.restful.datamodel.CreateTaskReq;
 import ws.restful.datamodel.CreateTaskRsp;
@@ -43,6 +44,20 @@ public class TaskResource {
     public TaskResource() {
     }
 
+    @Path("retrieveTasksByCategory")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveTasksByCategory(@PathParam("category") String category) {
+        try {
+            return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskControllerLocal.retrieveTaskByCategory(Category.valueOf(category)))).build();
+        }
+        catch(Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());  
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }    
+    
     @Path("retrieveAllUnassignedTasks")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)

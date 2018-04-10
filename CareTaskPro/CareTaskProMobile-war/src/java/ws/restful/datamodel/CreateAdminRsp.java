@@ -25,7 +25,7 @@ public class CreateAdminRsp {
     /**
      * @return the adminId
      */
-    public long getAdminId() {
+    public Long getAdminId() {
         return adminId;
     }
 

@@ -18,7 +18,7 @@ public interface ReviewControllerLocal {
 
     public ReviewEntity createNewReview(ReviewEntity reviewEntity);
 
-    public ReviewEntity retrieveReviewById(long reviewId) throws ReviewNotFoundException;
+    public ReviewEntity retrieveReviewById(Long reviewId) throws ReviewNotFoundException;
 
     public ReviewEntity updateReview(ReviewEntity reviewEntity);
 

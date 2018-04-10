@@ -37,7 +37,7 @@ public class NoResponderAutoCloseTimerSessionBean implements NoResponderAutoClos
     }
 
     @Override
-    public void createNoResponderAutoCloseTimer(long taskId, long duration) {
+    public void createNoResponderAutoCloseTimer(Long taskId, Long duration) {
 
         TimerService timerService = sessionContext.getTimerService();
 
@@ -46,7 +46,7 @@ public class NoResponderAutoCloseTimerSessionBean implements NoResponderAutoClos
 
     @Timeout
     public void handleTimeout(Timer timer) {
-        long taskId = Long.parseLong(timer.getInfo().toString());
+        Long taskId = Long.parseLong(timer.getInfo().toString());
         TaskEntity taskEntity = em.find(TaskEntity.class, taskId);
 
         if (taskEntity.getTaskStatus().equals(TaskStatus.PENDING)) {

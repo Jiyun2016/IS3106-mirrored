@@ -23,8 +23,8 @@ public interface HelperControllerLocal {
 
     public List<HelperEntity> retrieveAllHelpers();
 
-    public HelperEntity retrieveHelperByPhone(Integer phone) throws HelperNotFoundException;
+    public HelperEntity retrieveHelperByPhone(String phone) throws HelperNotFoundException;
 
-    public HelperEntity loginHelper(Integer phone, String password) throws HelperNotFoundException, WrongCredentialException;
+    public HelperEntity loginHelper(String phone, String password) throws HelperNotFoundException, WrongCredentialException;
 
 }

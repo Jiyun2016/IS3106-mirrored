@@ -52,8 +52,8 @@ public class TaskEntity implements Serializable {
     private RequesterEntity requesterEntity;
     @ManyToMany
     private List<HelperEntity> preferredHelpers;
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn
     private HelperEntity helperEntity; 
     @OneToOne(mappedBy = "taskEntity",optional = false)
     private ReviewEntity reviewEntity;
@@ -64,6 +64,15 @@ public class TaskEntity implements Serializable {
         this.reviewEntity = new ReviewEntity();
     }
 
+    public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, TaskStatus taskStatus,  RequesterEntity requesterEntity) {
+        this.category = category;
+        this.description = description;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.taskStatus = taskStatus;
+        this.requesterEntity = requesterEntity;
+    }
+    
     public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, TaskStatus taskStatus,  RequesterEntity requesterEntity,  HelperEntity helperEntity) {
         this.category = category;
         this.description = description;

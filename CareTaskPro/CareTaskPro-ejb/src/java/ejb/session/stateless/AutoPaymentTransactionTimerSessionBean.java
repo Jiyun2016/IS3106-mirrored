@@ -38,7 +38,7 @@ public class AutoPaymentTransactionTimerSessionBean implements AutoPaymentTransa
     }
 
     @Override
-    public void createPaymentTransactionTimer(long taskId, long duration) {
+    public void createPaymentTransactionTimer(Long taskId, Long duration) {
 
         TimerService timerService = sessionContext.getTimerService();
 
@@ -49,11 +49,11 @@ public class AutoPaymentTransactionTimerSessionBean implements AutoPaymentTransa
     public void handleTimeout(Timer timer) {
         System.out.println("********** PaymentTransactionTimer.handleTimeout(): the task try to complete payment transaction is " + timer.getInfo().toString());
 
-        long taskId = Long.parseLong(timer.getInfo().toString());
+        Long taskId = Long.parseLong(timer.getInfo().toString());
         TaskEntity taskEntity = em.find(TaskEntity.class, taskId);
 
         PaymentEntity paymentEntity = taskEntity.getPaymentEntity();
-        long paymentId = paymentEntity.getPaymentId();
+        Long paymentId = paymentEntity.getPaymentId();
 
         if (taskEntity.getTaskStatus().equals(TaskStatus.COMPLAINED)) {
             paymentEntity.setPaymentStatus(PaymentStatus.SUSPENDED);

@@ -35,7 +35,7 @@ public class PaymentController implements PaymentControllerLocal {
     @Override
     public PaymentEntity createPaymentEntity(TaskEntity taskEntity) {
         BigDecimal chargeRate = taskEntity.getHelperEntity().getHelperRole().getChargeRate();
-        long numOfHour = (taskEntity.getEndDateTime().getTime() - taskEntity.getStartDateTime().getTime()) / TimeConstant.MILLISEC_PER_HOUR;
+        Long numOfHour = (taskEntity.getEndDateTime().getTime() - taskEntity.getStartDateTime().getTime()) / TimeConstant.MILLISEC_PER_HOUR;
         BigDecimal paymentAmount = chargeRate.multiply((new BigDecimal(numOfHour)));
         BigDecimal companyRevenue = paymentAmount.multiply(CompanyConstant.COMPANY_CHARGE_PERCENTAGE);
         BigDecimal helperSalary = paymentAmount.subtract(companyRevenue);
@@ -49,7 +49,7 @@ public class PaymentController implements PaymentControllerLocal {
         taskEntity.setPaymentEntity(paymentEntity);
         em.merge(taskEntity);
 
-        long durationForPayment = TimeConstant.TIME_LAG_FOR_PAYMENT + taskEntity.getEndDateTime().getTime() - System.currentTimeMillis();
+        Long durationForPayment = TimeConstant.TIME_LAG_FOR_PAYMENT + taskEntity.getEndDateTime().getTime() - System.currentTimeMillis();
         autoPaymentTransactionTimerSessionBean.createPaymentTransactionTimer(taskEntity.getTaskId(), durationForPayment);
         
       
@@ -57,7 +57,7 @@ public class PaymentController implements PaymentControllerLocal {
     }
 
     @Override
-    public List<PaymentEntity> retrievePaymentByHelperId(long helperId) throws PaymentEntityNotFoundException {
+    public List<PaymentEntity> retrievePaymentByHelperId(Long helperId) throws PaymentEntityNotFoundException {
         List<PaymentEntity> payments;
 
         payments = em.createQuery("SELECT p FROM PaymentEntity p WHERE p.taskEntity.helperEntity.helperId = :inHelperId")
@@ -74,7 +74,7 @@ public class PaymentController implements PaymentControllerLocal {
     }
 
     @Override
-    public List<PaymentEntity> retrievePaymentByRequesterId(long requesterId) throws PaymentEntityNotFoundException {
+    public List<PaymentEntity> retrievePaymentByRequesterId(Long requesterId) throws PaymentEntityNotFoundException {
         List<PaymentEntity> payments;
 
         payments = em.createQuery("SELECT p FROM PaymentEntity p WHERE p.taskEntity.requesterEntity.requesterId = :inRequesterId")
@@ -90,7 +90,7 @@ public class PaymentController implements PaymentControllerLocal {
         }
     }
 
-    public void suspendPayment(long paymentId) {
+    public void suspendPayment(Long paymentId) {
         PaymentEntity paymentEntity = em.find(PaymentEntity.class, paymentId);
         paymentEntity.setPaymentStatus(PaymentStatus.SUSPENDED);
         em.merge(paymentEntity);

@@ -60,7 +60,7 @@ public class RequesterController implements RequesterControllerLocal {
     @Override
     public RequesterEntity retrieveRequesterByPhone(String phone) throws RequesterNotFoundException {
         Query query = em.createQuery("SELECT r FROM RequesterEntity r WHERE r.phone = :requesterPhone")
-                .setParameter("requesterPhone", phone.toString());
+                .setParameter("requesterPhone", phone);
         if (query.getResultList().isEmpty()) {
             throw new RequesterNotFoundException("Requester with phone " + phone + " does not exist!");
         }
@@ -76,22 +76,8 @@ public class RequesterController implements RequesterControllerLocal {
             throw new WrongCredentialException("Invalid phone or password entered!");
         }
         else {
-            em.merge(requesterEntity);
-            em.flush();
             return requesterEntity;
         }
     }
-    
-//    @Override
-//    public RequesterEntity logoutRequester(Long id) throws RequesterNotFoundException {
-//        RequesterEntity requesterEntity = retrieveRequesterById(id);
-//        if (requesterEntity.getIsLoggedIn()) {
-//            requesterEntity.setIsLoggedIn(false);
-//            em.merge(requesterEntity);
-//            return requesterEntity;
-//        }
-//        else {
-//            return requesterEntity;
-//        }
-//    }
+
 }

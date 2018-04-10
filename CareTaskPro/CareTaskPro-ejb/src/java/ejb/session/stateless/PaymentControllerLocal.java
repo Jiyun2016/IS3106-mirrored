@@ -20,8 +20,8 @@ public interface PaymentControllerLocal {
 
     public PaymentEntity createPaymentEntity(TaskEntity taskEntity);
 
-    public List<PaymentEntity> retrievePaymentByHelperId(long helperId) throws PaymentEntityNotFoundException;
+    public List<PaymentEntity> retrievePaymentByHelperId(Long helperId) throws PaymentEntityNotFoundException;
 
-    public List<PaymentEntity> retrievePaymentByRequesterId(long requesterId) throws PaymentEntityNotFoundException;
+    public List<PaymentEntity> retrievePaymentByRequesterId(Long requesterId) throws PaymentEntityNotFoundException;
     
 }

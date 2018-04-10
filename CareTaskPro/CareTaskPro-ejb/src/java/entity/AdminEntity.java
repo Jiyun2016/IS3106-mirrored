@@ -22,7 +22,7 @@ public class AdminEntity implements Serializable {
     private String firstName;
     @Column(length = 32, nullable = false)
     private String lastName;
-    @Column(length = 32, nullable = false)
+    @Column(length = 32, nullable = false, unique = true)
     private String username;
     @Column(length = 32, nullable = false)
     private String password;

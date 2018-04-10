@@ -16,6 +16,6 @@ import javax.ejb.Local;
 public interface NoResponderAutoCloseTimerSessionBeanLocal {
 
 
-    public void createNoResponderAutoCloseTimer(long taskId, long duration);
+    public void createNoResponderAutoCloseTimer(Long taskId, Long duration);
     
 }

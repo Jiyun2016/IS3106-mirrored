@@ -45,14 +45,14 @@ public class TaskController implements TaskControllerLocal {
         em.flush();
         em.refresh(taskEntity);
 
-        long durationBeforeCancel = taskEntity.getStartDateTime().getTime() - TimeConstant.TIME_BUFFER_FOR_CANCEL - System.currentTimeMillis();
+        Long durationBeforeCancel = taskEntity.getStartDateTime().getTime() - TimeConstant.TIME_BUFFER_FOR_CANCEL - System.currentTimeMillis();
         noResponderAutoCloseTimerSessionBean.createNoResponderAutoCloseTimer(taskEntity.getTaskId(), durationBeforeCancel);
 
         return taskEntity;
     }
 
     @Override
-    public TaskEntity retrieveTaskById(long taskId) throws TaskEntityNotFoundException {
+    public TaskEntity retrieveTaskById(Long taskId) throws TaskEntityNotFoundException {
         TaskEntity taskEntity = em.find(TaskEntity.class, taskId);
         if (taskEntity != null) {
             return taskEntity;
@@ -141,7 +141,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.ASSIGNED.toString())
+                .setParameter("inStatus", TaskStatus.ASSIGNED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -160,7 +160,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.PENDING.toString())
+                .setParameter("inStatus", TaskStatus.PENDING)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -179,7 +179,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.COMPLAINED.toString())
+                .setParameter("inStatus", TaskStatus.COMPLAINED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {

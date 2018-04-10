@@ -25,7 +25,7 @@ public class ReviewController implements ReviewControllerLocal {
     }
 
     @Override
-    public ReviewEntity retrieveReviewById(long reviewId) throws ReviewNotFoundException {
+    public ReviewEntity retrieveReviewById(Long reviewId) throws ReviewNotFoundException {
         ReviewEntity reviewEntity = em.find(ReviewEntity.class, reviewId);
         if (reviewEntity != null) {
             return reviewEntity;

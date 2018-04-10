@@ -7,7 +7,6 @@ import ejb.session.stateless.RequesterControllerLocal;
 import ejb.session.stateless.TaskControllerLocal;
 import entity.AdminEntity;
 import entity.HelperEntity;
-import entity.PaymentEntity;
 import entity.RequesterEntity;
 import entity.TaskEntity;
 import java.util.Date;
@@ -41,8 +40,10 @@ public class DataInitSessionBean {
 
     @EJB(name = "AdminControllerLocal")
     private AdminControllerLocal adminControllerLocal;
+    
     @EJB(name = "RequesterControllerLocal")
     private RequesterControllerLocal requesterControllerLocal;
+    
     @EJB(name = "HelperControllerLocal")
     private HelperControllerLocal helperControllerLocal;
 
@@ -65,7 +66,9 @@ public class DataInitSessionBean {
         List<HelperEntity> allHelper = helperControllerLocal.retrieveAllHelpers();
         if (allHelper == null || allHelper.isEmpty()) {
             initializeHelperData();
+            initializeTaskData();
         }
+
     }
 
     private void initializeAdminData() {
@@ -81,18 +84,18 @@ public class DataInitSessionBean {
     }
 
     private void initializeHelperData() {
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName1", "lastName1", Gender.MALE, "email1", "91116111", "password1", "address1", false, "certName1", "certNum1", "bankAcct1"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName1", "lastName1", Gender.MALE, "email1", "91116111", "password1", "address1", true, "certName1", "certNum1", "bankAcct1"));
         helperControllerLocal.createNewHelper(new HelperEntity("firstName2", "lastName2", Gender.FEMALE, "email2", "92226222", "password2", "address2", false, "certName2", "certNum2", "bankAcct2"));
         helperControllerLocal.createNewHelper(new HelperEntity("firstName3", "lastName3", Gender.MALE, "email3", "93336333", "password3", "address3", true, "certName3", "certNum3", "bankAcct3"));
     }
 
-//    private void initializeTaskData() {
-//        RequesterEntity r = requesterControllerLocal.createNewRequester(new RequesterEntity("firstName4", "lastName4", Gender.MALE, "email4", "61119444", "password4", "address4", "creditCardName4", "5542", "2", "2022", "003"));
-//        TaskEntity t = taskControllerLocal.createNewTask(new TaskEntity(Category.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
-//        System.out.println("********** Task Created: task with id " + t.getTaskId() + " is " + t.getTaskStatus().toString());
-//
-//        PaymentEntity p = paymentControllerLocal.createPaymentEntity(t);
-//        System.out.println("********** Payment Created: payment created for task with id " + t.getTaskId() + " the status of task is " + t.getTaskStatus().toString());
-//    }
+    private void initializeTaskData() {
+        RequesterEntity r = requesterControllerLocal.createNewRequester(new RequesterEntity("firstName4", "lastName4", Gender.MALE, "email4", "61119444", "password4", "address4", "creditCardName4", "5542", "2", "2022", "003"));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.HEALTHCARE, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
+    }
 
 }

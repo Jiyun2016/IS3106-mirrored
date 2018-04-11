@@ -18,6 +18,7 @@ import javax.persistence.PersistenceContext;
 import util.constant.TimeConstant;
 import util.enumeration.Category;
 import util.enumeration.TaskStatus;
+import util.exception.CancelTaskException;
 import util.exception.TaskEntityNotFoundException;
 
 /**
@@ -62,10 +63,47 @@ public class TaskController implements TaskControllerLocal {
     }
 
     @Override
+    public List<TaskEntity> retrieveTaskByStatusByRequesterId(Long requesterId, TaskStatus status) throws TaskEntityNotFoundException {
+        List<TaskEntity> tasks;
+        tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status AND task.requesterEntity.requesterId = :requesterId")
+                .setParameter("status", status.toString())
+                .setParameter("requesterId", requesterId)
+                .getResultList();
+        if (tasks != null && !tasks.isEmpty()) {
+            for (TaskEntity t : tasks) {
+                t.getTaskId();
+            }
+            return tasks;
+        } else {
+            throw new TaskEntityNotFoundException("The requester with id " + requesterId + " has no " + status.toString() + " task.");
+        }
+
+    }
+
+    @Override
+    public List<TaskEntity> retrieveTaskByStatusByHelperId(Long helperId, TaskStatus status) throws TaskEntityNotFoundException {
+        List<TaskEntity> tasks;
+        tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status AND task.requesterEntity.requesterId = :helperId")
+                .setParameter("status", status.toString())
+                .setParameter("helperId", helperId)
+                .getResultList();
+        if (tasks != null && !tasks.isEmpty()) {
+            for (TaskEntity t : tasks) {
+                t.getTaskId();
+            }
+            return tasks;
+        } else {
+            throw new TaskEntityNotFoundException("The helper with id " + helperId + " has no " + status.toString() + " task.");
+        }
+
+    }
+
+    @Override
     public List<TaskEntity> retrieveTaskInProcessByAssignedHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
-        tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.assignedHelper.id = :helperId AND t.assigned = true AND t.completed = false")
+        tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.assignedHelper.id = :helperId AND task.taskStatus = :status")
                 .setParameter("helperId", helperId.toString())
+                .setParameter("status", TaskStatus.ASSIGNED.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -83,8 +121,9 @@ public class TaskController implements TaskControllerLocal {
     public List<TaskEntity> retrieveTaskCompletedByHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
-        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.assignedHelper.id = :helperId AND t.completed = true")
+        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.assignedHelper.id = :helperId AND task.taskStatus = :status")
                 .setParameter("helperId", helperId.toString())
+                .setParameter("status", TaskStatus.COMPLETED.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -122,7 +161,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.category = :category")
-                .setParameter("category", category)
+                .setParameter("category", category.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -141,7 +180,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.ASSIGNED)
+                .setParameter("inStatus", TaskStatus.ASSIGNED.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -154,13 +193,13 @@ public class TaskController implements TaskControllerLocal {
         }
 
     }
-    
+
     @Override
-     public List<TaskEntity> retrieveTaskNotAssigned() throws TaskEntityNotFoundException {
+    public List<TaskEntity> retrieveTaskNotAssigned() throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.PENDING)
+                .setParameter("inStatus", TaskStatus.PENDING.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -179,7 +218,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.COMPLAINED)
+                .setParameter("inStatus", TaskStatus.COMPLAINED.toString())
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -211,20 +250,37 @@ public class TaskController implements TaskControllerLocal {
         em.merge(helper);
         PaymentEntity payment = paymentControllerLocal.createPaymentEntity(task);
         em.refresh(task);
-        
+
         return task;
     }
-    
+
     @Override
     public TaskEntity setTaskAsComplained(Long taskId) {
-        
+
         TaskEntity task = em.find(TaskEntity.class, taskId);
         task.setTaskStatus(TaskStatus.COMPLAINED);
-        
+
         em.merge(task);
         em.refresh(task);
-        
+
         return task;
+    }
+
+    @Override
+    public TaskEntity setTaskAsCancelled(Long taskId) throws CancelTaskException {
+
+        TaskEntity task = em.find(TaskEntity.class, taskId);
+
+        if (task.getTaskStatus().equals(TaskStatus.PENDING)) {
+            task.setTaskStatus(TaskStatus.CANCELLED);
+
+            em.merge(task);
+            em.refresh(task);
+
+            return task;
+        } else {
+            throw new CancelTaskException(" Task is already assigned.");
+        }
     }
 
 }

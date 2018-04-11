@@ -9,6 +9,8 @@ import entity.TaskEntity;
 import java.util.List;
 import javax.ejb.Local;
 import util.enumeration.Category;
+import util.enumeration.TaskStatus;
+import util.exception.CancelTaskException;
 import util.exception.TaskEntityNotFoundException;
 
 /**
@@ -41,5 +43,11 @@ public interface TaskControllerLocal {
     public TaskEntity assignHelperToTask(Long HelperId, Long taskId);
 
     public TaskEntity setTaskAsComplained(Long taskId);
+
+    public List<TaskEntity> retrieveTaskByStatusByRequesterId(Long requesterId, TaskStatus status) throws TaskEntityNotFoundException;
+
+    public List<TaskEntity> retrieveTaskByStatusByHelperId(Long helperId, TaskStatus status) throws TaskEntityNotFoundException;
+
+    public TaskEntity setTaskAsCancelled(Long taskId) throws CancelTaskException;
 
 }

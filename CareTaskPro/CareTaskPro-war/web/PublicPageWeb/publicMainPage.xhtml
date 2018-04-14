@@ -11,10 +11,6 @@
         <h:outputStylesheet library="css" name="default.css"/>
         <h:outputStylesheet library="css" name="cssLayout.css"/>
         
-        <title>
-                HelperHome
-        </title>
-
         
     </h:head>
 
@@ -22,52 +18,30 @@
         <p:layout fullPage="true">
 
             <p:layoutUnit position="north" style="overflow: auto; max-height: 50px;" >
-                <ui:insert name="north">
+                
                     <h:form>
                         
                         <p:toolbar>
                             <f:facet name="left">
-                                <h:outputText style="margin-left: 20px; font-size: 28px; font-family: fantasy" value="HomeCare by you" />
+                                <h:outputText style="margin-left: 20px; font-size: 28px; font-family: fantasy" value="Care Task Pro" />
                             </f:facet>
                             <f:facet name="right">
                                 <p:menubar>
-                                    <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Home" outcome="HelperHomepage" />
-                                    <p:menuitem style="padding-right: 10px; padding-left: 10px" value="View my account" outcome="MyAccount" />
-                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile" outcome="profile"  />
-                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile" outcome="EditProfile" />
+                                    
+                                    <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Requester login" outcome="requesterLogin" />
+                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Helper login" outcome="helperLogin"  />
+                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Administrative staff login" outcome="adminLogin" />
 
-                                    <f:facet name="options">
-                                        <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
-                                    </f:facet>
+                                   
                                 </p:menubar>
                             </f:facet>
                         </p:toolbar>
                         
                     </h:form>
 
-                </ui:insert>
             </p:layoutUnit>
 
-            <p:layoutUnit position="west"  style="">
-                <ui:insert name="west">
-
-                    <h2>Main Menu</h2>
-                    <h:form  style="padding-right:10px"> 
-                        <p:menu style="width: 100%; height:70%">
-                            <p:submenu label="Manage My Task">
-                                <p:menuitem style="padding-bottom: 10px" value="View upcoming tasks"  icon="ui-icon-calendar" />
-                                <p:menuitem  style="padding-bottom: 10px" value="View task history" icon="ui-icon-clock"/>
-                            </p:submenu>
-                            <p:submenu label="Manage My Reviews">
-                                <p:menuitem style="padding-bottom: 10px" value="View all my reviews" icon="ui-icon-comment"/>
-                            </p:submenu>
-                            <p:submenu label="Manage my salary">
-                                <p:menuitem style="padding-bottom: 10px" value="View salary transaction history"  icon="ui-icon-document-b"/>
-                            </p:submenu>
-                        </p:menu>
-                    </h:form>
-
-                </ui:insert>
+            <p:layoutUnit position="west" style="border:none">
             </p:layoutUnit>
 
             <p:layoutUnit position="center" >

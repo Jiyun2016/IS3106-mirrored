@@ -5,12 +5,65 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Helper log in</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+    </h:head>
+    <h:body>
+        <p:layout>
+            <p:layoutUnit position="north">
+                <h:form>
+                    <h1>Care Task Pro</h1>
+                    <h7>Do not have an account?</h7>
+                    <p:button outcome="helperRegister" value="Register as a helper" icon="ui-icon-star"></p:button>
+
+                </h:form>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="center" style="min-height: 500px">
+                <h:form id="contentLoginForm">
+                    <p:panelGrid>
+                        <p:growl autoUpdate="true" />
+
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="phone" value="Phone Number"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="phone" value="#{helperLoginManagedBean.phone}" required="true" requiredMessage="Phone number is required">
+                                    <f:validateLength minimum="6" />
+                                </p:inputText>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="password" value="Password"/>
+                            </p:column>
+                            <p:column>
+                                <p:password id="password" value="#{helperLoginManagedBean.password}" required="true" requiredMessage="Password is required">
+                                    <f:validateLength minimum="4" />
+                                </p:password>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <p:commandButton type="reset" value="Clear" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Login" actionListener="#{helperLoginManagedBean.login(event)}" icon="ui-icon-key" />      
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </h:form>
+
+
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
 </html>

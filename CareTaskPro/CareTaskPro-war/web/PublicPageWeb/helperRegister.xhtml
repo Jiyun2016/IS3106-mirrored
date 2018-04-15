@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Helper Register</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h1>Care Task Pro</h1>
+        <h:form>                
+
+            <p:panel header="Helper Register">
+                
+            <p:messages id="msgs" />
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="firstname" value="First Name: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="firstname" value="#{helperRegisterManagedBean.newHelper.firstName}" required="true" requiredMessage="First Name is required" />
+                        </p:column>
+                    <p:message for="firstname" />
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="lastname" value="Last Name: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="lastname" value="#{helperRegisterManagedBean.newHelper.lastName}" required="true" requiredMessage="Last Name is required" />
+                        </p:column>
+                        <p:message for="lastname" />
+
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="email" value="Email: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="email" value="#{helperRegisterManagedBean.newHelper.email}" required="true" requiredMessage="Email is required" />
+                        </p:column>
+                        <p:message for="email"/>
+
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="phone" value="Phone: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="phone" value="#{helperRegisterManagedBean.newHelper.phone}" required="true" requiredMessage="Phone number is required" />
+                        </p:column>
+                        <p:message for="phone"/>
+
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="address" value="Address: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="address" value="#{helperRegisterManagedBean.newHelper.address}" required="true" requiredMessage="Address is required" />
+                        </p:column>
+                        <p:message for="address"/>
+
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="bankAccountNumber" value="Bank Account No.: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="bankAccountNumber" value="#{helperRegisterManagedBean.newHelper.bankAccountNumber}" required="true" requiredMessage="Bank account number is required" />
+                        </p:column>
+                        <p:message for="bankAccountNumber"/>
+
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel for="gender" value="Gender:" />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneRadio id="gender"  value="#{helperRegisterManagedBean.newHelper.gender}">
+                                <f:selectItem itemLabel="Male" itemValue="MALE" />
+                                <f:selectItem itemLabel="Female" itemValue="FEMALE" />
+
+                            </p:selectOneRadio>
+                        </p:column>
+                        <p:message for="gender"/>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel for="identity" value="Identity:" />
+                        </p:column>
+                        <p:column>
+                            <p:selectOneRadio id="identity" value="#{helperRegisterManagedBean.newHelper.helperRole}">
+                                <f:selectItem itemLabel="Professional Nurse" itemValue="PROFESSIONAL" />
+                                <f:selectItem itemLabel="Volunteer" itemValue="NONPROFESSIONAL" />
+
+                            </p:selectOneRadio>
+                        </p:column>
+                        <p:message for="identity"/>
+                    </p:row>
+
+
+
+                    <p:row >
+                        <p:column colspan="3">
+                            <p:commandButton id="createNewHelper" value="Save" icon="ui-icon-disk"  actionListener="#{helperRegisterManagedBean.saveNewHelper(event)}" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </p:panel>
+
+        </h:form>
+
+    </h:body>
+</html>

@@ -23,9 +23,9 @@ import util.exception.TaskEntityNotFoundException;
  *
  * @author Amber
  */
-@Named(value = "viewAvailabelTasksManagedBean")
+@Named(value = "viewAvailableTasksManagedBean")
 @ViewScoped
-public class viewAvailableTasksManagedBean  implements Serializable {
+public class viewAvailableTasksManagedBean implements Serializable {
 
    
     @EJB

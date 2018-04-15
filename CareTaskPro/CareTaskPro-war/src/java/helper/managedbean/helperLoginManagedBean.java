@@ -22,9 +22,9 @@ import util.exception.WrongCredentialException;
  *
  * @author Amber
  */
-@Named(value = "loginManagedBean")
+@Named(value = "helperLoginManagedBean")
 @RequestScoped
-public class loginManagedBean {
+public class helperLoginManagedBean {
 
     
 
@@ -35,7 +35,7 @@ public class loginManagedBean {
     private String password;
 
     
-    public loginManagedBean() {
+    public helperLoginManagedBean() {
     }
     
     public void login(ActionEvent event) throws IOException

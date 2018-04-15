@@ -6,6 +6,7 @@
 package helper.managedbean;
 
 import ejb.session.stateless.TaskControllerLocal;
+import entity.HelperEntity;
 import entity.TaskEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import util.enumeration.Category;
 import util.exception.TaskEntityNotFoundException;
 
 /**
@@ -33,25 +34,51 @@ public class helperViewAvailableTasksManagedBean implements Serializable {
     
     private TaskEntity task;
     private TaskEntity selectedTaskToView;
-    private TaskEntity selectedTaskToTake;
-    private List<TaskEntity> tasks;
+    private List<TaskEntity> tasksNotAssigned;
     private List<TaskEntity> filteredTasks;
-    
-    public helperViewAvailableTasksManagedBean() {
-        tasks = new ArrayList<>();
+    private List<TaskEntity> tasksChoosenAsPreferredHelper;
+    private HelperEntity helper;
+    private TaskEntity preferredTask;
+
+    public helperViewAvailableTasksManagedBean(TaskEntity task, List<TaskEntity> tasksNotAssigned, List<TaskEntity> filteredTasks, List<TaskEntity> tasksChoosenAsPreferredHelper, HelperEntity helper, TaskEntity preferredTask) {
+        this.task = task;
+        this.tasksNotAssigned = tasksNotAssigned;
+        this.filteredTasks = filteredTasks;
+        this.tasksChoosenAsPreferredHelper = tasksChoosenAsPreferredHelper;
+        this.helper = helper;
+        this.preferredTask = preferredTask;
     }
+
+   
     
     
     @PostConstruct
     public void postConstruct()
     {
         try{
-        tasks = taskControllerLocal.retrieveTaskByCategory(Category.HOUSEWORK);//change category to helper's category
+        tasksNotAssigned = taskControllerLocal.retrieveTaskNotAssigned();
+        helper = (HelperEntity)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity");
+        tasksChoosenAsPreferredHelper = taskControllerLocal.retrieveTaskCompletedByHelperId(helper.getHelperId());
+        }catch(TaskEntityNotFoundException ex){
         
         }
-        catch(TaskEntityNotFoundException ex){
-            //dialog box showing no tasks available
+        
+    }
+    
+    public void helperTakeTask(ActionEvent event)
+    {
+        TaskEntity taskToTake = (TaskEntity)event.getComponent().getAttributes().get("taskToTake");
+        taskControllerLocal.assignHelperToTask(helper.getHelperId(), taskToTake.getTaskId());
+        
+        if(tasksNotAssigned.contains(taskToTake)){
+            tasksNotAssigned.remove(taskToTake);
         }
+        else{
+            tasksChoosenAsPreferredHelper.remove(taskToTake);
+        }
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Task " + taskToTake.getTaskId() + " taken successfully", "Task " + taskToTake.getTaskId() + " taken successfully"));
+        
     }
     
     /**
@@ -82,32 +109,19 @@ public class helperViewAvailableTasksManagedBean implements Serializable {
         this.selectedTaskToView = selectedTaskToView;
     }
 
+   
     /**
-     * @return the selectedTaskToTake
+     * @return the tasksNotAssigned
      */
-    public TaskEntity getSelectedTaskToTake() {
-        return selectedTaskToTake;
+    public List<TaskEntity> getTasksNotAssigned() {
+        return tasksNotAssigned;
     }
 
     /**
-     * @param selectedTaskToTake the selectedTaskToTake to set
+     * @param tasksNotAssigned the tasksNotAssigned to set
      */
-    public void setSelectedTaskToTake(TaskEntity selectedTaskToTake) {
-        this.selectedTaskToTake = selectedTaskToTake;
-    }
-
-    /**
-     * @return the tasks
-     */
-    public List<TaskEntity> getTasks() {
-        return tasks;
-    }
-
-    /**
-     * @param tasks the tasks to set
-     */
-    public void setTasks(List<TaskEntity> tasks) {
-        this.tasks = tasks;
+    public void setTasksNotAssigned(List<TaskEntity> tasksNotAssigned) {
+        this.tasksNotAssigned = tasksNotAssigned;
     }
 
     /**
@@ -122,6 +136,20 @@ public class helperViewAvailableTasksManagedBean implements Serializable {
      */
     public void setFilteredTasks(List<TaskEntity> filteredTasks) {
         this.filteredTasks = filteredTasks;
+    }
+
+    /**
+     * @return the tasksChoosenAsPreferredHelper
+     */
+    public List<TaskEntity> getTasksChoosenAsPreferredHelper() {
+        return tasksChoosenAsPreferredHelper;
+    }
+
+    /**
+     * @param tasksChoosenAsPreferredHelper the tasksChoosenAsPreferredHelper to set
+     */
+    public void setTasksChoosenAsPreferredHelper(List<TaskEntity> tasksChoosenAsPreferredHelper) {
+        this.tasksChoosenAsPreferredHelper = tasksChoosenAsPreferredHelper;
     }
     
 }

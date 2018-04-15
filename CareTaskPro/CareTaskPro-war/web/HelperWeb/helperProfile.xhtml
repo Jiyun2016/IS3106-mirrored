@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/helperTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:define name="center">
+        <h:form id="formViewProfile">
+            <p:panel header="Profile information">
+                <p:panelGrid >
+                    <p:row  style="border: none">
+                        <p:column  style="border: none">
+                            <h:outputLabel value="First Name:" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <h:outputText value="#{helperProfileManagedBean.helperToView.firstName}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row   style="border: none">
+                        <p:column  style="border: none">
+                            <h:outputLabel value="Last Name:" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <h:outputText value="#{helperProfileManagedBean.helperToView.lastName}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row  style="border: none">
+                        <p:column  style="border: none">
+                            <h:outputLabel value="Phone:" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <h:outputText value="#{helperProfileManagedBean.helperToView.phone}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row  style="border: none">
+                        <p:column  style="border: none">
+                            <h:outputLabel value="Gender:" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <h:outputText value="#{helperProfileManagedBean.helperToView.gender}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row  style="border: none">
+                        <p:column  style="border: none">
+                            <h:outputLabel value="Address:" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <h:outputText value="#{helperProfileManagedBean.helperToView.address}" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <p:commandButton update="formUpdateAddress" oncomplete="PF('dialogUpdateAddress').show()" value="Update" icon="ui-icon-pencil" title="Update">
+
+                            </p:commandButton>
+                        </p:column>
+                    </p:row>
+
+                    <p:row  style="border: none">
+                        <p:column  style="border: none">
+                            <h:outputLabel value="Email:" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <h:outputText value="#{helperProfileManagedBean.helperToView.email}" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <p:commandButton update="formUpdateEmail" oncomplete="PF('dialogUpdateEmail').show()" value="Update" icon="ui-icon-pencil" title="Update">
+
+                            </p:commandButton>
+                        </p:column>
+                    </p:row>
+
+                    <p:row  style="border: none">
+                        <p:column  style="border: none">
+                            <h:outputLabel value="Bank Account No.:" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <h:outputText value="#{helperProfileManagedBean.helperToView.bankAccountNumber}" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <p:commandButton update="formUpdateBankAccountNumber" oncomplete="PF('dialogUpdateBankAccountNumber').show()" value="Update" icon="ui-icon-pencil" title="Update">
+
+                            </p:commandButton>
+                        </p:column>
+                    </p:row>
+
+                    <p:row  style="border: none">
+                        <p:column  style="border: none">
+                            <h:outputLabel value="Identity:" />
+                        </p:column>
+                        <p:column  style="border: none">
+                            <h:outputText value="#{helperProfileManagedBean.helperToView.helperRole}" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+            </p:panel>
+        </h:form>
+
+        <h:form id="formUpdateAddress">
+
+            <p:dialog id="dialogUpdateAddress" widgetVar="dialogUpdateAddress" header="Update Address" closable="true">
+
+                <p:messages id="messagesUpdateAddress" redisplay="false" />
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="address" value="Address: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="address" value="#{helperProfileManagedBean.helperToView.address}" required="true" requiredMessage="Address is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="address" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:commandButton id="updateEmail" value="Save" icon="ui-icon-disk" update="@form formViewProfile" actionListener="#{helperProfileManagedBean.saveHelper(event)}" oncomplete="PF('dialogUpdateEmail').show();" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+            </p:dialog>
+
+        </h:form>
+
+
+        <h:form id="formUpdateEmail">
+
+            <p:dialog id="dialogUpdateEmail" widgetVar="dialogUpdateEmail" header="Update Email" closable="true">
+
+                <p:messages id="messagesUpdateEmail" redisplay="false" />
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="email" value="Email: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="email" value="#{helperProfileManagedBean.helperToView.email}" required="true" requiredMessage="Email is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="email" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:commandButton id="updateEmail" value="Save" icon="ui-icon-disk" update="@form formViewProfile" actionListener="#{helperProfileManagedBean.saveHelper(event)}" oncomplete="PF('dialogUpdateEmail').show();" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+            </p:dialog>
+
+
+        </h:form>
+
+        <h:form id="formUpdateBankAccountNumber">
+
+            <p:dialog id="dialogUpdateBankAccountNumber" widgetVar="dialogUpdateBankAccountNumber" header="Update Bank Account Number" closable="true">
+
+                <p:messages id="messagesUpdateBankAccountNumber" redisplay="false" />
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="bankAccountNumber" value="Bank Account Number: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="bankAccountNumber" value="#{helperProfileManagedBean.helperToView.bankAccountNumber}" required="true" requiredMessage="Bank Account Number is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="bankAccountNumber" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:commandButton id="updateEmail" value="Save" icon="ui-icon-disk" update="@form formViewProfile" actionListener="#{helperProfileManagedBean.saveHelper(event)}" oncomplete="PF('dialogUpdateBankAccountNumber').show();" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+            </p:dialog>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

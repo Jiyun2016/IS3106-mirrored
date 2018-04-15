@@ -10,7 +10,9 @@ import entity.HelperEntity;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -18,18 +20,19 @@ import javax.faces.view.ViewScoped;
  *
  * @author Amber
  */
-@Named(value = "profileManagedBean")
+@Named(value = "helperProfileManagedBean")
 @ViewScoped
-public class profileManagedBean implements Serializable{
+public class helperProfileManagedBean implements Serializable{
 
     @EJB
     private HelperControllerLocal helperController;
     
     private HelperEntity helperToView;
     
+    
 
     
-    public profileManagedBean() {
+    public helperProfileManagedBean() {
     }
     
     @PostConstruct
@@ -38,6 +41,12 @@ public class profileManagedBean implements Serializable{
         helperToView = (HelperEntity)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity");
     }
 
+    public void saveHelper(ActionEvent event)
+    {
+       helperController.updateHelper(helperToView);
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Book " + helperToView.getHelperId() + " updated successfully", null));
+    }
     /**
      * @return the helperToView
      */

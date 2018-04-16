@@ -8,19 +8,18 @@
                 xmlns:ps="http://xmlns.jcp.org/jsf/passthrough">
 
     <ui:define name="content">
-        <h3>Edit My Profile</h3>
-        <br/>
-        <h:form id="formEditProfile">
-            <p:panelGrid rendered="#{requesterProfileManagedBean.requesterEntity ne null}">
+        <h3>Register</h3>
+        <h:form id="formCreateNewRequester">
 
-                <p:messages id="messagesUpdateProfile" redisplay="false" />
-                
+
+            <p:panelGrid>
+
                 <p:row>
                     <p:column>
                         <p:outputLabel for="firstName" value="First Name: " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="firstName" value="#{requesterProfileManagedBean.requesterEntity.firstName}" required="true" requiredMessage="First Name is required" />
+                        <p:inputText id="firstName" value="#{requesterRegisterManagedBean.requesterEntity.firstName}" required="true" requiredMessage="First Name is required" />
                     </p:column>
                     <p:column>
                         <p:message for="firstName" />
@@ -32,7 +31,7 @@
                         <p:outputLabel for="lastName" value="Last Name: " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="lastName" value="#{requesterProfileManagedBean.requesterEntity.lastName}" required="true" requiredMessage="Last Name is required" />
+                        <p:inputText id="lastName" value="#{requesterRegisterManagedBean.requesterEntity.lastName}" required="true" requiredMessage="Last Name is required" />
                     </p:column>
                     <p:column>
                         <p:message for="lastName" />
@@ -44,12 +43,15 @@
                         <p:outputLabel for="gender" value="Gender: " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="gender" value="#{requesterProfileManagedBean.requesterEntity.gender}" required="true" requiredMessage="Gender is required" />
-                    </p:column>
+                        <h:selectOneMenu id="gender" value="#{requesterRegisterManagedBean.requesterEntity.gender}" required="true" requiredMessage="Gender is required">
+                            <f:selectItems value="#{requesterRegisterManagedBean.genders}" />
+                            <p:ajax listener="#{requesterRegisterManagedBean.onChange}" update="@form formCreateNewRequester" />
+                        </h:selectOneMenu>  </p:column>
                     <p:column>
                         <p:message for="gender" />
                     </p:column>
                 </p:row>
+
 
 
                 <p:row>
@@ -57,7 +59,7 @@
                         <p:outputLabel for="email" value="Email " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="email" value="#{requesterProfileManagedBean.requesterEntity.email}" required="true" requiredMessage="Email is required"  />
+                        <p:inputText id="email" value="#{requesterRegisterManagedBean.requesterEntity.email}" required="true" requiredMessage="Email is required" validator="emailValidator" />
 
                     </p:column>
                     <p:column>
@@ -70,9 +72,9 @@
                         <p:outputLabel for="phone" value="Phone " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="phone" value="#{requesterProfileManagedBean.requesterEntity.phone}" required="true" requiredMessage="Phone is required" ps:type="number">
-                            <!--                            <f:validateLength minimum="8" maximum="8"/>
-                                                        <f:convertNumber integerOnly="true"/>-->
+                        <p:inputText id="phone" value="#{requesterRegisterManagedBean.requesterEntity.phone}" required="true" requiredMessage="Phone is required" ps:type="number" >
+                            <f:validateLength minimum="8" maximum="8"/>
+
                         </p:inputText>
                     </p:column>
                     <p:column>
@@ -85,7 +87,7 @@
                         <p:outputLabel for="password" value="Password " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="password" value="#{requesterProfileManagedBean.requesterEntity.password}" required="true" requiredMessage="Password is required"  >
+                        <p:inputText id="password" value="#{requesterRegisterManagedBean.requesterEntity.password}" required="true" requiredMessage="Password is required"  >
                             <f:validateLength minimum="4" />
                         </p:inputText>
                     </p:column>
@@ -99,7 +101,7 @@
                         <p:outputLabel for="address" value="Address " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="address" value="#{requesterProfileManagedBean.requesterEntity.address}" required="true" requiredMessage="Address is required"  />
+                        <p:inputText id="address" value="#{requesterRegisterManagedBean.requesterEntity.address}" required="true" requiredMessage="Address is required"  />
                     </p:column>
                     <p:column>
                         <p:message for="address" />
@@ -112,7 +114,7 @@
                         <p:outputLabel for="creditCardNum" value="Credit Card Number " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="creditCardNum" value="#{requesterProfileManagedBean.requesterEntity.creditCardNum}" required="true" requiredMessage="Credit Card Number is required" ps:type="number">
+                        <p:inputText id="creditCardNum" value="#{requesterRegisterManagedBean.requesterEntity.creditCardNum}" required="true" requiredMessage="Credit Card Number is required">
                             <f:validateLength minimum="16" maximum="16"/>
                             <f:convertNumber integerOnly="true"/>
                         </p:inputText>
@@ -127,7 +129,7 @@
                         <p:outputLabel for="creditCardName" value="Credit Card Name " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="creditCardName" value="#{requesterProfileManagedBean.requesterEntity.creditCardName}" required="true" requiredMessage="Credit Card Name is required">
+                        <p:inputText id="creditCardName" value="#{requesterRegisterManagedBean.requesterEntity.creditCardName}" required="true" requiredMessage="Credit Card Name is required">
                             <f:validateLength minimum="4"/>
                         </p:inputText>
                     </p:column>
@@ -141,7 +143,7 @@
                         <p:outputLabel for="creditCardExpiryMonth" value="Credit Card Month " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="creditCardExpiryMonth" value="#{requesterProfileManagedBean.requesterEntity.creditCardExpiryMonth}" required="true" requiredMessage="Credit Card Month is required" ps:type="number" ps:min="1" ps:max="12" >
+                        <p:inputText id="creditCardExpiryMonth" value="#{requesterRegisterManagedBean.requesterEntity.creditCardExpiryMonth}" required="true" requiredMessage="Credit Card Month is required" ps:type="number" ps:min="1" ps:max="12" >
                             <f:convertNumber integerOnly="true"/>
                         </p:inputText>
                     </p:column>
@@ -155,7 +157,7 @@
                         <p:outputLabel for="creditCardExpiryYear" value="Credit Card Year " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="creditCardExpiryYear" value="#{requesterProfileManagedBean.requesterEntity.creditCardExpiryYear}" required="true" requiredMessage="Credit Card Year is required" ps:type="number" ps:min="2018" >
+                        <p:inputText id="creditCardExpiryYear" value="#{requesterRegisterManagedBean.requesterEntity.creditCardExpiryYear}" required="true" requiredMessage="Credit Card Year is required" ps:type="number" ps:min="2018" >
                             <f:convertNumber integerOnly="true"/>
                         </p:inputText>
                     </p:column>
@@ -169,7 +171,7 @@
                         <p:outputLabel for="creditCardCVC" value="Credit Card CVC " />
                     </p:column>
                     <p:column>
-                        <p:inputText id="creditCardCVC" value="#{requesterProfileManagedBean.requesterEntity.creditCardCVC}" required="true" requiredMessage="Credit Card CVC is required">
+                        <p:inputText id="creditCardCVC" value="#{requesterRegisterManagedBean.requesterEntity.creditCardCVC}" required="true" requiredMessage="Credit Card CVC is required">
                             <f:validateLength minimum="3" maximum="3"/>
                             <f:convertNumber integerOnly="true"/>
                         </p:inputText>
@@ -182,15 +184,16 @@
                 <p:row>
                     <p:column colspan="3">
                         <p:commandButton type="reset" value="Clear" />&nbsp;
-                        <p:commandButton value="Update"  update="@form formEditProfile" actionListener="#{requesterProfileManagedBean.updateProfile}"  />
+                        <p:commandButton value="Register"  update="@form formCreateNewRequester" actionListener="#{requesterProfileManagedBean.createNewRequester}"  />
+
                     </p:column>
                 </p:row>
 
             </p:panelGrid>
 
+
+
         </h:form>
-
-
 
     </ui:define>
 

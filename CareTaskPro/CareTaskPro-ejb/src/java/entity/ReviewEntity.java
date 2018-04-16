@@ -33,6 +33,8 @@ public class ReviewEntity implements Serializable {
     private TaskEntity taskEntity;
 
     public ReviewEntity() {
+        this.reviewRemarks = "";
+        this.ratings = new Integer(0);
     }
 
     public ReviewEntity(String reviewRemarks, Integer ratings) {

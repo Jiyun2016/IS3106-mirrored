@@ -32,5 +32,7 @@ public interface AdminControllerLocal {
     public void deleteEmployee(String username) throws AdminEntityNotFoundException;
 
     public void changePassword(AdminEntity adminEntity, String currentPassword, String newPassword) throws AdminEntityNotFoundException, AdminPasswordChangeException;
+
+    public AdminEntity retrieveAdminById(Long id) throws AdminEntityNotFoundException;
     
 }

@@ -5,6 +5,7 @@
  */
 package ejb.session.stateless;
 
+import entity.ReviewEntity;
 import entity.TaskEntity;
 import java.util.List;
 import javax.ejb.Local;
@@ -49,5 +50,11 @@ public interface TaskControllerLocal {
     public List<TaskEntity> retrieveTaskByStatusByHelperId(Long helperId, TaskStatus status) throws TaskEntityNotFoundException;
 
     public TaskEntity setTaskAsCancelled(Long taskId) throws CancelTaskException;
+
+    public TaskEntity addReviewToTask(Long taskId, ReviewEntity reviewEntity);
+
+    public List<TaskEntity> retrieveAllTask();
+
+    public TaskEntity updateTaskEntityByRequester(TaskEntity ta,Long taId);
 
 }

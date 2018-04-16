@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/requesterTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h3>View All Helpers</h3>
+        <br/>
+
+
+        <h:form id="formAllHelpers">
+
+            <p:messages id="messages" redisplay="false" closable="true" />
+
+            <p:dataTable id="dataTableAllHelpers" widgetVar="dataTableAllHelpers" value="#{requesterHelperManagedBean.helperEntities}" var="helperEntity" rowKey="#{helperEntity.helperId}" rowIndexVar="row"
+                         filteredValue="#{requesterHelperManagedBean.filteredHelperEntities}"
+                         rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
+
+                <f:facet name="header">
+                    <p:outputPanel style="text-align: right;">
+                        <h:outputText value="Search all fields:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllHelpers').filter()" style="width:300px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="Helper ID: " sortBy="#{helperEntity.helperId}" filterBy="#{helperEntity.helperId}" filterMatchMode="contains" >
+                    <h:outputText value="#{helperEntity.helperId}" />
+                </p:column>
+
+                <p:column headerText="First Name: " sortBy="#{helperEntity.firstName}" filterBy="#{helperEntity.firstName}" filterMatchMode="contains" >
+                    <h:outputText value="#{helperEntity.firstName}" />
+                </p:column>
+
+
+                <p:column headerText="Last Name: " sortBy="#{helperEntity.lastName}" filterBy="#{helperEntity.lastName}" filterMatchMode="contains" >
+                    <h:outputText value="#{helperEntity.lastName}" />
+                </p:column>
+
+                <p:column headerText="Role: " sortBy="#{helperEntity.helperRole}" filterBy="#{helperEntity.helperRole}" filterMatchMode="contains" >
+                    <h:outputText value="#{helperEntity.helperRole}" />
+                </p:column>
+
+                <p:column headerText="Email: " sortBy="#{helperEntity.email}" filterBy="#{helperEntity.email}" filterMatchMode="contains" >
+                    <h:outputText value="#{helperEntity.email}" />
+                </p:column>
+
+                <p:column headerText="Phone: " sortBy="#{helperEntity.phone}" filterBy="#{helperEntity.phone}" filterMatchMode="contains" >
+                    <h:outputText value="#{helperEntity.phone}" />
+                </p:column>
+
+
+            </p:dataTable>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

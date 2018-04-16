@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/adminTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h3>View All Requesters</h3>
+        <br/>
+
+
+        <h:form id="formAllRequesters">
+
+            <p:messages id="messages" redisplay="false" closable="true" />
+
+            <p:dataTable id="dataTableAllRequesters" widgetVar="dataTableAllRequesters" value="#{adminRequesterManagementManagedBean.requesterEntities}" var="requesterEntity" rowKey="#{requesterEntity.requesterId}" rowIndexVar="row"
+                         filteredValue="#{adminRequesterManagementManagedBean.filteredRequesterEntities}"
+                         rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
+
+                <f:facet name="header">
+                    <p:outputPanel style="text-align: right;">
+                        <h:outputText value="Search all fields:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllRequesters').filter()" style="width:300px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="Requester ID: " sortBy="#{requesterEntity.requesterId}" filterBy="#{requesterEntity.requesterId}" filterMatchMode="contains" >
+                    <h:outputText value="#{requesterEntity.requesterId}" />
+                </p:column>
+
+                <p:column headerText="First Name: " sortBy="#{requesterEntity.firstName}" filterBy="#{requesterEntity.firstName}" filterMatchMode="contains" >
+                    <h:outputText value="#{requesterEntity.firstName}" />
+                </p:column>
+
+
+                <p:column headerText="Last Name: " sortBy="#{requesterEntity.lastName}" filterBy="#{requesterEntity.lastName}" filterMatchMode="contains" >
+                    <h:outputText value="#{requesterEntity.lastName}" />
+                </p:column>
+
+                <p:column headerText="Gender: " sortBy="#{requesterEntity.gender}" filterBy="#{requesterEntity.gender}" filterMatchMode="contains" >
+                    <h:outputText value="#{requesterEntity.gender}" />
+                </p:column>
+
+                <p:column headerText="Email: " sortBy="#{requesterEntity.email}" filterBy="#{requesterEntity.email}" filterMatchMode="contains" >
+                    <h:outputText value="#{requesterEntity.email}" />
+                </p:column>
+
+                <p:column headerText="Phone: " sortBy="#{requesterEntity.phone}" filterBy="#{requesterEntity.phone}" filterMatchMode="contains" >
+                    <h:outputText value="#{requesterEntity.phone}" />
+                </p:column>
+
+
+            </p:dataTable>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

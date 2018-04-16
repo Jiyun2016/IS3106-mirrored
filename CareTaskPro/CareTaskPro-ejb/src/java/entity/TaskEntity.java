@@ -32,7 +32,9 @@ public class TaskEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
     @Column(length = 32, nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
+    
     @Column(length = 32, nullable = false)
     private String description;
     @Temporal(TemporalType.TIMESTAMP)
@@ -45,23 +47,36 @@ public class TaskEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
     
-    @OneToOne(mappedBy = "taskEntity",optional = false)
+    @OneToOne(mappedBy = "taskEntity",optional = true)
+    @JoinColumn(nullable = true)
     private PaymentEntity paymentEntity;
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private RequesterEntity requesterEntity;
     @ManyToMany
     private List<HelperEntity> preferredHelpers;
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(optional = true)
+    @JoinColumn(nullable = true)
     private HelperEntity helperEntity; 
-    @OneToOne(mappedBy = "taskEntity",optional = false)
+    @OneToOne(mappedBy = "taskEntity",optional = true)
+    @JoinColumn(nullable = true)
     private ReviewEntity reviewEntity;
 
     public TaskEntity() {
-        this.preferredHelpers = new ArrayList<>();
-        this.paymentEntity = new PaymentEntity();
-        this.reviewEntity = new ReviewEntity();
+        this.taskStatus = taskStatus.PENDING;
+//        this.paymentEntity = new PaymentEntity();
+//        this.reviewEntity = new ReviewEntity();
+//        this.helperEntity = new HelperEntity();
+    }
+    
+     public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, RequesterEntity requesterEntity, List<HelperEntity> preferredHelpers) {
+        this.taskStatus = taskStatus.PENDING;
+        this.category = category;
+        this.description = description;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.requesterEntity = requesterEntity;
+        this.preferredHelpers = preferredHelpers;
     }
 
     public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, TaskStatus taskStatus,  RequesterEntity requesterEntity) {
@@ -73,15 +88,7 @@ public class TaskEntity implements Serializable {
         this.requesterEntity = requesterEntity;
     }
     
-    public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, TaskStatus taskStatus,  RequesterEntity requesterEntity,  HelperEntity helperEntity) {
-        this.category = category;
-        this.description = description;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-        this.taskStatus = taskStatus;
-        this.requesterEntity = requesterEntity;
-        this.helperEntity = helperEntity;
-    }
+   
 
     
 

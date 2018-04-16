@@ -66,7 +66,7 @@ public class RequesterCreateTaskManagedBean implements Serializable{
         setRequesterId(getRequesterEntity().getRequesterId());
         setTaskEntity(new TaskEntity());
         taskEntity.setRequesterEntity(requesterEntity);
-        categories = new String[]{CategoryString.COMPANIONSHIP,CategoryString.COMPANIONSHIP,CategoryString.HOUSEWORK};
+        categories = new String[]{CategoryString.COMPANIONSHIP,CategoryString.HEALTHCARE,CategoryString.HOUSEWORK};
 
         List<HelperEntity> helperEntities = helperControllerLocal.retrieveAllHelpers();
         for (HelperEntity helperEntity : helperEntities) {

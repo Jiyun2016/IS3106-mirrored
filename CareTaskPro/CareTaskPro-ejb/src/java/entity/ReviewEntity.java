@@ -32,14 +32,20 @@ public class ReviewEntity implements Serializable {
     @OneToOne(optional = false)
     private TaskEntity taskEntity;
 
-    public ReviewEntity() {
+    public ReviewEntity(){
+        
+    }
+    
+    public ReviewEntity(TaskEntity task) {
+        this.taskEntity = task;
         this.reviewRemarks = "";
         this.ratings = new Integer(0);
     }
 
-    public ReviewEntity(String reviewRemarks, Integer ratings) {
+    public ReviewEntity(String reviewRemarks, Integer ratings, TaskEntity task) {
         this.reviewRemarks = reviewRemarks;
         this.ratings = ratings;
+        this.taskEntity = task;
     }
     
     public Long getReviewId() {

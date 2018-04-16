@@ -40,10 +40,10 @@
                 </p:column>
 
                 <p:column headerText="Action" >
-                    <p:commandButton update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
+                    <p:commandButton value="Details" update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
                         <f:setPropertyActionListener value="#{taskEntity}" target="#{requesterTaskManagementManagedBean.taskEntityToView}" />
                     </p:commandButton>
-                    <p:commandButton  title="Complain" actionListener="#{requesterTaskManagementManagedBean.complainTask}" update="formAllAssignedTasks:dataTableAllAssignedTasks formAllAssignedTasks:messages">
+                    <p:commandButton  value="Complain" actionListener="#{requesterTaskManagementManagedBean.complainTask}" update="formAllAssignedTasks:dataTableAllAssignedTasks formAllAssignedTasks:messages" icon="ui-icon-pencil">
                         <f:attribute name="taskIdToComplain" value="#{taskEntity.taskId}" />
                         <p:confirm header="Confirmation" message="Are you sure you want to complain #{taskEntity.taskId} ?" icon="ui-icon-alert" />
                     </p:commandButton>
@@ -111,10 +111,10 @@
                     
                     <p:row>
                         <p:column>
-                            <h:outputLabel value="Helper: " />
+                            <h:outputLabel value="Helper Name: " />
                         </p:column>
                         <p:column>
-                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.helperEntity}" />
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.helperEntity.firstName}" />
                         </p:column>
                     </p:row>
 

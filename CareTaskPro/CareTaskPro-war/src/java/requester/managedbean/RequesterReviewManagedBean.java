@@ -39,16 +39,19 @@ public class RequesterReviewManagedBean implements Serializable{
     private Long taskIdToAddReview;
 
     public RequesterReviewManagedBean() {
-        reviewEntity = new ReviewEntity();
+        
     }
 
     @PostConstruct
     public void postConstruct() {
+        
+        
         setTaskIdToAddReview((Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("taskIdToView"));
+       // System.err.println("......postConstruct: taskIdToReview: "+ taskIdToAddReview);
 
         try {
             setTaskEntityToAddReview(taskControllerLocal.retrieveTaskById(getTaskIdToAddReview()));
-            
+            reviewEntity = new ReviewEntity(taskEntityToAddReview);
             
         } catch (TaskEntityNotFoundException ex) {
             setTaskEntityToAddReview(new TaskEntity());
@@ -60,6 +63,7 @@ public class RequesterReviewManagedBean implements Serializable{
     }
 
     public void createReview() {
+        System.err.println(".....createReview triggered");
         reviewEntity = reviewControllerLocal.createNewReview(getReviewEntity());
         taskEntityToAddReview = taskControllerLocal.addReviewToTask(taskIdToAddReview, reviewEntity);
         reviewEntity = taskEntityToAddReview.getReviewEntity();

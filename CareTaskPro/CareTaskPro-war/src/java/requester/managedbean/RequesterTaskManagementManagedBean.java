@@ -88,7 +88,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
         setRequesterEntity((RequesterEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRequesterEntity"));
         setRequesterId(getRequesterEntity().getRequesterId());
         setFilteredTaskEntities(taskEntities);
-        categories = new String[]{CategoryString.COMPANIONSHIP,CategoryString.COMPANIONSHIP,CategoryString.HOUSEWORK};
+        categories = new String[]{CategoryString.COMPANIONSHIP,CategoryString.HEALTHCARE,CategoryString.HOUSEWORK};
 
 
         viewPendingTask();
@@ -163,7 +163,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
     public void updateTask(ActionEvent event) throws IOException {
         try {
             System.err.println(".....task to update:" + taskEntityToUpdate.getTaskId());
-            setTaskIdToUpdate((Long) event.getComponent().getAttributes().get("taskIdToUpdate"));
+            taskIdToUpdate = taskEntityToUpdate.getTaskId();
             taskControllerLocal.updateTaskEntityByRequester(getTaskEntityToUpdate(), taskIdToUpdate);
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Task updated successfully", null));
@@ -203,7 +203,8 @@ public class RequesterTaskManagementManagedBean implements Serializable{
 
     public void addReviewToTask(ActionEvent event) throws IOException {
         setTaskIdToReview((Long) event.getComponent().getAttributes().get("taskIdToReview"));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("taskIdToAddReview", getTaskIdToReview());
+        System.err.println(".....taskIdToReview: "+taskIdToReview);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("taskIdToView", getTaskIdToReview());
         FacesContext.getCurrentInstance().getExternalContext().redirect("createReview.xhtml");
 
     }

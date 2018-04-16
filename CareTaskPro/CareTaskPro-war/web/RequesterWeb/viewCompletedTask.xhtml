@@ -42,11 +42,12 @@
                 </p:column>
 
                 <p:column headerText="Action" >
-                    <p:commandButton update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
+                    <p:commandButton value="Details" update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
                         <f:setPropertyActionListener value="#{taskEntity}" target="#{requesterTaskManagementManagedBean.taskEntityToView}" />
                     </p:commandButton>
-                    <p:commandButton title="Review" actionListener="#{requesterTaskManagementManagedBean.addReviewToTask}" update="formAllCompletedTasks:dataTableAllCompletedTasks formAllCompletedTasks:messages">
+                    <p:commandButton value="Review" actionListener="#{requesterTaskManagementManagedBean.addReviewToTask}" icon="ui-icon-pencil" update="formAllCompletedTasks:dataTableAllCompletedTasks formAllCompletedTasks:messages">
                         <f:attribute name="taskIdToReview" value="#{taskEntity.taskId}" /> 
+                        
                     </p:commandButton>
                     
                     

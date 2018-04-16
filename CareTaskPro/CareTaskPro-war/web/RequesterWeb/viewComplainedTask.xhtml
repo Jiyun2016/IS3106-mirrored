@@ -42,7 +42,7 @@
                 </p:column>
 
                 <p:column headerText="Action" >
-                    <p:commandButton update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
+                    <p:commandButton value="Details" update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
                         <f:setPropertyActionListener value="#{taskEntity}" target="#{requesterTaskManagementManagedBean.taskEntityToView}" />
                     </p:commandButton>
                 </p:column>

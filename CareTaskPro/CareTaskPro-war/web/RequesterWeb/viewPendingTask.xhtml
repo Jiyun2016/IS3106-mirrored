@@ -39,15 +39,15 @@
                     <h:outputText value="#{taskEntity.startDateTime}" />
                 </p:column>
 
-                <p:column headerText="Action" >
-                    <p:commandButton update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
+                <p:column headerText="Action" colspan="2" >
+                    <p:commandButton value="Details" update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
                         <f:setPropertyActionListener value="#{taskEntity}" target="#{requesterTaskManagementManagedBean.taskEntityToView}" />
                     </p:commandButton>
-                    <p:commandButton update="formUpdateTask" oncomplete="PF('dialogUpdateTask').show()" icon="ui-icon-pencil" title="Update">
+                    <p:commandButton value="Update" update="formUpdateTask" oncomplete="PF('dialogUpdateTask').show()" icon="ui-icon-pencil" title="Update">
 
                         <f:setPropertyActionListener value="#{taskEntity}" target="#{requesterTaskManagementManagedBean.taskEntityToUpdate}" />
                     </p:commandButton>
-                    <p:commandButton icon="ui-icon-trash" actionListener="#{requesterTaskManagementManagedBean.cancelTask}" update="@form formAllPendingTasks:dataTableAllPendingTasks formAllPendingTasks:messages">
+                    <p:commandButton value="Cancel" icon="ui-icon-trash" actionListener="#{requesterTaskManagementManagedBean.cancelTask}" update="@form formAllPendingTasks:dataTableAllPendingTasks formAllPendingTasks:messages">
                         <f:attribute name="taskIdToCancel" value="#{taskEntity.taskId}" />
                         <p:confirm header="Confirmation" message="Are you sure you want to cancel #{taskEntity.taskId} ?" icon="ui-icon-alert" />
                     </p:commandButton>
@@ -229,11 +229,7 @@
                 <p:panelGrid>
                     <p:row>
                         <p:column colspan="3">
-                            <p:commandButton value="Update Task" update="@form formAllPendingTasks:dataTableAllPendingTasks" actionListener="#{requesterTaskManagementManagedBean.updateTask}" oncomplete="PF('dialogUpdateTask').show();" >
-                                <f:attribute name="taskIdToUpdate" value="#{taskEntityToUpdate.taskId}" />
-                            </p:commandButton>
-
-
+                            <p:commandButton value="Update Task" update="@form formAllPendingTasks:dataTableAllPendingTasks" actionListener="#{requesterTaskManagementManagedBean.updateTask}" oncomplete="PF('dialogUpdateTask').show();" />
                         </p:column>
                     </p:row>
                 </p:panelGrid>

@@ -26,8 +26,9 @@
                 <h:form>
                     <p:menubar >
                         <p:menuitem style="padding-right: 10px; padding-left: 10px"  value="AdminHome" outcome="adminHome" />
-                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile"   />
-                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  />
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile"  rendered="#{sessionScope['isLogin']}" />
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  rendered="#{sessionScope['isLogin']}"/>
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Create new admin"  rendered="#{sessionScope['isLogin']}"/>
                         <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Logout" actionListener="#{adminHomeManagedBean.logout}" icon="ui-icon-unlocked" rendered="#{sessionScope['isLogin']}"/>
 
                     </p:menubar>
@@ -43,7 +44,7 @@
                     <p:menu style="width: 100%; height:70%">
 
 
-                        <p:submenu label="Management" >
+                        <p:submenu label="Management" rendered="#{sessionScope['isLogin']}">
                             <p:menuitem style="padding-bottom: 10px" value="View All Admins"  icon="ui-icon-calendar" />
 
 

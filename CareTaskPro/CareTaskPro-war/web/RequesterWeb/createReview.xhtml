@@ -10,54 +10,56 @@
         <h3>Create Review</h3>
         <h:form id="formCreateReview">
 
-         
-                <p:panelGrid>
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Task ID: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{requesterReviewManagedBean.taskIdToAddReview}" />
-                        </p:column>
-                    </p:row>
+            <p:panelGrid rendered="#{requesterReviewManagedBean.taskEntityToAddReview ne null}">
 
-                    <p:row>
-                        <p:column>
-                            <p:outputLabel for="reviewRemarks" value="Review Remarks: " />
-                        </p:column>
-                        <p:column>
-                            <p:inputText id="reviewRemarks" value="#{requesterReviewManagedBean.reviewEntity.reviewRemarks}" required="true" requiredMessage="Category is required" />
-                        </p:column>
-                        <p:column>
-                            <p:message for="reviewRemarks" />
-                        </p:column>
-                    </p:row>
+                <p:messages id="messagesUpdateProfile" redisplay="false" />
 
-                    <p:row>
-                        <p:column>
-                            <p:outputLabel for="ratings" value="Ratings: " />
-                        </p:column>
-                        <p:column>
-                            <p:rating id="ratings" value="#{requesterReviewManagedBean.reviewEntity.ratings}" stars="5" required="true" requiredMessage="Rating is required">
-                                <f:validateLongRange minimum="1" maximum="5" />
-                            </p:rating>
-                        </p:column>
-                        <p:column>
-                            <p:message for="ratings" />
-                        </p:column>
-                    </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputLabel value="Task ID: " />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{requesterReviewManagedBean.taskEntityToAddReview.taskId}" />
+                    </p:column>
+                </p:row>
 
-                    <p:row>
-                        <p:column colspan="3">
-                            <p:commandButton type="reset" value="Clear" />&nbsp;
-                            <p:commandButton value="Create New Review" actionListener="#{requesterReviewManagedBean.createReview}"  />
-                        </p:column>
-                    </p:row>
+                <p:row>
+                    <p:column>
+                        <p:outputLabel for="reviewRemarks" value="Review Remarks: " />
+                    </p:column>
+                    <p:column>
+                        <p:inputTextarea id="reviewRemarks" value="#{requesterReviewManagedBean.reviewEntity.reviewRemarks}" rows="6" cols="33" required="true" requiredMessage="Remarks is required" />
+                    </p:column>
+                    <p:column>
+                        <p:message for="reviewRemarks" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel for="ratings" value="Ratings: " />
+                    </p:column>
+                    <p:column>
+                        <p:rating id="ratings" value="#{requesterReviewManagedBean.reviewEntity.ratings}" stars="5" required="true" requiredMessage="Rating is required">
+                            <f:validateLongRange minimum="1" maximum="5" />
+                        </p:rating>
+                    </p:column>
+                    <p:column>
+                        <p:message for="ratings" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column colspan="3">
+                        <p:commandButton type="reset" value="Clear" />&nbsp;
+                        <p:commandButton value="Create New Review" update="@form formCreateReview" actionListener="#{requesterReviewManagedBean.createReview}"  />
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
 
 
-
-        
 
         </h:form>
     </ui:define>

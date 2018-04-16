@@ -25,6 +25,7 @@ import util.exception.CancelTaskException;
 import util.exception.NoEnoughBufferForHelperException;
 import util.exception.TaskEntityNotFoundException;
 import util.exception.TaskTimeClashException;
+import util.stringConstant.PaymentStatusString;
 import util.stringConstant.TaskStatusString;
 
 /**
@@ -247,8 +248,9 @@ public class TaskController implements TaskControllerLocal {
 
     @Override
     public TaskEntity updateTaskEntityByRequester(TaskEntity ta, Long taId) {
-
+        System.err.println("1^^^^^taskentity is "+ta.getTaskId()+" and taId is "+ taId.toString());
         TaskEntity t = em.find(TaskEntity.class, taId);
+        System.err.println("2^^^^^taskentity is "+ta.getTaskId()+" and taId is "+ taId.toString()+ " and t is "+t.getTaskId());
         t.setCategory(ta.getCategory());
         t.setDescription(ta.getDescription());
         t.setEndDateTime(ta.getEndDateTime());
@@ -271,6 +273,7 @@ public class TaskController implements TaskControllerLocal {
 
         TaskEntity task = em.find(TaskEntity.class, taskId);
         task.setTaskStatus(TaskStatusString.COMPLAINED);
+        task.getPaymentEntity().setPaymentStatus(PaymentStatusString.SUSPENDED);
 
         em.merge(task);
         task = em.find(TaskEntity.class, taskId);
@@ -285,10 +288,8 @@ public class TaskController implements TaskControllerLocal {
 
         if (task.getTaskStatus().equals(TaskStatusString.PENDING)) {
             task.setTaskStatus(TaskStatusString.CANCELLED);
-            System.err.println("1 ^^^^^^^^taskcontroller: task status is " + task.getTaskStatus());
             em.merge(task);
             task = em.find(TaskEntity.class, taskId);
-            System.err.println("2 ^^^^^^^^taskcontroller: task status is " + task.getTaskStatus());
             return task;
         } else {
             throw new CancelTaskException(" Task is already assigned.");
@@ -299,6 +300,7 @@ public class TaskController implements TaskControllerLocal {
     public TaskEntity addReviewToTask(Long taskId, ReviewEntity reviewEntity) {
         TaskEntity task = em.find(TaskEntity.class, taskId);
 
+        System.err.println("1^^^^^^^^^taskId to add review: " + taskId);
         task.setReviewEntity(reviewEntity);
         reviewEntity.setTaskEntity(task);
 

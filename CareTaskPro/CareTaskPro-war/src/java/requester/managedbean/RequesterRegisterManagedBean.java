@@ -23,8 +23,8 @@ import util.stringConstant.GenderString;
  * @author panjiyun
  */
 @Named(value = "requesterRegisterManagedBean")
-@ViewScoped
-public class RequesterRegisterManagedBean implements Serializable{
+@RequestScoped
+public class RequesterRegisterManagedBean {
 
     @EJB(name = "RequesterControllerLocal")
     private RequesterControllerLocal requesterControllerLocal;

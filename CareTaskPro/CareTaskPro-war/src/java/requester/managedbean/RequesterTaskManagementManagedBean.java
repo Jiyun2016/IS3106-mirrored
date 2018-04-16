@@ -28,6 +28,7 @@ import util.enumeration.Category;
 import util.enumeration.TaskStatus;
 import util.exception.CancelTaskException;
 import util.exception.TaskEntityNotFoundException;
+import util.stringConstant.CategoryString;
 import util.stringConstant.TaskStatusString;
 
 /**
@@ -47,7 +48,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
     @EJB(name = "TaskControllerLocal")
     private TaskControllerLocal taskControllerLocal;
 
-    private Category[] categories;
+    private String[] categories;
 
     private RequesterEntity requesterEntity;
     private Long requesterId;
@@ -87,7 +88,8 @@ public class RequesterTaskManagementManagedBean implements Serializable{
         setRequesterEntity((RequesterEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRequesterEntity"));
         setRequesterId(getRequesterEntity().getRequesterId());
         setFilteredTaskEntities(taskEntities);
-        setCategories(Category.values());
+        categories = new String[]{CategoryString.COMPANIONSHIP,CategoryString.COMPANIONSHIP,CategoryString.HOUSEWORK};
+
 
         viewPendingTask();
         viewAssignedTask();
@@ -111,7 +113,6 @@ public class RequesterTaskManagementManagedBean implements Serializable{
 
     public void viewPendingTask() {
         try {
-//            System.err.println(".....view pending task trigerred");
             setTaskEntitiesPending(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatusString.PENDING));
 
         } catch (TaskEntityNotFoundException ex) {
@@ -420,14 +421,14 @@ public class RequesterTaskManagementManagedBean implements Serializable{
     /**
      * @return the categories
      */
-    public Category[] getCategories() {
+    public String[] getCategories() {
         return categories;
     }
 
     /**
      * @param categories the categories to set
      */
-    public void setCategories(Category[] categories) {
+    public void setCategories(String[] categories) {
         this.categories = categories;
     }
 

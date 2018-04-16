@@ -23,6 +23,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import util.enumeration.Category;
+import util.stringConstant.CategoryString;
 
 /**
  *
@@ -41,7 +42,7 @@ public class RequesterCreateTaskManagedBean implements Serializable{
     @EJB(name = "TaskControllerLocal")
     private TaskControllerLocal taskControllerLocal;
     
-    private Category[] categories;
+    private String[] categories;
 
     private RequesterEntity requesterEntity;
     private Long requesterId;
@@ -65,7 +66,7 @@ public class RequesterCreateTaskManagedBean implements Serializable{
         setRequesterId(getRequesterEntity().getRequesterId());
         setTaskEntity(new TaskEntity());
         taskEntity.setRequesterEntity(requesterEntity);
-        setCategories(Category.values());
+        categories = new String[]{CategoryString.COMPANIONSHIP,CategoryString.COMPANIONSHIP,CategoryString.HOUSEWORK};
 
         List<HelperEntity> helperEntities = helperControllerLocal.retrieveAllHelpers();
         for (HelperEntity helperEntity : helperEntities) {
@@ -153,14 +154,14 @@ public class RequesterCreateTaskManagedBean implements Serializable{
     /**
      * @return the categories
      */
-    public Category[] getCategories() {
+    public String[] getCategories() {
         return categories;
     }
 
     /**
      * @param categories the categories to set
      */
-    public void setCategories(Category[] categories) {
+    public void setCategories(String[] categories) {
         this.categories = categories;
     }
 

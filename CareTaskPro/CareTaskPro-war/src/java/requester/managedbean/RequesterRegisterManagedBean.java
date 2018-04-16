@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import util.enumeration.Gender;
+import util.stringConstant.GenderString;
 
 /**
  *
@@ -30,7 +31,7 @@ public class RequesterRegisterManagedBean implements Serializable{
 
     private RequesterEntity requesterEntity;
     
-    private Gender[] genders;
+    private String[] genders;
 
     /**
      * Creates a new instance of RequesterRegisterManagedBean
@@ -42,7 +43,7 @@ public class RequesterRegisterManagedBean implements Serializable{
     
     @PostConstruct
     public void postConstruct() {
-        setGenders(Gender.values());
+        genders = new String[]{GenderString.FEMALE,GenderString.MALE};
     }
 
     public void createNewRequester() {
@@ -73,14 +74,14 @@ public class RequesterRegisterManagedBean implements Serializable{
     /**
      * @return the genders
      */
-    public Gender[] getGenders() {
+    public String[] getGenders() {
         return genders;
     }
 
     /**
      * @param genders the genders to set
      */
-    public void setGenders(Gender[] genders) {
+    public void setGenders(String[] genders) {
         this.genders = genders;
     }
     

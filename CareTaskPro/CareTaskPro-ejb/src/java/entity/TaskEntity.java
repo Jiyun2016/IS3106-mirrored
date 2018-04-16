@@ -32,8 +32,7 @@ public class TaskEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
     @Column(length = 32, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    private String category;
     
     @Column(length = 32, nullable = false)
     private String description;
@@ -68,7 +67,7 @@ public class TaskEntity implements Serializable {
 //        this.helperEntity = new HelperEntity();
     }
     
-     public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, RequesterEntity requesterEntity, List<HelperEntity> preferredHelpers) {
+     public TaskEntity(String category, String description, Date startDateTime, Date endDateTime, RequesterEntity requesterEntity, List<HelperEntity> preferredHelpers) {
         this.taskStatus = TaskStatusString.PENDING;
         this.category = category;
         this.description = description;
@@ -78,7 +77,7 @@ public class TaskEntity implements Serializable {
         this.preferredHelpers = preferredHelpers;
     }
 
-    public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, String taskStatus,  RequesterEntity requesterEntity) {
+    public TaskEntity(String category, String description, Date startDateTime, Date endDateTime, String taskStatus,  RequesterEntity requesterEntity) {
         this.category = category;
         this.description = description;
         this.startDateTime = startDateTime;
@@ -124,11 +123,11 @@ public class TaskEntity implements Serializable {
         return "entity.TaskEntity[ id=" + taskId + " ]";
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

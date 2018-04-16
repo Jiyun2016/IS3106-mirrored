@@ -77,13 +77,24 @@ public class TaskEntity implements Serializable {
         this.preferredHelpers = preferredHelpers;
     }
 
-    public TaskEntity(String category, String description, Date startDateTime, Date endDateTime, String taskStatus,  RequesterEntity requesterEntity) {
+    public TaskEntity(String category, String description, Date startDateTime, Date endDateTime, String taskStatus,  RequesterEntity requesterEntity, HelperEntity helperEntity) {
         this.category = category;
         this.description = description;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.taskStatus = taskStatus;
         this.requesterEntity = requesterEntity;
+        this.helperEntity = helperEntity;
+    }
+    
+     public TaskEntity(String category, String description, Date startDateTime, Date endDateTime, String taskStatus,  RequesterEntity requesterEntity) {
+        this.category = category;
+        this.description = description;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.taskStatus = taskStatus;
+        this.requesterEntity = requesterEntity;
+        
     }
     
    

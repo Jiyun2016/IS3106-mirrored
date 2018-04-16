@@ -11,6 +11,7 @@ package util.constant;
  */
 public class TimeConstant {
     public static final long MILLISEC_PER_HOUR = 3600000;
+    public static final long MILLISEC_PER_MIN = 60000;
     public static final long TIME_LAG_FOR_PAYMENT = 60000;
     public static final long TIME_BUFFER_FOR_CANCEL = 60000;
     

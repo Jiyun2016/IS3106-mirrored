@@ -25,5 +25,7 @@ public interface PaymentControllerLocal {
     public List<PaymentEntity> retrievePaymentByRequesterId(Long requesterId) throws PaymentEntityNotFoundException;
 
     public List<PaymentEntity> retrieveAllPayment();
+
+    public void setPaymentAsCompleted(Long paymentId);
     
 }

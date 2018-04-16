@@ -80,11 +80,11 @@ public class HelperEntity implements Serializable {
 
         if(isCertified) {
             this.helperRole = "PROFESSIONAL";
-            this.chargeRate = new BigDecimal(20);
+            this.chargeRate = new BigDecimal(0.5);
         }
         else {
             this.helperRole = "NONPROFESSIONAL";
-            this.chargeRate = new BigDecimal(15);
+            this.chargeRate = new BigDecimal(0.4);
         }
     }
 

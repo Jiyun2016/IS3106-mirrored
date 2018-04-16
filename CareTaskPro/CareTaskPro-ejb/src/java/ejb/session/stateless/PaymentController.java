@@ -37,8 +37,8 @@ public class PaymentController implements PaymentControllerLocal {
     @Override
     public PaymentEntity createPaymentEntity(TaskEntity taskEntity) {
         BigDecimal chargeRate = taskEntity.getHelperEntity().getChargeRate();
-        Long numOfHour = (taskEntity.getEndDateTime().getTime() - taskEntity.getStartDateTime().getTime()) / TimeConstant.MILLISEC_PER_HOUR;
-        BigDecimal paymentAmount = chargeRate.multiply((new BigDecimal(numOfHour)));
+        Long numOfMin = (taskEntity.getEndDateTime().getTime() - taskEntity.getStartDateTime().getTime()) / TimeConstant.MILLISEC_PER_MIN;
+        BigDecimal paymentAmount = chargeRate.multiply((new BigDecimal(numOfMin)));
         BigDecimal companyRevenue = paymentAmount.multiply(CompanyConstant.COMPANY_CHARGE_PERCENTAGE);
         BigDecimal helperSalary = paymentAmount.subtract(companyRevenue);
 
@@ -46,7 +46,7 @@ public class PaymentController implements PaymentControllerLocal {
 
         em.persist(paymentEntity);
         em.flush();
-        em.refresh(paymentEntity);
+        paymentEntity = em.find(PaymentEntity.class, paymentEntity.getPaymentId());
 
         taskEntity.setPaymentEntity(paymentEntity);
         em.merge(taskEntity);
@@ -95,6 +95,14 @@ public class PaymentController implements PaymentControllerLocal {
     public void suspendPayment(Long paymentId) {
         PaymentEntity paymentEntity = em.find(PaymentEntity.class, paymentId);
         paymentEntity.setPaymentStatus(PaymentStatusString.SUSPENDED);
+        em.merge(paymentEntity);
+    }
+    
+    
+    @Override
+     public void setPaymentAsCompleted(Long paymentId) {
+        PaymentEntity paymentEntity = em.find(PaymentEntity.class, paymentId);
+        paymentEntity.setPaymentStatus(PaymentStatusString.COMPLETED);
         em.merge(paymentEntity);
     }
     

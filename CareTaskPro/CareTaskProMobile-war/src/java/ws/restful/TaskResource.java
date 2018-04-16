@@ -101,7 +101,7 @@ public class TaskResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveTasksByStatusByHelperId(@PathParam("helperId") Long helperId, @PathParam("status") String status) {
         try {
-            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTaskByStatusByHelperId(helperId, TaskStatus.valueOf(status));
+            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTaskByStatusByHelperId(helperId, status);
             
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(TaskEntity task: taskEntities) {
@@ -125,7 +125,7 @@ public class TaskResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveTasksByRequesterId(@PathParam("requesterId") Long requesterId, @PathParam("status") String status) {
         try {
-            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTaskByStatusByRequesterId(requesterId, TaskStatus.valueOf(status));
+            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTaskByStatusByRequesterId(requesterId, status);
             
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(TaskEntity task: taskEntities) {

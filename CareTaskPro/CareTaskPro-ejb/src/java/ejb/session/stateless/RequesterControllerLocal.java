@@ -27,4 +27,6 @@ public interface RequesterControllerLocal {
 
     public RequesterEntity loginRequester(String phone, String password) throws RequesterNotFoundException, WrongCredentialException;
 
+    public RequesterEntity updateRequesterProfile(RequesterEntity re);
+
 }

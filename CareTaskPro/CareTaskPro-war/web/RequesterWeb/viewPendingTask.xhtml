@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/requesterTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+
+        <h3>View My Pending Tasks + Update + Cancel</h3>
+        <br/>
+
+
+        <h:form id="formAllPendingTasks">
+
+            <p:messages id="messages" redisplay="false" closable="true" />
+
+            <p:dataTable id="dataTableAllPendingTasks" widgetVar="dataTableAllPendingTasks" value="#{requesterTaskManagementManagedBean.taskEntitiesPending}" var="taskEntity" rowKey="#{taskEntity.taskId}" rowIndexVar="row"
+                         filteredValue="#{requesterTaskManagementManagedBean.filteredTaskEntities}"
+                         rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
+
+                <f:facet name="header">
+                    <p:outputPanel style="text-align: right;">
+                        <h:outputText value="Search all fields:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllPendingTasks').filter()" style="width:300px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="Task ID" sortBy="#{taskEntity.taskId}" filterBy="#{taskEntity.taskId}" filterMatchMode="contains">
+                    <h:outputText value="#{taskEntity.taskId}" />
+                </p:column>
+
+                <p:column headerText="Category" sortBy="#{taskEntity.category}" filterBy="#{taskEntity.category}" filterMatchMode="contains">
+                    <h:outputText value="#{taskEntity.category}" />
+                </p:column>
+
+                <p:column headerText="Start Time" sortBy="#{taskEntity.startDateTime}" filterBy="#{taskEntity.startDateTime}" filterMatchMode="gt">
+                    <h:outputText value="#{taskEntity.startDateTime}" />
+                </p:column>
+
+                <p:column headerText="Action" >
+                    <p:commandButton update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
+                        <f:setPropertyActionListener value="#{taskEntity}" target="#{requesterTaskManagementManagedBean.taskEntityToView}" />
+                    </p:commandButton>
+                    <p:commandButton update="formUpdateTask" oncomplete="PF('dialogUpdateTask').show()" icon="ui-icon-pencil" title="Update">
+
+                        <f:setPropertyActionListener value="#{taskEntity}" target="#{requesterTaskManagementManagedBean.taskEntityToUpdate}" />
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-trash" actionListener="#{requesterTaskManagementManagedBean.cancelTask}" update="@form formAllPendingTasks:dataTableAllPendingTasks formAllPendingTasks:messages">
+                        <f:attribute name="taskIdToCancel" value="#{taskEntity.taskId}" />
+                        <p:confirm header="Confirmation" message="Are you sure you want to cancel #{taskEntity.taskId} ?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+
+        </h:form>
+
+
+
+        <h:form id="formViewTask">
+
+            <p:dialog id="dialogViewTask" widgetVar="dialogViewTask" header="View Task" closable="true">
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task ID: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.taskId}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task Category: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.category}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task Description: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.description}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Start Time: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.startDateTime}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="End Time: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.endDateTime}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Status: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.taskStatus}" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+                <p:dataList value="#{requesterTaskManagementManagedBean.taskEntityToView.preferredHelpers}" var="h" type="ordered">
+                    <f:facet name="header">
+                        Preferred Helpers
+                    </f:facet>
+                    #{h.helperId}, #{h.firstName}
+                </p:dataList>
+
+            </p:dialog>
+
+        </h:form>
+
+        <h:form id="formUpdateTask">
+
+            <p:dialog id="dialogUpdateTask" widgetVar="dialogUpdateTask" header="Update Task" closable="true">
+
+                <p:messages id="messagesUpdateTask" redisplay="false" />
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task ID: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToUpdate.taskId}" />
+                        </p:column>
+                        <p:column>
+                            &nbsp;
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Category: " />
+                        </p:column>
+                        <p:column>
+                            <h:selectOneMenu id="category" value="#{requesterTaskManagementManagedBean.taskEntityToUpdate.category}" required="true" requiredMessage="Category is required">
+
+                                <f:selectItems value="#{requesterTaskManagementManagedBean.categories}" />
+                                <p:ajax listener="#{requesterTaskManagementManagedBean.onChange}" update="@form formUpdateTask" />
+                            </h:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            &nbsp;
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="description" value="Description: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="description" value="#{requesterTaskManagementManagedBean.taskEntityToUpdate.description}" required="true" requiredMessage="Description is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="description" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="startDateTime" value="Start Datetime: " />
+                        </p:column>
+                        <p:column>
+                            <p:calendar id="startDateTime" binding="#{startDateComponent}" value="#{requesterTaskManagementManagedBean.taskEntityToUpdate.startDateTime}" pattern="MM/dd/yyyy HH:mm:ss" required="true" requiredMessage="Start Datetime is required" >
+                                <f:validator validatorId="startDateValidator" />
+                            </p:calendar>
+                        </p:column>
+                        <p:column>
+                            <p:message for="startDateTime" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="endDateTime" value="End Datetime: " />
+                        </p:column>
+                        <p:column>
+                            <p:calendar id="endDateTime" value="#{requesterTaskManagementManagedBean.taskEntityToUpdate.endDateTime}" pattern="MM/dd/yyyy HH:mm:ss" required="true" requiredMessage="End Datetime is required" >
+                                <f:validator validatorId="endDateValidator" />
+                                <f:attribute name="startDateComponent" value="#{startDateComponent}" />
+                            </p:calendar>
+                        </p:column>
+                        <p:column>
+                            <p:message for="endDateTime" />
+                        </p:column>
+                    </p:row>
+
+
+
+                </p:panelGrid>
+
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <p:outputLabel for="preferredHelpers" value="Preferred Helpers:" />
+                    <p:selectCheckboxMenu id="preferredHelpers" value="#{requesterTaskManagementManagedBean.taskEntityToUpdate.preferredHelpers}" label="Helpers" multiple="true" converter="helperEntityConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                        <f:selectItems value="#{requesterTaskManagementManagedBean.selectItemsHelperEntities}" />
+                        <p:ajax listener="#{requesterTaskManagementManagedBean.onChange}" update="@form formUpdateTask" />
+                    </p:selectCheckboxMenu>
+
+                </h:panelGrid>
+
+                <p:panelGrid>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:commandButton value="Update Task" update="@form formAllPendingTasks:dataTableAllPendingTasks" actionListener="#{requesterTaskManagementManagedBean.updateTask}" oncomplete="PF('dialogUpdateTask').show();" >
+                                <f:attribute name="taskIdToUpdate" value="#{taskEntityToUpdate.taskId}" />
+                            </p:commandButton>
+
+
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+            </p:dialog>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

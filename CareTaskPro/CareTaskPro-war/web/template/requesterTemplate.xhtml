@@ -25,8 +25,8 @@
                 <h:form>
                     <p:menubar >
                         <p:menuitem style="padding-right: 10px; padding-left: 10px"  value="RequesterHome" outcome="requesterHome" />
-                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile" outcome="requesterProfile"   />
-                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile" outcome="editRequesterProfile" />
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile" outcome = "requesterProfile"  />
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  outcome = "editRequesterProfile" />
                         <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Logout" actionListener="#{requesterHomeManagedBean.logout}" icon="ui-icon-unlocked" rendered="#{sessionScope['isLogin']}"/>
 
                     </p:menubar>
@@ -43,27 +43,29 @@
 
 
                         <p:submenu label="Services" >
-                            <p:menuitem style="padding-bottom: 10px" value="Add a New Task"  icon="ui-icon-calendar" />
+                            <p:menuitem style="padding-bottom: 10px" value="Add a New Task"  outcome="createTask" icon="ui-icon-calendar" />
 
 
-                            <p:menuitem style="padding-bottom: 10px" value="View All Tasks" icon="ui-icon-comment"/>
+                            <p:menuitem style="padding-bottom: 10px" value="View Pending Tasks" outcome="viewPendingTask" />
 
 
-                            <p:menuitem style="padding-bottom: 10px" value="View All Pending Tasks"  icon="ui-icon-document-b"/>
+                            <p:menuitem style="padding-bottom: 10px" value="View Assigned Tasks" outcome="viewAssignedTask" />
 
 
-                            <p:menuitem style="padding-bottom: 10px" value="View All Assigned Tasks"  icon="ui-icon-document-b"/>
-
+                            <p:menuitem style="padding-bottom: 10px" value="View Completed Tasks" outcome="viewCompletedTask" />
+                           
                             
-                            <p:menuitem style="padding-bottom: 10px" value="View All Completed Tasks"  icon="ui-icon-document-b"/>
+                            <p:menuitem style="padding-bottom: 10px" value="View Complained Tasks" outcome="viewComplainedTask" />
 
 
-                            <p:menuitem style="padding-bottom: 10px" value="View payment history"  icon="ui-icon-document-b"/>
+                            <p:menuitem style="padding-bottom: 10px" value="View payment history" outcome="viewPaymentHistory"/>
                         </p:submenu>
 
 
                         <p:submenu label="General">
+                            <p:menuitem style="padding-bottom: 10px" value="View All Helpers"  outcome="viewAllHelper" icon="ui-icon-document-b"/>
                             <p:menuitem style="padding-bottom: 10px" value="About" outcome="requesterAbout" icon="ui-icon-document-b"/>
+
                         </p:submenu>
                     </p:menu>
                 </h:form>

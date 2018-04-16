@@ -6,6 +6,7 @@
 package ejb.session.stateless;
 
 import entity.ReviewEntity;
+import entity.TaskEntity;
 import javax.ejb.Local;
 import util.exception.ReviewNotFoundException;
 

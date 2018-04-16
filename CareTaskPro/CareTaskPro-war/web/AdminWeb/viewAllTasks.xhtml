@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/adminTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h3>View All Tasks</h3>
+        <br/>
+
+
+        <h:form id="formAllTasks">
+
+            <p:messages id="messages" redisplay="false" closable="true" />
+
+            <p:dataTable id="dataTableAllTasks" widgetVar="dataTableAllTasks" value="#{adminTaskManagementManagedBean.taskEntities}" var="taskEntity" rowKey="#{taskEntity.taskId}" rowIndexVar="row"
+                         filteredValue="#{adminTaskManagementManagedBean.filteredTaskEntities}"
+                         rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
+
+                <f:facet name="header">
+                    <p:outputPanel style="text-align: right;">
+                        <h:outputText value="Search all fields:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllTasks').filter()" style="width:300px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="Task ID: " sortBy="#{taskEntity.taskId}" filterBy="#{taskEntity.taskId}" filterMatchMode="contains" >
+                    <h:outputText value="#{taskEntity.taskId}" />
+                </p:column>
+
+                <p:column headerText="Category: " sortBy="#{taskEntity.category}" filterBy="#{taskEntity.category}" filterMatchMode="contains" >
+                    <h:outputText value="#{taskEntity.category}" />
+                </p:column>
+
+                <p:column headerText="Requester: " sortBy="#{taskEntity.requesterEntity}" filterBy="#{taskEntity.requesterEntity}" filterMatchMode="contains" >
+                    <h:outputText value="#{taskEntity.requesterEntity}" />
+                </p:column>
+
+                <p:column headerText="Start Time: " sortBy="#{taskEntity.startDateTime}" filterBy="#{taskEntity.startDateTime}" filterMatchMode="contains" >
+                    <h:outputText value="#{taskEntity.startDateTime}" />
+                </p:column>
+
+                <p:column headerText="Task Status: " sortBy="#{taskEntity.taskStatus}" filterBy="#{taskEntity.taskStatus}" filterMatchMode="contains" >
+                    <h:outputText value="#{taskEntity.taskStatus}" />
+                </p:column>
+
+                <p:column headerText="Action" >
+                    <p:commandButton update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
+                        <f:setPropertyActionListener value="#{taskEntity}" target="#{adminTaskManagementManagedBean.taskEntityToView}" />
+                    </p:commandButton>
+                    <p:commandButton update="formUpdateTask" oncomplete="PF('dialogUpdateTask').show()" icon="ui-icon-pencil" title="Update">
+                        <f:setPropertyActionListener value="#{taskEntity}" target="#{adminTaskManagementManagedBean.taskEntityToUpdate}" />
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+
+        </h:form>
+
+
+        <h:form id="formViewTask">
+
+            <p:dialog id="dialogViewTask" widgetVar="dialogViewTask" header="View Task" closable="true">
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task ID: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.taskId}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task Category: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.category}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task Description: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.description}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Start Time: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.startDateTime}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="End Time: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.endDateTime}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Helper: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.helperEntity}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Helper: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.helperEntity}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Review remarks: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.reviewEntity.reviewRemarks}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Ratings: " />
+                        </p:column>
+                        <p:column>
+                            <p:rating id="rating" value="#{adminTaskManagementManagedBean.taskEntityToView.reviewEntity.ratings}" stars="5" readonly="true" />
+                        </p:column>
+                    </p:row>
+
+
+
+                </p:panelGrid>
+                <p:dataList value="#{adminTaskManagementManagedBean.taskEntityToView.preferredHelpers}" var="h" type="ordered">
+                    <f:facet name="header">
+                        Preferred Helpers
+                    </f:facet>
+                    #{h.helperId}, #{h.firstName}
+                </p:dataList>
+
+            </p:dialog>
+
+        </h:form>
+
+        <h:form id="formUpdateTask">
+
+            <p:dialog id="dialogUpdateTask" widgetVar="dialogUpdateTask" header="Update Task" closable="true">
+
+                <p:messages id="messagesUpdateTask" redisplay="false" />
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task ID: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToUpdate.taskId}" />
+                        </p:column>
+                        <p:column>
+                            &nbsp;
+                        </p:column>
+                    </p:row>
+                    
+                    
+                     <p:row>
+                        <p:column>
+                            <p:outputLabel for="taskStatus" value="Status: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="taskStatus" value="#{adminTaskManagementManagedBean.taskEntityToUpdate.taskStatus}" required="true" requiredMessage="Status is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="taskStatus" />
+                        </p:column>
+                    </p:row>
+
+                
+
+                <p:panelGrid>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:commandButton value="Update Product" update="@form formAllTasks:dataTableAllTasks" actionListener="#{adminTaskManagementManagedBean.updateTask}" oncomplete="PF('dialogUpdateTask').show();" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+            </p:dialog>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

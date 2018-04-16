@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import util.constant.CompanyConstant;
 import util.constant.TimeConstant;
 import util.enumeration.PaymentStatus;
@@ -94,6 +95,13 @@ public class PaymentController implements PaymentControllerLocal {
         PaymentEntity paymentEntity = em.find(PaymentEntity.class, paymentId);
         paymentEntity.setPaymentStatus(PaymentStatus.SUSPENDED);
         em.merge(paymentEntity);
+    }
+    
+    @Override
+    public List<PaymentEntity> retrieveAllPayment() {
+        Query query = em.createQuery("SELECT p FROM PaymentEntity p");
+        return query.getResultList();
+
     }
 
 }

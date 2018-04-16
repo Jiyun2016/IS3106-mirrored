@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/requesterTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        content
+        can review here
+
+        <h3>View My Complained Tasks</h3>
+        <br/>
+
+
+        <h:form id="formAllComplainedTasks">
+
+            <p:messages id="messages" redisplay="false" closable="true" />
+
+            <p:dataTable id="dataTableAllComplainedTasks" widgetVar="dataTableAllComplainedTasks" value="#{requesterTaskManagementManagedBean.taskEntitiesComplained}" var="taskEntity" rowKey="#{taskEntity.taskId}" rowIndexVar="row"
+                         filteredValue="#{requesterTaskManagementManagedBean.filteredTaskEntities}"
+                         rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
+
+                <f:facet name="header">
+                    <p:outputPanel style="text-align: right;">
+                        <h:outputText value="Search all fields:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllComplainedTasks').filter()" style="width:300px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="Task ID" sortBy="#{taskEntity.taskId}" filterBy="#{taskEntity.taskId}" filterMatchMode="contains">
+                    <h:outputText value="#{taskEntity.taskId}" />
+                </p:column>
+
+                <p:column headerText="Category" sortBy="#{taskEntity.category}" filterBy="#{taskEntity.category}" filterMatchMode="contains">
+                    <h:outputText value="#{taskEntity.category}" />
+                </p:column>
+
+                <p:column headerText="Start Time" sortBy="#{taskEntity.startDateTime}" filterBy="#{taskEntity.startDateTime}" filterMatchMode="gt">
+                    <h:outputText value="#{taskEntity.startDateTime}" />
+                </p:column>
+
+                <p:column headerText="Action" >
+                    <p:commandButton update="formViewTask" oncomplete="PF('dialogViewTask').show()" icon="ui-icon-document" title="View">
+                        <f:setPropertyActionListener value="#{taskEntity}" target="#{requesterTaskManagementManagedBean.taskEntityToView}" />
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+
+
+        </h:form>
+
+
+
+        <h:form id="formViewTask">
+
+            <p:dialog id="dialogViewTask" widgetVar="dialogViewTask" header="View Task" closable="true">
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task ID: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.taskId}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task Category: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.category}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Task Description: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.description}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Start Time: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.startDateTime}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="End Time: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.endDateTime}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Helper: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.helperEntity}" />
+                        </p:column>
+                    </p:row>
+                 
+
+                </p:panelGrid>
+
+
+            </p:dialog>
+
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>

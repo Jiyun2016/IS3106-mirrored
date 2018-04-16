@@ -7,6 +7,7 @@ package ejb.session.stateless;
 
 import entity.HelperEntity;
 import entity.PaymentEntity;
+import entity.ReviewEntity;
 import entity.TaskEntity;
 import java.util.List;
 import javax.annotation.Resource;
@@ -15,6 +16,7 @@ import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import util.constant.TimeConstant;
 import util.enumeration.Category;
 import util.enumeration.TaskStatus;
@@ -53,6 +55,13 @@ public class TaskController implements TaskControllerLocal {
     }
 
     @Override
+    public List<TaskEntity> retrieveAllTask() {
+        Query query = em.createQuery("SELECT t FROM TaskEntity t");
+        return query.getResultList();
+
+    }
+
+    @Override
     public TaskEntity retrieveTaskById(Long taskId) throws TaskEntityNotFoundException {
         TaskEntity taskEntity = em.find(TaskEntity.class, taskId);
         if (taskEntity != null) {
@@ -66,7 +75,7 @@ public class TaskController implements TaskControllerLocal {
     public List<TaskEntity> retrieveTaskByStatusByRequesterId(Long requesterId, TaskStatus status) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
         tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status AND task.requesterEntity.requesterId = :requesterId")
-                .setParameter("status", status.toString())
+                .setParameter("status", status)
                 .setParameter("requesterId", requesterId)
                 .getResultList();
         if (tasks != null && !tasks.isEmpty()) {
@@ -84,7 +93,7 @@ public class TaskController implements TaskControllerLocal {
     public List<TaskEntity> retrieveTaskByStatusByHelperId(Long helperId, TaskStatus status) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
         tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status AND task.requesterEntity.requesterId = :helperId")
-                .setParameter("status", status.toString())
+                .setParameter("status", status)
                 .setParameter("helperId", helperId)
                 .getResultList();
         if (tasks != null && !tasks.isEmpty()) {
@@ -103,7 +112,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
         tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.assignedHelper.id = :helperId AND task.taskStatus = :status")
                 .setParameter("helperId", helperId.toString())
-                .setParameter("status", TaskStatus.ASSIGNED.toString())
+                .setParameter("status", TaskStatus.ASSIGNED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -123,7 +132,7 @@ public class TaskController implements TaskControllerLocal {
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.assignedHelper.id = :helperId AND task.taskStatus = :status")
                 .setParameter("helperId", helperId.toString())
-                .setParameter("status", TaskStatus.COMPLETED.toString())
+                .setParameter("status", TaskStatus.COMPLETED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -161,7 +170,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.category = :category")
-                .setParameter("category", category.toString())
+                .setParameter("category", category)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -180,7 +189,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.ASSIGNED.toString())
+                .setParameter("inStatus", TaskStatus.ASSIGNED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -199,7 +208,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.PENDING.toString())
+                .setParameter("inStatus", TaskStatus.PENDING)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -218,7 +227,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.COMPLAINED.toString())
+                .setParameter("inStatus", TaskStatus.COMPLAINED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -233,10 +242,24 @@ public class TaskController implements TaskControllerLocal {
     }
 
     @Override
-    public TaskEntity updateTaskEntity(TaskEntity taskEntity) {
-        em.merge(taskEntity);
-        em.refresh(taskEntity);
-        return taskEntity;
+    public TaskEntity updateTaskEntityByRequester(TaskEntity ta, Long taId) {
+        
+        TaskEntity t = em.find(TaskEntity.class, taId);
+        t.setCategory(ta.getCategory());
+        t.setDescription(ta.getDescription());
+        t.setEndDateTime(ta.getEndDateTime());
+        t.setPreferredHelpers(ta.getPreferredHelpers());
+        t.setStartDateTime(ta.getStartDateTime());
+
+        return t;
+    }
+
+    @Override
+    public TaskEntity updateTaskEntity(TaskEntity ta) {
+        em.merge(ta);
+        ta = em.find(TaskEntity.class, ta.getTaskId());
+
+        return ta;
     }
 
     @Override
@@ -249,7 +272,7 @@ public class TaskController implements TaskControllerLocal {
         em.merge(task);
         em.merge(helper);
         PaymentEntity payment = paymentControllerLocal.createPaymentEntity(task);
-        em.refresh(task);
+        task = em.find(TaskEntity.class, taskId);
 
         return task;
     }
@@ -261,7 +284,7 @@ public class TaskController implements TaskControllerLocal {
         task.setTaskStatus(TaskStatus.COMPLAINED);
 
         em.merge(task);
-        em.refresh(task);
+        task = em.find(TaskEntity.class, taskId);
 
         return task;
     }
@@ -273,14 +296,28 @@ public class TaskController implements TaskControllerLocal {
 
         if (task.getTaskStatus().equals(TaskStatus.PENDING)) {
             task.setTaskStatus(TaskStatus.CANCELLED);
-
+            System.err.println("1 ^^^^^^^^taskcontroller: task status is " + task.getTaskStatus());
             em.merge(task);
-            em.refresh(task);
-
+            task = em.find(TaskEntity.class, taskId);
+            System.err.println("2 ^^^^^^^^taskcontroller: task status is " + task.getTaskStatus());
             return task;
         } else {
             throw new CancelTaskException(" Task is already assigned.");
         }
+    }
+
+    @Override
+    public TaskEntity addReviewToTask(Long taskId, ReviewEntity reviewEntity) {
+        TaskEntity task = em.find(TaskEntity.class, taskId);
+
+        task.setReviewEntity(reviewEntity);
+        reviewEntity.setTaskEntity(task);
+
+        em.merge(task);
+        em.merge(reviewEntity);
+
+        return task;
+
     }
 
 }

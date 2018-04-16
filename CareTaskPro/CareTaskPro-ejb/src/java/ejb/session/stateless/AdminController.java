@@ -6,6 +6,7 @@
 package ejb.session.stateless;
 
 import entity.AdminEntity;
+import entity.RequesterEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,6 +17,7 @@ import javax.persistence.Query;
 import util.exception.AdminEntityNotFoundException;
 import util.exception.AdminPasswordChangeException;
 import util.exception.InvalidLoginCredentialException;
+import util.exception.RequesterNotFoundException;
 
 /**
  *
@@ -26,7 +28,7 @@ public class AdminController implements AdminControllerLocal {
 
     @PersistenceContext(unitName = "CareTaskPro-ejbPU")
     private EntityManager em;
-    
+
     @Override
     public AdminEntity createNewAdmin(AdminEntity adminEntity) {
         em.persist(adminEntity);
@@ -34,86 +36,72 @@ public class AdminController implements AdminControllerLocal {
         em.refresh(adminEntity);
         return adminEntity;
     }
-    
-    
-    
+
     @Override
-    public List<AdminEntity> retrieveAllAdmin(){
+    public List<AdminEntity> retrieveAllAdmin() {
         Query query = em.createQuery("SELECT s FROM AdminEntity s");
         return query.getResultList();
-        
+
     }
-    
+
     @Override
-    public AdminEntity retrieveAdminByUsername(String username) throws AdminEntityNotFoundException
-    {
+    public AdminEntity retrieveAdminByUsername(String username) throws AdminEntityNotFoundException {
         Query query = em.createQuery("SELECT s FROM AdminEntity s WHERE s.username = :inUsername");
         query.setParameter("inUsername", username);
-        
-        try
-        {
-            return (AdminEntity)query.getSingleResult();
-        }
-        catch(NoResultException | NonUniqueResultException ex)
-        {
+
+        try {
+            return (AdminEntity) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
             throw new AdminEntityNotFoundException("Admin Username " + username + " does not exist!");
         }
     }
-    
-    
+
     @Override
-    public AdminEntity adminLogin(String username, String inPassword) throws InvalidLoginCredentialException
-    {
-        try
-        {
+    public AdminEntity retrieveAdminById(Long id) throws AdminEntityNotFoundException {
+        AdminEntity adminEntity = em.find(AdminEntity.class, id);
+        if (adminEntity != null) {
+            return adminEntity;
+        } else {
+            throw new AdminEntityNotFoundException("Admin with id " + id + " does not exist!");
+        }
+    }
+
+    @Override
+    public AdminEntity adminLogin(String username, String inPassword) throws InvalidLoginCredentialException {
+        try {
             AdminEntity adminEntity = retrieveAdminByUsername(username);
             String password = adminEntity.getPassword();
-                    
-            if(inPassword.equals(password))
-            {
+
+            if (inPassword.equals(password)) {
                 return adminEntity;
-            }
-            else
-            {
+            } else {
                 throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
             }
-        }
-        catch(AdminEntityNotFoundException ex)
-        {
+        } catch (AdminEntityNotFoundException ex) {
             throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
         }
     }
-    
+
     @Override
-    public void updateEmployee(AdminEntity adminEntity) 
-    {
+    public void updateEmployee(AdminEntity adminEntity) {
         em.merge(adminEntity);
     }
-    
-    
+
     @Override
-    public void deleteEmployee(String username) throws AdminEntityNotFoundException
-    {
+    public void deleteEmployee(String username) throws AdminEntityNotFoundException {
         AdminEntity adminToRemove = retrieveAdminByUsername(username);
         em.remove(adminToRemove);
     }
-    
+
     @Override
-    public void changePassword(AdminEntity adminEntity, String currentPassword, String newPassword) throws AdminEntityNotFoundException, AdminPasswordChangeException
-    {
-        
-        if(adminEntity.getPassword().equals(currentPassword))
-        {
+    public void changePassword(AdminEntity adminEntity, String currentPassword, String newPassword) throws AdminEntityNotFoundException, AdminPasswordChangeException {
+
+        if (adminEntity.getPassword().equals(currentPassword)) {
             adminEntity.setPassword(newPassword);
             em.merge(adminEntity);
-        }
-        else
-        {
+        } else {
             throw new AdminPasswordChangeException("Current Password is invalid");
         }
     }
-            
-  
 
-    
 }

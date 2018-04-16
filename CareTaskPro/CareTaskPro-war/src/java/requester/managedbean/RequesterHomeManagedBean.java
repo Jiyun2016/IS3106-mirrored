@@ -20,6 +20,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
+import util.enumeration.TaskStatus;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.RequesterNotFoundException;
 import util.exception.TaskEntityNotFoundException;
@@ -84,7 +85,9 @@ public class RequesterHomeManagedBean {
 
     public List<TaskEntity> getTaskAssigned() throws IOException {
         try {
-            return taskControllerLocal.retrieveTaskAssigned();
+            RequesterEntity re = (RequesterEntity)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRequesterEntity");
+            Long requesterId = re.getRequesterId();
+            return taskControllerLocal.retrieveTaskByStatusByRequesterId(requesterId, TaskStatus.ASSIGNED);
         } catch (TaskEntityNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No task found: " + ex.getMessage(), null));
             return new ArrayList<TaskEntity>();

@@ -8,58 +8,80 @@ package requester.managedbean;
 import ejb.session.stateless.RequesterControllerLocal;
 import entity.RequesterEntity;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import util.enumeration.Gender;
 
 /**
  *
- * @author Amber
+ * @author panjiyun
  */
 @Named(value = "requesterRegisterManagedBean")
 @ViewScoped
-public class requesterRegisterManagedBean implements Serializable{
+public class RequesterRegisterManagedBean implements Serializable{
 
-    @EJB
-    private RequesterControllerLocal requesterController;
+    @EJB(name = "RequesterControllerLocal")
+    private RequesterControllerLocal requesterControllerLocal;
+
+    private RequesterEntity requesterEntity;
     
-    private RequesterEntity newRequester;
+    private Gender[] genders;
 
     /**
-     * Creates a new instance of requesterRegisterManagedBean
+     * Creates a new instance of RequesterRegisterManagedBean
      */
-    public requesterRegisterManagedBean() {
-    }
+    public RequesterRegisterManagedBean() {
 
-    public requesterRegisterManagedBean(RequesterEntity newRequester) {
-        this.newRequester = newRequester;
+        requesterEntity = new RequesterEntity();
     }
     
-    public void saveNewRequester(ActionEvent event)
-    {
-        setNewRequester(requesterController.createNewRequester(getNewRequester()));
-        getNewRequester().setRequesterId(getNewRequester().getRequesterId());
-       
-        setNewRequester(new RequesterEntity());
-        
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New requester " + getNewRequester().getFirstName() + getNewRequester().getLastName() + " created successfully", null));
+    @PostConstruct
+    public void postConstruct() {
+        setGenders(Gender.values());
+    }
+
+    public void createNewRequester() {
+        try {
+            RequesterEntity re = requesterControllerLocal.createNewRequester(getRequesterEntity());
+            setRequesterEntity(new RequesterEntity());
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New requester registered successfully (Product ID: " + re.getRequesterId() + ")", null));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while registering the new requester: " + ex.getMessage(), null));
+        }
     }
 
     /**
-     * @return the newRequester
+     * @return the requesterEntity
      */
-    public RequesterEntity getNewRequester() {
-        return newRequester;
+    public RequesterEntity getRequesterEntity() {
+        return requesterEntity;
     }
 
     /**
-     * @param newRequester the newRequester to set
+     * @param requesterEntity the requesterEntity to set
      */
-    public void setNewRequester(RequesterEntity newRequester) {
-        this.newRequester = newRequester;
+    public void setRequesterEntity(RequesterEntity requesterEntity) {
+        this.requesterEntity = requesterEntity;
     }
 
+    /**
+     * @return the genders
+     */
+    public Gender[] getGenders() {
+        return genders;
+    }
+
+    /**
+     * @param genders the genders to set
+     */
+    public void setGenders(Gender[] genders) {
+        this.genders = genders;
+    }
+    
 }

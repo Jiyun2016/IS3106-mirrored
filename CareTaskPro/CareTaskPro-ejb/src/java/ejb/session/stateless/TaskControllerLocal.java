@@ -42,7 +42,7 @@ public interface TaskControllerLocal {
     public TaskEntity updateTaskEntity(TaskEntity taskEntity);
 
     public TaskEntity createNewTask(TaskEntity taskEntity);
-    
+
     public TaskEntity setTaskAsComplained(Long taskId);
 
     public List<TaskEntity> retrieveTaskByStatusByRequesterId(Long requesterId, String status) throws TaskEntityNotFoundException;
@@ -55,15 +55,10 @@ public interface TaskControllerLocal {
 
     public List<TaskEntity> retrieveAllTask();
 
-    public TaskEntity updateTaskEntityByRequester(TaskEntity ta,Long taId);
+    public TaskEntity updateTaskEntityByRequester(TaskEntity ta, Long taId);
 
-<<<<<<< HEAD
-    public List<TaskEntity> retrieveTasksByStatus(TaskStatus status);
-    
-    public TaskEntity assignHelperToTask(Long HelperId, Long taskId)throws NoEnoughBufferForHelperException , TaskTimeClashException;
+    public TaskEntity assignHelperToTask(Long HelperId, Long taskId) throws NoEnoughBufferForHelperException, TaskTimeClashException;
 
-=======
     public List<TaskEntity> retrieveTasksByStatus(String status);
->>>>>>> 4fcb0c200f7b5c8a5c2055ee61313d046395718f
 
 }

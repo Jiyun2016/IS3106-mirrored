@@ -19,10 +19,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-<<<<<<< HEAD
-=======
-import util.enumeration.Category;
->>>>>>> 4fcb0c200f7b5c8a5c2055ee61313d046395718f
+
 import util.stringConstant.CategoryString;
 import util.stringConstant.GenderString;
 import util.stringConstant.TaskStatusString;
@@ -100,7 +97,7 @@ public class DataInitSessionBean {
     }
 
     private void initializeTaskData() {
-<<<<<<< HEAD
+
         RequesterEntity r = requesterControllerLocal.createNewRequester(new RequesterEntity("firstName4", "lastName4", GenderString.MALE, "email4", "64449444", "password4", "address4", "creditCardName4", "5544", "4", "2024", "004"));
         HelperEntity h = helperControllerLocal.createNewHelper(new HelperEntity("firstName4", "lastName4", "MALE", "email4", "94446444", "password4", "address4", true, "certName4", "certNum5", "bankAcct4"));
 
@@ -146,14 +143,8 @@ public class DataInitSessionBean {
         paymentControllerLocal.setPaymentAsCompleted(p8.getPaymentId());
         paymentControllerLocal.setPaymentAsCompleted(p9.getPaymentId());
         paymentControllerLocal.setPaymentAsCompleted(p10.getPaymentId());
-=======
-        RequesterEntity r = requesterControllerLocal.createNewRequester(new RequesterEntity("firstName4", "lastName4", GenderString.MALE, "email4", "61119444", "password4", "address4", "creditCardName4", "5542", "2", "2022", "003"));
-        taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
-        taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
-        taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HEALTHCARE, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
-        taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
-        taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
->>>>>>> 4fcb0c200f7b5c8a5c2055ee61313d046395718f
+
+       
     }
 
 }

@@ -69,7 +69,7 @@ public class helperViewAvailableTasksManagedBean implements Serializable {
     public void helperTakeTask(ActionEvent event)
     {
         TaskEntity taskToTake = (TaskEntity)event.getComponent().getAttributes().get("taskToTake");
-        taskControllerLocal.assignHelperToTask(helper.getHelperId(), taskToTake.getTaskId());
+   //     taskControllerLocal.assignHelperToTask(helper.getHelperId(), taskToTake.getTaskId());
         
         if(tasksNotAssigned.contains(taskToTake)){
             tasksNotAssigned.remove(taskToTake);

@@ -57,4 +57,6 @@ public interface TaskControllerLocal {
 
     public TaskEntity updateTaskEntityByRequester(TaskEntity ta,Long taId);
 
+    public List<TaskEntity> retrieveTasksByStatus(TaskStatus status);
+
 }

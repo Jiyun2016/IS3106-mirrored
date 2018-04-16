@@ -2,6 +2,8 @@ package ws.restful;
 
 import ejb.session.stateless.HelperControllerLocal;
 import entity.HelperEntity;
+import entity.TaskEntity;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -41,7 +43,7 @@ public class HelperResource {
     @Context
     private UriInfo context;
 
- private final HelperControllerLocal helperControllerLocal = lookupHelperControllerLocal();
+    private final HelperControllerLocal helperControllerLocal = lookupHelperControllerLocal();
 
     public HelperResource() {
     }
@@ -52,7 +54,18 @@ public class HelperResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllHelpers() {
         try {
-            return Response.status(Status.OK).entity(new RetrieveAllHelpersRsp(helperControllerLocal.retrieveAllHelpers())).build();
+            List<HelperEntity> helperEntities = helperControllerLocal.retrieveAllHelpers();
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(HelperEntity helper: helperEntities) {
+                for(TaskEntity task: helper.getTaskEntities()) {
+                    task.setHelperEntity(null);
+                }
+                for(TaskEntity task: helper.getRecommendedTaskEntities()) {
+                    task.setHelperEntity(null);
+                }
+            }
+            return Response.status(Status.OK).entity(new RetrieveAllHelpersRsp(helperEntities)).build();
         } 
         catch(Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());  
@@ -82,7 +95,6 @@ public class HelperResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createHelper(JAXBElement<CreateHelperReq> jaxbCreateHelperReq) {
-        
         if((jaxbCreateHelperReq != null) && (jaxbCreateHelperReq.getValue() != null)) {
             try {
                 CreateHelperReq createHelperReq = jaxbCreateHelperReq.getValue();               

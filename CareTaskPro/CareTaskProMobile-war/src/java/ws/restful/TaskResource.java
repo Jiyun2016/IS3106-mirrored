@@ -1,7 +1,9 @@
 package ws.restful;
 
 import ejb.session.stateless.TaskControllerLocal;
+import entity.HelperEntity;
 import entity.TaskEntity;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -20,6 +22,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.JAXBElement;
 import util.enumeration.Category;
+import util.enumeration.TaskStatus;
 import util.exception.TaskEntityNotFoundException;
 import ws.restful.datamodel.CreateTaskReq;
 import ws.restful.datamodel.CreateTaskRsp;
@@ -44,13 +47,23 @@ public class TaskResource {
     public TaskResource() {
     }
 
-    @Path("retrieveTasksByCategory")
+    @Path("retrieveTasksByCategory/{category}")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveTasksByCategory(@PathParam("category") String category) {
         try {
-            return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskControllerLocal.retrieveTaskByCategory(Category.valueOf(category)))).build();
+            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTaskByCategory(Category.valueOf(category));
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(TaskEntity task: taskEntities) {
+                for(HelperEntity helper: task.getPreferredHelpers()) {
+                    helper.setRecommendedTaskEntities(null);
+                }
+                task.getRequesterEntity().setTaskEntities(null);
+            }            
+            
+            return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskEntities)).build();
         }
         catch(Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());  
@@ -58,34 +71,78 @@ public class TaskResource {
         }
     }    
     
-    @Path("retrieveAllUnassignedTasks")
+    @Path("retrieveTasksByStatus/{status}")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAllUnassignedTasks() {
+    public Response retrieveTasksByStatus(@PathParam("status") String status) {
         try {
-            return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskControllerLocal.retrieveTaskNotAssigned())).build();
+            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTasksByStatus(TaskStatus.valueOf(status));
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(TaskEntity task: taskEntities) {
+                for(HelperEntity helper: task.getPreferredHelpers()) {
+                    helper.setRecommendedTaskEntities(null);
+                }
+                task.getRequesterEntity().setTaskEntities(null);
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskEntities)).build();
         } 
         catch(Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());  
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
-    }    
+    }        
     
-    @Path("retrieveAllAssignedTasks")
+    @Path("retrieveTasksByStatusByHelperId/{helperId}/{status}")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAllAssignedTasks() {
+    public Response retrieveTasksByStatusByHelperId(@PathParam("helperId") Long helperId, @PathParam("status") String status) {
         try {
-            return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskControllerLocal.retrieveTaskAssigned())).build();
+            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTaskByStatusByHelperId(helperId, TaskStatus.valueOf(status));
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(TaskEntity task: taskEntities) {
+                for(HelperEntity helper: task.getPreferredHelpers()) {
+                    helper.setRecommendedTaskEntities(null);
+                }
+                task.getRequesterEntity().setTaskEntities(null);
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskEntities)).build();
+        } 
+        catch(Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());  
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }        
+    
+    @Path("retrieveTasksByStatusByRequesterId/{requesterId}/{status}")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveTasksByRequesterId(@PathParam("requesterId") Long requesterId, @PathParam("status") String status) {
+        try {
+            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTaskByStatusByRequesterId(requesterId, TaskStatus.valueOf(status));
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(TaskEntity task: taskEntities) {
+                for(HelperEntity helper: task.getPreferredHelpers()) {
+                    helper.setRecommendedTaskEntities(null);
+                }
+                task.getRequesterEntity().setTaskEntities(null);
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskEntities)).build();
         } 
         catch(Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());  
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }   
-    
+
     @Path("retrieveTask/{taskId}")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)

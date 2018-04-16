@@ -2,6 +2,8 @@ package ws.restful;
 
 import ejb.session.stateless.RequesterControllerLocal;
 import entity.RequesterEntity;
+import entity.TaskEntity;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -52,7 +54,16 @@ public class RequesterResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllRequesters() {
         try {
-            return Response.status(Status.OK).entity(new RetrieveAllRequestersRsp(requesterControllerLocal.retrieveAllRequesters())).build();
+            List<RequesterEntity> requesterEntities = requesterControllerLocal.retrieveAllRequesters();
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(RequesterEntity requester: requesterEntities) {
+                for(TaskEntity task: requester.getTaskEntities()) {
+                    task.setRequesterEntity(null);
+                }
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllRequestersRsp(requesterEntities)).build();
         } 
         catch(Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());  
@@ -87,7 +98,7 @@ public class RequesterResource {
             try {
                 CreateRequesterReq createRequesterReq = jaxbCreateRequesterReq.getValue();               
                 RequesterEntity requester = requesterControllerLocal.createNewRequester(createRequesterReq.getRequester());
-                CreateRequesterRsp createRequesterRsp = new CreateRequesterRsp(requester.getrequesterId());
+                CreateRequesterRsp createRequesterRsp = new CreateRequesterRsp(requester.getRequesterId());
                 
                 return Response.status(Response.Status.OK).entity(createRequesterRsp).build();
             } 
@@ -147,6 +158,12 @@ public class RequesterResource {
     public Response loginRequester(@QueryParam("phone") String phone, @QueryParam("password") String password) {
         try {
             RequesterEntity requester = requesterControllerLocal.loginRequester(phone, password);
+
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(TaskEntity task: requester.getTaskEntities()) {
+                task.setRequesterEntity(null);
+            }
+                            
             return Response.status(Status.OK).entity(new RetrieveRequesterRsp(requester)).build();
         } 
         catch(WrongCredentialException ex) {

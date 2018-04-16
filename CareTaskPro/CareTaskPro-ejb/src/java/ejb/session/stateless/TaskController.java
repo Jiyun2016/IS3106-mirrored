@@ -319,5 +319,19 @@ public class TaskController implements TaskControllerLocal {
         return task;
 
     }
+    
+    @Override
+    public List<TaskEntity> retrieveTasksByStatus(TaskStatus status) {
+        List<TaskEntity> tasks;
+        tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status")
+                .setParameter("status", status)
+                .getResultList();
+        if (tasks != null && !tasks.isEmpty()) {
+            for (TaskEntity t : tasks) {
+                t.getTaskId();
+            }
+        }
+        return tasks;
+    }   
 
 }

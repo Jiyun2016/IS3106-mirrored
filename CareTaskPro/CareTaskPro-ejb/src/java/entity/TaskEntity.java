@@ -1,7 +1,6 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -19,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import util.enumeration.Category;
 import util.enumeration.TaskStatus;
+import util.stringConstant.TaskStatusString;
 
 /**
  *
@@ -44,8 +44,7 @@ public class TaskEntity implements Serializable {
     @Column(nullable = false)
     private Date endDateTime;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TaskStatus taskStatus;
+    private String taskStatus;
     
     @OneToOne(mappedBy = "taskEntity",optional = true)
     @JoinColumn(nullable = true)
@@ -63,14 +62,14 @@ public class TaskEntity implements Serializable {
     private ReviewEntity reviewEntity;
 
     public TaskEntity() {
-        this.taskStatus = taskStatus.PENDING;
+        this.taskStatus = TaskStatusString.PENDING;
 //        this.paymentEntity = new PaymentEntity();
 //        this.reviewEntity = new ReviewEntity();
 //        this.helperEntity = new HelperEntity();
     }
     
      public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, RequesterEntity requesterEntity, List<HelperEntity> preferredHelpers) {
-        this.taskStatus = taskStatus.PENDING;
+        this.taskStatus = TaskStatusString.PENDING;
         this.category = category;
         this.description = description;
         this.startDateTime = startDateTime;
@@ -79,7 +78,7 @@ public class TaskEntity implements Serializable {
         this.preferredHelpers = preferredHelpers;
     }
 
-    public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, TaskStatus taskStatus,  RequesterEntity requesterEntity) {
+    public TaskEntity(Category category, String description, Date startDateTime, Date endDateTime, String taskStatus,  RequesterEntity requesterEntity) {
         this.category = category;
         this.description = description;
         this.startDateTime = startDateTime;
@@ -157,11 +156,11 @@ public class TaskEntity implements Serializable {
         this.endDateTime = endDateTime;
     }
 
-    public TaskStatus getTaskStatus() {
+    public String getTaskStatus() {
         return taskStatus;
     }
 
-    public void setTaskStatus(TaskStatus taskStatus) {
+    public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
     }
 

@@ -19,8 +19,8 @@ import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import util.enumeration.Category;
-import util.enumeration.Gender;
-import util.enumeration.TaskStatus;
+import util.stringConstant.GenderString;
+import util.stringConstant.TaskStatusString;
 
 /**
  *
@@ -78,24 +78,24 @@ public class DataInitSessionBean {
     }
 
     private void initializeRequesterData() {
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName1", "lastName1", Gender.MALE, "email1", "61119111", "password1", "address1", "creditCardName1", "5541", "1", "2021", "001"));
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName2", "lastName2", Gender.FEMALE, "email2", "62229222", "password2", "address2", "creditCardName2", "5542", "2", "2022", "002"));
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName3", "lastName3", Gender.MALE, "email3", "63339333", "password3", "address3", "creditCardName3", "5543", "3", "2023", "003"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName1", "lastName1", "MALE", "email1", "61119111", "password1", "address1", "creditCardName1", "5541", "1", "2021", "001"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName2", "lastName2","FEMALE", "email2", "62229222", "password2", "address2", "creditCardName2", "5542", "2", "2022", "002"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName3", "lastName3", "MALE", "email3", "63339333", "password3", "address3", "creditCardName3", "5543", "3", "2023", "003"));
     }
 
     private void initializeHelperData() {
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName1", "lastName1", Gender.MALE, "email1", "91116111", "password1", "address1", true, "certName1", "certNum1", "bankAcct1"));
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName2", "lastName2", Gender.FEMALE, "email2", "92226222", "password2", "address2", false, "certName2", "certNum2", "bankAcct2"));
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName3", "lastName3", Gender.MALE, "email3", "93336333", "password3", "address3", true, "certName3", "certNum3", "bankAcct3"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName1", "lastName1", "MALE", "email1", "91116111", "password1", "address1", true, "certName1", "certNum1", "bankAcct1"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName2", "lastName2", "FEMALE", "email2", "92226222", "password2", "address2", false, "certName2", "certNum2", "bankAcct2"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName3", "lastName3", "MALE", "email3", "93336333", "password3", "address3", true, "certName3", "certNum3", "bankAcct3"));
     }
 
     private void initializeTaskData() {
-        RequesterEntity r = requesterControllerLocal.createNewRequester(new RequesterEntity("firstName4", "lastName4", Gender.MALE, "email4", "61119444", "password4", "address4", "creditCardName4", "5542", "2", "2022", "003"));
-        taskControllerLocal.createNewTask(new TaskEntity(Category.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
-        taskControllerLocal.createNewTask(new TaskEntity(Category.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
-        taskControllerLocal.createNewTask(new TaskEntity(Category.HEALTHCARE, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
-        taskControllerLocal.createNewTask(new TaskEntity(Category.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
-        taskControllerLocal.createNewTask(new TaskEntity(Category.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatus.PENDING, r));
+        RequesterEntity r = requesterControllerLocal.createNewRequester(new RequesterEntity("firstName4", "lastName4", GenderString.MALE, "email4", "61119444", "password4", "address4", "creditCardName4", "5542", "2", "2022", "003"));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.HEALTHCARE, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
+        taskControllerLocal.createNewTask(new TaskEntity(Category.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 420000)), TaskStatusString.PENDING, r));
     }
 
 }

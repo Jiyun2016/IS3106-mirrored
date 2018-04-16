@@ -22,6 +22,7 @@ import util.enumeration.Category;
 import util.enumeration.TaskStatus;
 import util.exception.CancelTaskException;
 import util.exception.TaskEntityNotFoundException;
+import util.stringConstant.TaskStatusString;
 
 /**
  *
@@ -72,7 +73,7 @@ public class TaskController implements TaskControllerLocal {
     }
 
     @Override
-    public List<TaskEntity> retrieveTaskByStatusByRequesterId(Long requesterId, TaskStatus status) throws TaskEntityNotFoundException {
+    public List<TaskEntity> retrieveTaskByStatusByRequesterId(Long requesterId, String status) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
         tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status AND task.requesterEntity.requesterId = :requesterId")
                 .setParameter("status", status)
@@ -90,7 +91,7 @@ public class TaskController implements TaskControllerLocal {
     }
 
     @Override
-    public List<TaskEntity> retrieveTaskByStatusByHelperId(Long helperId, TaskStatus status) throws TaskEntityNotFoundException {
+    public List<TaskEntity> retrieveTaskByStatusByHelperId(Long helperId, String status) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
         tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status AND task.requesterEntity.requesterId = :helperId")
                 .setParameter("status", status)
@@ -112,7 +113,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
         tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.assignedHelper.id = :helperId AND task.taskStatus = :status")
                 .setParameter("helperId", helperId.toString())
-                .setParameter("status", TaskStatus.ASSIGNED)
+                .setParameter("status", TaskStatusString.ASSIGNED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -132,7 +133,7 @@ public class TaskController implements TaskControllerLocal {
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.assignedHelper.id = :helperId AND task.taskStatus = :status")
                 .setParameter("helperId", helperId.toString())
-                .setParameter("status", TaskStatus.COMPLETED)
+                .setParameter("status", TaskStatusString.COMPLETED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -189,7 +190,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.ASSIGNED)
+                .setParameter("inStatus", TaskStatusString.ASSIGNED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -208,7 +209,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.PENDING)
+                .setParameter("inStatus", TaskStatusString.PENDING)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -227,7 +228,7 @@ public class TaskController implements TaskControllerLocal {
         List<TaskEntity> tasks;
 
         tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.taskStatus = :inStatus")
-                .setParameter("inStatus", TaskStatus.COMPLAINED)
+                .setParameter("inStatus", TaskStatusString.COMPLAINED)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {
@@ -267,7 +268,7 @@ public class TaskController implements TaskControllerLocal {
         HelperEntity helper = em.find(HelperEntity.class, HelperId);
         TaskEntity task = em.find(TaskEntity.class, taskId);
         task.setHelperEntity(helper);
-        task.setTaskStatus(TaskStatus.ASSIGNED);
+        task.setTaskStatus(TaskStatusString.ASSIGNED);
         helper.getTaskEntities().add(task);
         em.merge(task);
         em.merge(helper);
@@ -281,7 +282,7 @@ public class TaskController implements TaskControllerLocal {
     public TaskEntity setTaskAsComplained(Long taskId) {
 
         TaskEntity task = em.find(TaskEntity.class, taskId);
-        task.setTaskStatus(TaskStatus.COMPLAINED);
+        task.setTaskStatus(TaskStatusString.COMPLAINED);
 
         em.merge(task);
         task = em.find(TaskEntity.class, taskId);
@@ -294,8 +295,8 @@ public class TaskController implements TaskControllerLocal {
 
         TaskEntity task = em.find(TaskEntity.class, taskId);
 
-        if (task.getTaskStatus().equals(TaskStatus.PENDING)) {
-            task.setTaskStatus(TaskStatus.CANCELLED);
+        if (task.getTaskStatus().equals(TaskStatusString.PENDING)) {
+            task.setTaskStatus(TaskStatusString.CANCELLED);
             System.err.println("1 ^^^^^^^^taskcontroller: task status is " + task.getTaskStatus());
             em.merge(task);
             task = em.find(TaskEntity.class, taskId);

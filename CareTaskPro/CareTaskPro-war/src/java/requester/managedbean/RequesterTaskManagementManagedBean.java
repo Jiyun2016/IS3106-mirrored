@@ -18,7 +18,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -29,6 +28,7 @@ import util.enumeration.Category;
 import util.enumeration.TaskStatus;
 import util.exception.CancelTaskException;
 import util.exception.TaskEntityNotFoundException;
+import util.stringConstant.TaskStatusString;
 
 /**
  *
@@ -112,7 +112,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
     public void viewPendingTask() {
         try {
 //            System.err.println(".....view pending task trigerred");
-            setTaskEntitiesPending(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatus.PENDING));
+            setTaskEntitiesPending(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatusString.PENDING));
 
         } catch (TaskEntityNotFoundException ex) {
             //          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No task found: " + ex.getMessage(), null));
@@ -122,7 +122,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
 
     public void viewAssignedTask() {
         try {
-              setTaskEntitiesAssigned(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatus.ASSIGNED));
+              setTaskEntitiesAssigned(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatusString.ASSIGNED));
 
         } catch (TaskEntityNotFoundException ex) {
             //          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No task found: " + ex.getMessage(), null));
@@ -132,7 +132,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
 
     public void viewCompletedTask() {
         try {
-            setTaskEntitiesCompleted(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatus.COMPLETED));
+            setTaskEntitiesCompleted(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatusString.COMPLETED));
 
         } catch (TaskEntityNotFoundException ex) {
 //            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No task found: " + ex.getMessage(), null));
@@ -142,7 +142,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
 
     public void viewComplainedTask() {
         try {
-            setTaskEntitiesComplained(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatus.COMPLAINED));
+            setTaskEntitiesComplained(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatusString.COMPLAINED));
 
         } catch (TaskEntityNotFoundException ex) {
             //         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No task found: " + ex.getMessage(), null));

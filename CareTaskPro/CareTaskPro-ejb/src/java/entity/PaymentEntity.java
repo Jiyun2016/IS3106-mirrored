@@ -28,8 +28,7 @@ public class PaymentEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus;
+    private String paymentStatus;
     @Column(precision = 18, scale = 2,nullable = false)
     private BigDecimal paymentAmount;
     @Column(precision = 18, scale = 2,nullable = false)
@@ -46,7 +45,7 @@ public class PaymentEntity implements Serializable {
     public PaymentEntity() {
     }
 
-    public PaymentEntity(TaskEntity taskEntity, PaymentStatus paymentStatus, BigDecimal paymentAmount, BigDecimal helperSalary, Date paymentTime, BigDecimal companyRevenue) {
+    public PaymentEntity(TaskEntity taskEntity, String paymentStatus, BigDecimal paymentAmount, BigDecimal helperSalary, Date paymentTime, BigDecimal companyRevenue) {
         this.taskEntity = taskEntity;
         this.paymentStatus = paymentStatus;
         this.paymentAmount = paymentAmount;
@@ -88,11 +87,11 @@ public class PaymentEntity implements Serializable {
         return "entity.PaymentEntity[ paymentId=" + paymentId + " ]";
     }
 
-    public PaymentStatus getPaymentStatus() {
+    public String getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
+    public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 

@@ -45,9 +45,9 @@ public interface TaskControllerLocal {
 
     public TaskEntity setTaskAsComplained(Long taskId);
 
-    public List<TaskEntity> retrieveTaskByStatusByRequesterId(Long requesterId, TaskStatus status) throws TaskEntityNotFoundException;
+    public List<TaskEntity> retrieveTaskByStatusByRequesterId(Long requesterId, String status) throws TaskEntityNotFoundException;
 
-    public List<TaskEntity> retrieveTaskByStatusByHelperId(Long helperId, TaskStatus status) throws TaskEntityNotFoundException;
+    public List<TaskEntity> retrieveTaskByStatusByHelperId(Long helperId, String status) throws TaskEntityNotFoundException;
 
     public TaskEntity setTaskAsCancelled(Long taskId) throws CancelTaskException;
 

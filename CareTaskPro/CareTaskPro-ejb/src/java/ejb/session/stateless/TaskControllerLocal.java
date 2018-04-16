@@ -57,9 +57,13 @@ public interface TaskControllerLocal {
 
     public TaskEntity updateTaskEntityByRequester(TaskEntity ta,Long taId);
 
+<<<<<<< HEAD
     public List<TaskEntity> retrieveTasksByStatus(TaskStatus status);
     
     public TaskEntity assignHelperToTask(Long HelperId, Long taskId)throws NoEnoughBufferForHelperException , TaskTimeClashException;
 
+=======
+    public List<TaskEntity> retrieveTasksByStatus(String status);
+>>>>>>> 4fcb0c200f7b5c8a5c2055ee61313d046395718f
 
 }

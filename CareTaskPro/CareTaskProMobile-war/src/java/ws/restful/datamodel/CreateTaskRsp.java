@@ -25,7 +25,7 @@ public class CreateTaskRsp {
     /**
      * @return the taskId
      */
-    public long getTaskId() {
+    public Long getTaskId() {
         return taskId;
     }
 

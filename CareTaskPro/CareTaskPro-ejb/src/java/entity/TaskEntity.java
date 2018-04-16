@@ -32,8 +32,13 @@ public class TaskEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
     @Column(length = 32, nullable = false)
+<<<<<<< HEAD
     private String category;
     
+=======
+    //@Enumerated(EnumType.STRING)
+    private String category;
+>>>>>>> 4fcb0c200f7b5c8a5c2055ee61313d046395718f
     @Column(length = 32, nullable = false)
     private String description;
     @Temporal(TemporalType.TIMESTAMP)
@@ -77,7 +82,11 @@ public class TaskEntity implements Serializable {
         this.preferredHelpers = preferredHelpers;
     }
 
+<<<<<<< HEAD
     public TaskEntity(String category, String description, Date startDateTime, Date endDateTime, String taskStatus,  RequesterEntity requesterEntity, HelperEntity helperEntity) {
+=======
+    public TaskEntity(String category, String description, Date startDateTime, Date endDateTime, String taskStatus,  RequesterEntity requesterEntity) {
+>>>>>>> 4fcb0c200f7b5c8a5c2055ee61313d046395718f
         this.category = category;
         this.description = description;
         this.startDateTime = startDateTime;

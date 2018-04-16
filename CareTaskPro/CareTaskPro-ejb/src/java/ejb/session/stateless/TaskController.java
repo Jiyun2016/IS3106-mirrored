@@ -310,7 +310,7 @@ public class TaskController implements TaskControllerLocal {
     }
 
     @Override
-    public List<TaskEntity> retrieveTasksByStatus(TaskStatus status) {
+    public List<TaskEntity> retrieveTasksByStatus(String status) {
         List<TaskEntity> tasks;
         tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status")
                 .setParameter("status", status)

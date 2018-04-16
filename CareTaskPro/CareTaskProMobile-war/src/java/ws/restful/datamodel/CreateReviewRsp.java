@@ -25,7 +25,7 @@ public class CreateReviewRsp {
     /**
      * @return the reviewId
      */
-    public long getReviewId() {
+    public Long getReviewId() {
         return reviewId;
     }
 

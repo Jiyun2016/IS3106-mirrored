@@ -77,7 +77,7 @@ public class TaskResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveTasksByStatus(@PathParam("status") String status) {
         try {
-            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTasksByStatus(TaskStatus.valueOf(status));
+            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTasksByStatus(status);
             
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(TaskEntity task: taskEntities) {

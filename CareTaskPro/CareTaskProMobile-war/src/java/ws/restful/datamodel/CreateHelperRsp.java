@@ -25,7 +25,7 @@ public class CreateHelperRsp {
     /**
      * @return the helperId
      */
-    public long getHelperId() {
+    public Long getHelperId() {
         return helperId;
     }
 

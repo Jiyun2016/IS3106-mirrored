@@ -25,7 +25,7 @@ public class CreateRequesterRsp {
     /**
      * @return the requesterId
      */
-    public long getRequesterId() {
+    public Long getRequesterId() {
         return requesterId;
     }
 

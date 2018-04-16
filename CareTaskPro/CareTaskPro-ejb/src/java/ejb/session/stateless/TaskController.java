@@ -9,6 +9,7 @@ import entity.HelperEntity;
 import entity.PaymentEntity;
 import entity.ReviewEntity;
 import entity.TaskEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -21,7 +22,9 @@ import util.constant.TimeConstant;
 import util.enumeration.Category;
 import util.enumeration.TaskStatus;
 import util.exception.CancelTaskException;
+import util.exception.NoEnoughBufferForHelperException;
 import util.exception.TaskEntityNotFoundException;
+import util.exception.TaskTimeClashException;
 import util.stringConstant.TaskStatusString;
 
 /**
@@ -244,7 +247,7 @@ public class TaskController implements TaskControllerLocal {
 
     @Override
     public TaskEntity updateTaskEntityByRequester(TaskEntity ta, Long taId) {
-        
+
         TaskEntity t = em.find(TaskEntity.class, taId);
         t.setCategory(ta.getCategory());
         t.setDescription(ta.getDescription());
@@ -261,21 +264,6 @@ public class TaskController implements TaskControllerLocal {
         ta = em.find(TaskEntity.class, ta.getTaskId());
 
         return ta;
-    }
-
-    @Override
-    public TaskEntity assignHelperToTask(Long HelperId, Long taskId) {
-        HelperEntity helper = em.find(HelperEntity.class, HelperId);
-        TaskEntity task = em.find(TaskEntity.class, taskId);
-        task.setHelperEntity(helper);
-        task.setTaskStatus(TaskStatusString.ASSIGNED);
-        helper.getTaskEntities().add(task);
-        em.merge(task);
-        em.merge(helper);
-        PaymentEntity payment = paymentControllerLocal.createPaymentEntity(task);
-        task = em.find(TaskEntity.class, taskId);
-
-        return task;
     }
 
     @Override
@@ -320,7 +308,7 @@ public class TaskController implements TaskControllerLocal {
         return task;
 
     }
-    
+
     @Override
     public List<TaskEntity> retrieveTasksByStatus(TaskStatus status) {
         List<TaskEntity> tasks;
@@ -333,6 +321,68 @@ public class TaskController implements TaskControllerLocal {
             }
         }
         return tasks;
-    }   
+    }
+
+    @Override
+    public TaskEntity assignHelperToTask(Long helperId, Long taskId) throws NoEnoughBufferForHelperException, TaskTimeClashException {
+        HelperEntity helper = em.find(HelperEntity.class, helperId);
+        TaskEntity task = em.find(TaskEntity.class, taskId);
+
+        if (!checkEnoughBufferTimeForHelper(task)) {
+            throw new NoEnoughBufferForHelperException("The task to accept needs to be more than " + TimeConstant.TIME_BUFFER_FOR_HELPER_BEFORE_TASKSTART + " minites from now.");
+        }
+
+        List<TaskEntity> clashedTask = checkTimeClashForHelper(task, helperId);
+        if (!clashedTask.isEmpty()) {
+            String clashedTaskIds = "";
+            for (TaskEntity t : clashedTask) {
+                clashedTaskIds = clashedTaskIds + " " + t.getTaskId().toString();
+            }
+            throw new TaskTimeClashException("Tasks with ID" + clashedTaskIds + " clash with current task!");
+        }
+
+        task.setHelperEntity(helper);
+        task.setTaskStatus(TaskStatusString.ASSIGNED);
+        helper.getTaskEntities().add(task);
+        em.merge(task);
+        em.merge(helper);
+        PaymentEntity payment = paymentControllerLocal.createPaymentEntity(task);
+        task = em.find(TaskEntity.class, taskId);
+
+        return task;
+    }
+
+    private List<TaskEntity> checkTimeClashForHelper(TaskEntity taskEntityToCheck, Long helperId) {
+        long startTimeToCheck = taskEntityToCheck.getStartDateTime().getTime();
+        long endTimeToCheck = taskEntityToCheck.getEndDateTime().getTime();
+
+        List<TaskEntity> clashedTaskEntities = new ArrayList<TaskEntity>();
+        try {
+            List<TaskEntity> taskEntitiesAssigned = retrieveTaskByStatusByHelperId(helperId, TaskStatusString.ASSIGNED);
+
+            for (TaskEntity t : taskEntitiesAssigned) {
+
+                if (!t.getTaskId().equals(taskEntityToCheck.getTaskId())
+                        && ((((startTimeToCheck - t.getStartDateTime().getTime()) <= 0)
+                        && ((endTimeToCheck - t.getStartDateTime().getTime()) >= 0))
+                        || (((startTimeToCheck - t.getStartDateTime().getTime()) >= 0)
+                        && ((startTimeToCheck - t.getEndDateTime().getTime()) <= 0)))) {
+                    clashedTaskEntities.add(t);
+                }
+
+            }
+            return clashedTaskEntities;
+        } catch (TaskEntityNotFoundException ex) {
+            return new ArrayList<TaskEntity>();
+        }
+    }
+
+    private boolean checkEnoughBufferTimeForHelper(TaskEntity taskEntityToCheck) {
+        long startTimeToCheck = taskEntityToCheck.getStartDateTime().getTime();
+        if (startTimeToCheck - System.currentTimeMillis() <= TimeConstant.TIME_BUFFER_FOR_HELPER_BEFORE_TASKSTART) {
+            return false;
+        }
+        return true;
+    }
 
 }

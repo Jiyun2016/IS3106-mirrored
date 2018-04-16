@@ -12,7 +12,9 @@ import javax.ejb.Local;
 import util.enumeration.Category;
 import util.enumeration.TaskStatus;
 import util.exception.CancelTaskException;
+import util.exception.NoEnoughBufferForHelperException;
 import util.exception.TaskEntityNotFoundException;
+import util.exception.TaskTimeClashException;
 
 /**
  *
@@ -40,9 +42,7 @@ public interface TaskControllerLocal {
     public TaskEntity updateTaskEntity(TaskEntity taskEntity);
 
     public TaskEntity createNewTask(TaskEntity taskEntity);
-
-    public TaskEntity assignHelperToTask(Long HelperId, Long taskId);
-
+    
     public TaskEntity setTaskAsComplained(Long taskId);
 
     public List<TaskEntity> retrieveTaskByStatusByRequesterId(Long requesterId, String status) throws TaskEntityNotFoundException;
@@ -58,5 +58,8 @@ public interface TaskControllerLocal {
     public TaskEntity updateTaskEntityByRequester(TaskEntity ta,Long taId);
 
     public List<TaskEntity> retrieveTasksByStatus(TaskStatus status);
+    
+    public TaskEntity assignHelperToTask(Long HelperId, Long taskId)throws NoEnoughBufferForHelperException , TaskTimeClashException;
+
 
 }

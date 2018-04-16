@@ -46,7 +46,7 @@ public class helperLoginManagedBean {
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentHelperEntity", currentHelperEntity);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("HelperHomepage.xhtml");            
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../HelperWeb/HelperHomepage.xhtml");            
         }
         catch(WrongCredentialException|HelperNotFoundException|IOException ex)
         {

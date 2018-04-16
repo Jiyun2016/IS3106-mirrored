@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -31,8 +32,7 @@ public class HelperEntity implements Serializable {
     @Column(length = 32, nullable = false)
     private String lastName;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private String gender;
     @Column(length = 32, nullable = false, unique = true)
     private String email;
     @Column(length = 8, nullable = false, unique = true)
@@ -50,8 +50,8 @@ public class HelperEntity implements Serializable {
     @Column(length = 32, nullable = false)
     private String bankAccountNumber;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private HelperRole helperRole;
+    private String helperRole;
+    private BigDecimal chargeRate;
     
     @OneToMany(mappedBy = "helperEntity")
     private List<TaskEntity> taskEntities;
@@ -63,7 +63,7 @@ public class HelperEntity implements Serializable {
         recommendedTaskEntities = new ArrayList<>();
     }
 
-    public HelperEntity(String firstName, String lastName, Gender gender, String email, String phone, String password, String address, Boolean isCertified, String certName, String certNum, String bankAccountNumber) {
+    public HelperEntity(String firstName, String lastName, String gender, String email, String phone, String password, String address, Boolean isCertified, String certName, String certNum, String bankAccountNumber) {
         this();
         
         this.firstName = firstName;
@@ -79,10 +79,12 @@ public class HelperEntity implements Serializable {
         this.bankAccountNumber = bankAccountNumber;
 
         if(isCertified) {
-            this.helperRole = HelperRole.PROFESSIONAL;
+            this.helperRole = "PROFESSIONAL";
+            this.chargeRate = new BigDecimal(20);
         }
         else {
-            this.helperRole = HelperRole.NONPROFESSIONAL;
+            this.helperRole = "NONPROFESSIONAL";
+            this.chargeRate = new BigDecimal(15);
         }
     }
 
@@ -135,11 +137,11 @@ public class HelperEntity implements Serializable {
         this.lastName = lastName;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
     
@@ -207,11 +209,11 @@ public class HelperEntity implements Serializable {
         this.bankAccountNumber = bankAccountNumber;
     }
 
-    public HelperRole getHelperRole() {
+    public String getHelperRole() {
         return helperRole;
     }
 
-    public void setHelperRole(HelperRole helperRole) {
+    public void setHelperRole(String helperRole) {
         this.helperRole = helperRole;
     }
 
@@ -229,6 +231,20 @@ public class HelperEntity implements Serializable {
 
     public void setRecommendedTaskEntities(List<TaskEntity> recommendedTaskEntities) {
         this.recommendedTaskEntities = recommendedTaskEntities;
+    }
+
+    /**
+     * @return the chargeRate
+     */
+    public BigDecimal getChargeRate() {
+        return chargeRate;
+    }
+
+    /**
+     * @param chargeRate the chargeRate to set
+     */
+    public void setChargeRate(BigDecimal chargeRate) {
+        this.chargeRate = chargeRate;
     }
 
 }

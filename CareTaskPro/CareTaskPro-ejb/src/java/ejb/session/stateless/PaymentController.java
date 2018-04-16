@@ -19,6 +19,7 @@ import util.constant.CompanyConstant;
 import util.constant.TimeConstant;
 import util.enumeration.PaymentStatus;
 import util.exception.PaymentEntityNotFoundException;
+import util.stringConstant.PaymentStatusString;
 
 /**
  *
@@ -35,13 +36,13 @@ public class PaymentController implements PaymentControllerLocal {
 
     @Override
     public PaymentEntity createPaymentEntity(TaskEntity taskEntity) {
-        BigDecimal chargeRate = taskEntity.getHelperEntity().getHelperRole().getChargeRate();
+        BigDecimal chargeRate = taskEntity.getHelperEntity().getChargeRate();
         Long numOfHour = (taskEntity.getEndDateTime().getTime() - taskEntity.getStartDateTime().getTime()) / TimeConstant.MILLISEC_PER_HOUR;
         BigDecimal paymentAmount = chargeRate.multiply((new BigDecimal(numOfHour)));
         BigDecimal companyRevenue = paymentAmount.multiply(CompanyConstant.COMPANY_CHARGE_PERCENTAGE);
         BigDecimal helperSalary = paymentAmount.subtract(companyRevenue);
 
-        PaymentEntity paymentEntity = new PaymentEntity(taskEntity, PaymentStatus.PENDING, paymentAmount, helperSalary, new Date(System.currentTimeMillis()), companyRevenue);
+        PaymentEntity paymentEntity = new PaymentEntity(taskEntity, PaymentStatusString.PENDING, paymentAmount, helperSalary, new Date(System.currentTimeMillis()), companyRevenue);
 
         em.persist(paymentEntity);
         em.flush();
@@ -93,7 +94,7 @@ public class PaymentController implements PaymentControllerLocal {
 
     public void suspendPayment(Long paymentId) {
         PaymentEntity paymentEntity = em.find(PaymentEntity.class, paymentId);
-        paymentEntity.setPaymentStatus(PaymentStatus.SUSPENDED);
+        paymentEntity.setPaymentStatus(PaymentStatusString.SUSPENDED);
         em.merge(paymentEntity);
     }
     

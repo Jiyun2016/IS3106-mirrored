@@ -5,9 +5,7 @@
  */
 package ejb.session.stateless;
 
-import entity.PaymentEntity;
 import entity.TaskEntity;
-import java.util.Date;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -17,8 +15,8 @@ import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import util.enumeration.PaymentStatus;
 import util.enumeration.TaskStatus;
+import util.stringConstant.TaskStatusString;
 
 /**
  *
@@ -53,7 +51,7 @@ public class NoResponderAutoCloseTimerSessionBean implements NoResponderAutoClos
 
             System.out.println("********** NoResponderAutoCloseTimer.handleTimeout(): the task to be closed is " + timer.getInfo().toString());
 
-            taskEntity.setTaskStatus(TaskStatus.CANCELLED);
+            taskEntity.setTaskStatus(TaskStatusString.CANCELLED);
             em.merge(taskEntity);
 
         }

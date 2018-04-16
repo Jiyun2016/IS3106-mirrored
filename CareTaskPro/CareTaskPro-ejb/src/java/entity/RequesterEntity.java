@@ -29,8 +29,7 @@ public class RequesterEntity implements Serializable {
     @Column(length = 32, nullable = false)
     private String lastName;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private String gender;
     @Column(length = 32, nullable = false, unique = true)
     private String email;
     @Column(length = 18, nullable = false, unique = true)
@@ -57,7 +56,7 @@ public class RequesterEntity implements Serializable {
         this.taskEntities = new ArrayList<>();
     }
 
-    public RequesterEntity(String firstName, String lastName, Gender gender, String email, String phone, String password, String address, String creditCardNum, String creditCardName, String creditCardExpiryMonth, String creditCardExpiryYear, String creditCardCVC) {
+    public RequesterEntity(String firstName, String lastName, String gender, String email, String phone, String password, String address, String creditCardNum, String creditCardName, String creditCardExpiryMonth, String creditCardExpiryYear, String creditCardCVC) {
         this();
  
         this.firstName = firstName;
@@ -152,14 +151,14 @@ public class RequesterEntity implements Serializable {
     /**
      * @return the gender
      */
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
     /**
      * @param gender the gender to set
      */
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

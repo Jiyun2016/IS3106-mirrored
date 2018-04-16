@@ -7,7 +7,6 @@ package ejb.session.stateless;
 
 import entity.PaymentEntity;
 import entity.TaskEntity;
-import java.util.Date;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -17,8 +16,9 @@ import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import util.enumeration.PaymentStatus;
 import util.enumeration.TaskStatus;
+import util.stringConstant.PaymentStatusString;
+import util.stringConstant.TaskStatusString;
 
 /**
  *
@@ -56,13 +56,13 @@ public class AutoPaymentTransactionTimerSessionBean implements AutoPaymentTransa
         Long paymentId = paymentEntity.getPaymentId();
 
         if (taskEntity.getTaskStatus().equals(TaskStatus.COMPLAINED)) {
-            paymentEntity.setPaymentStatus(PaymentStatus.SUSPENDED);
+            paymentEntity.setPaymentStatus(PaymentStatusString.SUSPENDED);
             em.merge(paymentEntity);
 
         } else {
-            paymentEntity.setPaymentStatus(PaymentStatus.COMPLETED);
+            paymentEntity.setPaymentStatus(PaymentStatusString.COMPLETED);
             em.merge(paymentEntity);
-            taskEntity.setTaskStatus(TaskStatus.COMPLETED);
+            taskEntity.setTaskStatus(TaskStatusString.COMPLETED);
             em.merge(taskEntity);
         }
 

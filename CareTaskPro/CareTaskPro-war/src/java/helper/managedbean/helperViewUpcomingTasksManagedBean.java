@@ -16,6 +16,11 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.ScheduleEvent;
+import org.primefaces.model.ScheduleModel;
 import util.exception.TaskEntityNotFoundException;
 
 /**
@@ -37,8 +42,15 @@ public class helperViewUpcomingTasksManagedBean implements Serializable{
     private HelperEntity helper;
     private TaskEntity taskToView;
     
-    
+    private ScheduleModel eventModel;
+ 
+    private ScheduleEvent event = new DefaultScheduleEvent();
 
+    public helperViewUpcomingTasksManagedBean() {
+        this.taskToView = new TaskEntity();
+    }
+    
+    
     public helperViewUpcomingTasksManagedBean(List<TaskEntity> tasks, HelperEntity helper,TaskEntity taskToView) {
         this.helper = helper;
         this.tasks = tasks;
@@ -50,13 +62,20 @@ public class helperViewUpcomingTasksManagedBean implements Serializable{
     @PostConstruct
     public void init(){
         try{
+        eventModel = new DefaultScheduleModel();
         helper = (HelperEntity)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity");
         tasks = taskController.retrieveTaskInProcessByAssignedHelperId(helper.getHelperId());
+        for(TaskEntity t: tasks){
+            eventModel.addEvent(new DefaultScheduleEvent(t.getCategory(),t.getStartDateTime(),t.getEndDateTime(),t.getRequesterEntity()));
+        }
         }catch(TaskEntityNotFoundException ex){
             
         }
     }
 
+     public void onEventSelect(SelectEvent selectEvent) {
+        setEvent((ScheduleEvent) selectEvent.getObject());
+    }
     /**
      * @return the tasks
      */
@@ -111,5 +130,33 @@ public class helperViewUpcomingTasksManagedBean implements Serializable{
      */
     public void setTaskToView(TaskEntity taskToView) {
         this.taskToView = taskToView;
+    }
+
+    /**
+     * @return the eventModel
+     */
+    public ScheduleModel getEventModel() {
+        return eventModel;
+    }
+
+    /**
+     * @param eventModel the eventModel to set
+     */
+    public void setEventModel(ScheduleModel eventModel) {
+        this.eventModel = eventModel;
+    }
+
+    /**
+     * @return the event
+     */
+    public ScheduleEvent getEvent() {
+        return event;
+    }
+
+    /**
+     * @param event the event to set
+     */
+    public void setEvent(ScheduleEvent event) {
+        this.event = event;
     }
 }

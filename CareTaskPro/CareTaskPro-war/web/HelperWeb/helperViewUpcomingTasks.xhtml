@@ -6,16 +6,16 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:define name="center">
-        
-       
+
+
         <h:form>
             <p:growl id="messages" showDetail="true" />
 
             <h:panelGrid columnClasses="value">
                 <h3 style="margin-top: 0">My Task Schedule</h3>
-                <p:schedule id="schedule" value="#{helperViewUpcomingTasksManagedBean.tasks}" widgetVar="myschedule" timeZone="GMT+2">
+                <p:schedule id="schedule" value="#{helperViewUpcomingTasksManagedBean.eventModel}" widgetVar="myschedule" timeZone="GMT+8">
 
-                    <p:ajax event="eventSelect" listener="#{helperViewUpcomingTasksManagedBean.taskToView}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                    <p:ajax event="eventSelect" listener="#{helperViewUpcomingTasksManagedBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
 
                 </p:schedule>
             </h:panelGrid>
@@ -23,25 +23,20 @@
             <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
                 <h:panelGrid id="eventDetails" columns="2">
                     <p:outputLabel for="category" value="Category:" />
-                    <h:outputText id="category" value="#{helperViewUpcomingTasksManagedBean.taskToView.category}"/>
+                    <h:outputText id="category" value="#{helperViewUpcomingTasksManagedBean.event.title}"/>
 
                     <p:outputLabel for="from" value="From:" />
-                    <h:outputText id="from" value="#{helperViewUpcomingTasksManagedBean.taskToView.startDateTime}"/>
-                   
+                    <h:outputText id="from" value="#{helperViewUpcomingTasksManagedBean.event.startDate}"/>
+
                     <p:outputLabel for="to" value="To:" />
-                    <h:outputText id="to" value="#{helperViewUpcomingTasksManagedBean.taskToView.endDateTime}"/>
+                    <h:outputText id="to" value="#{helperViewUpcomingTasksManagedBean.event.endDate}"/>
                     
-                    <p:outputLabel for="description" value="Description:" />
-                    <h:outputText id="description" value="#{helperViewUpcomingTasksManagedBean.taskToView.description}"/>
-                    
-                    <p:outputLabel for="requesterAddress" value="Requester Address:" />
-                    <h:outputText id="requesterAddress" value="#{helperViewUpcomingTasksManagedBean.taskToView.requesterEntity.address}"/>
-                    
-                    <p:outputLabel for="requesterPhone" value="Requester Phone:" />
-                    <h:outputText id="requesterPhone" value="#{helperViewUpcomingTasksManagedBean.taskToView.requesterEntity.phone}"/>
+                    <p:outputLabel for="address" value="Address:" />
+                    <h:outputText id="address" value="#{helperViewUpcomingTasksManagedBean.event.data.address}"/>
 
                 </h:panelGrid>
             </p:dialog>  
+            
         </h:form>
     </ui:define>
 

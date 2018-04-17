@@ -8,13 +8,13 @@
 
     <ui:define name="center">
         <h:form id="preferredTasksDataTable">
-            <p:dataTable id="dataTablePreferredTasks" widgetVar="dataTablePreferredTasks" value="#{helperViewAvailableTasksManagedBean.tasksChoosenAsPreferredHelper}" 
+            <p:dataTable id="dataTablePreferredTasks" widgetVar="dataTablePreferredTasks" value="#{viewAvailableTasksManagedBean.tasksChoosenAsPreferredHelper}" 
                          var="preferredTask" emptyMessage="No tasks choosen as preferred helper for now"
                          rowKey="#{preferredTask.taskId}" rowIndexVar="row" 
                          rows="10" paginator="true" 
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                          rowsPerPageTemplate="10,20,50">  
-                <!--                         can add in filterValue-->
+                
 
                 <p:column headerText="Task ID" sortBy="#{preferredTask.taskId}" filterBy="#{preferredTask.taskId}" filterMatchMode="contains">
                     <h:outputText value="#{preferredTask.taskId}" />
@@ -28,13 +28,13 @@
                     <h:outputText value="#{preferredTask.startDateTime}" />
                 </p:column>
 
-                <p:column headerText="Task Ending Date/Time" sortBy="#{preferredTask.startDateTime}" filterBy="#{preferredTask.startDateTime}" filterMatchMode="contains">
-                    <h:outputText value="#{preferredTask.startDateTime}" />
+                <p:column headerText="Task Ending Date/Time" sortBy="#{preferredTask.endDateTime}" filterBy="#{preferredTask.endDateTime}" filterMatchMode="contains">
+                    <h:outputText value="#{preferredTask.endDateTime}" />
                 </p:column>
                 
                 <p:column headerText="Action" >
                     <p:commandButton update="formViewDescription" oncomplete="PF('dialogViewDescription').show()" icon="ui-icon-document" title="View">
-                        <f:setPropertyActionListener value="#{preferredTask.description}" target="#{helperViewAvailableTasksManagedBean.selectedTaskToView}" />
+                        <f:setPropertyActionListener value="#{preferredTask.description}" target="#{viewAvailableTasksManagedBean.selectedTaskToView}" />
                     </p:commandButton>
  
                 </p:column>
@@ -43,7 +43,7 @@
 
         </h:form>
         <h:form id="tasksDataTable">
-            <p:dataTable id="dataTableTasks" widgetVar="dataTableTasks" value="#{helperViewAvailableTasksManagedBean.tasksNotAssigned}" 
+            <p:dataTable id="dataTableTasks" widgetVar="dataTableTasks" value="#{viewAvailableTasksManagedBean.tasksNotAssigned}" 
                          var="task"
                          rowKey="#{task.taskId}" rowIndexVar="row" 
                          rows="10" paginator="true" 
@@ -63,19 +63,20 @@
                     <h:outputText value="#{task.startDateTime}" />
                 </p:column>
 
-                <p:column headerText="Task Ending Date/Time" sortBy="#{task.startDateTime}" filterBy="#{task.startDateTime}" filterMatchMode="contains">
-                    <h:outputText value="#{task.startDateTime}" />
+                <p:column headerText="Task Ending Date/Time" sortBy="#{task.endDateTime}" filterBy="#{task.endDateTime}" filterMatchMode="contains">
+                    <h:outputText value="#{task.endDateTime}" />
                 </p:column>
 
                 <p:column headerText="Action" >
                     <p:commandButton update="formViewDescription" oncomplete="PF('dialogViewDescription').show()" icon="ui-icon-document" title="View">
-                        <f:setPropertyActionListener value="#{preferredTask.description}" target="#{helperViewAvailableTasksManagedBean.selectedTaskToView}" />
+                        <f:setPropertyActionListener value="#{task.description}" target="#{viewAvailableTasksManagedBean.selectedTaskToView}" />
                     </p:commandButton>
                     
                     <p:growl id="message" showDetail="true" />
 
-                    <p:commandButton value="TAKE" actionListener="#{dialogView.destroyWorld}" update="message">
+                    <p:commandButton value="TAKE" actionListener="#{viewAvailableTasksManagedBean.helperTakeTask}" update="message">
                         <p:confirm header="Confirmation" message="Do you want to take up this task?" icon="ui-icon-alert" />
+                        <f:attribute name="task" value="#{task}" />
                     </p:commandButton>
 
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -86,6 +87,31 @@
                 </p:column>
 
             </p:dataTable>
+
+        </h:form>
+        
+        <h:form id="formViewDescription">
+
+            <p:dialog id="dialogViewDescription" widgetVar="dialogViewDescription" header="View Description" closable="true">
+
+              
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="description" value="Description: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText id="description" value="#{viewAvailableTasksManagedBean.selectedTaskToView.description}"  />
+                        </p:column>
+                       
+                    </p:row>
+
+                   
+                </p:panelGrid>
+
+            </p:dialog>
 
         </h:form>
     </ui:define>

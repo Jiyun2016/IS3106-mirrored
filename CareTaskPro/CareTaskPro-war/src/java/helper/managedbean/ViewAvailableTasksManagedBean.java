@@ -9,7 +9,6 @@ import ejb.session.stateless.TaskControllerLocal;
 import entity.HelperEntity;
 import entity.TaskEntity;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -18,15 +17,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import util.exception.NoEnoughBufferForHelperException;
 import util.exception.TaskEntityNotFoundException;
+import util.exception.TaskTimeClashException;
 
 /**
  *
  * @author Amber
  */
-@Named(value = "helperViewAvailableTasksManagedBean")
+@Named(value = "viewAvailableTasksManagedBean")
 @ViewScoped
-public class helperViewAvailableTasksManagedBean implements Serializable {
+public class ViewAvailableTasksManagedBean implements Serializable {
 
    
     @EJB
@@ -40,7 +41,16 @@ public class helperViewAvailableTasksManagedBean implements Serializable {
     private HelperEntity helper;
     private TaskEntity preferredTask;
 
-    public helperViewAvailableTasksManagedBean(TaskEntity task, List<TaskEntity> tasksNotAssigned, List<TaskEntity> filteredTasks, List<TaskEntity> tasksChoosenAsPreferredHelper, HelperEntity helper, TaskEntity preferredTask) {
+    
+    
+    public ViewAvailableTasksManagedBean() {
+        System.err.println("********** ViewAvailableTasksManagedBean");
+        
+    }
+    
+    
+
+    public ViewAvailableTasksManagedBean(TaskEntity task, List<TaskEntity> tasksNotAssigned, List<TaskEntity> filteredTasks, List<TaskEntity> tasksChoosenAsPreferredHelper, HelperEntity helper, TaskEntity preferredTask) {
         this.task = task;
         this.tasksNotAssigned = tasksNotAssigned;
         this.filteredTasks = filteredTasks;
@@ -48,7 +58,7 @@ public class helperViewAvailableTasksManagedBean implements Serializable {
         this.helper = helper;
         this.preferredTask = preferredTask;
     }
-
+    
    
     
     
@@ -56,9 +66,10 @@ public class helperViewAvailableTasksManagedBean implements Serializable {
     public void postConstruct()
     {
         try{
+            System.err.println("********* Post Construct");
         tasksNotAssigned = taskControllerLocal.retrieveTaskNotAssigned();
         helper = (HelperEntity)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity");
-        tasksChoosenAsPreferredHelper = taskControllerLocal.retrieveTaskCompletedByHelperId(helper.getHelperId());
+        tasksChoosenAsPreferredHelper = taskControllerLocal.retrieveTaskByPreferredHelperId(helper.getHelperId());
             System.err.println("!!!!!!!!!!!this is the first task"+tasksNotAssigned.get(0).getTaskId());
         }catch(TaskEntityNotFoundException ex){
         
@@ -68,8 +79,11 @@ public class helperViewAvailableTasksManagedBean implements Serializable {
     
     public void helperTakeTask(ActionEvent event)
     {
-        TaskEntity taskToTake = (TaskEntity)event.getComponent().getAttributes().get("taskToTake");
-   //     taskControllerLocal.assignHelperToTask(helper.getHelperId(), taskToTake.getTaskId());
+        try{
+            System.err.println("********task is taken");
+        TaskEntity taskToTake = (TaskEntity)event.getComponent().getAttributes().get("task");
+          System.err.println(taskToTake.getTaskId() + "; " + helper.getHelperId());
+        taskControllerLocal.assignHelperToTask(helper.getHelperId(), taskToTake.getTaskId());
         
         if(tasksNotAssigned.contains(taskToTake)){
             tasksNotAssigned.remove(taskToTake);
@@ -79,7 +93,10 @@ public class helperViewAvailableTasksManagedBean implements Serializable {
         }
         
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Task " + taskToTake.getTaskId() + " taken successfully", "Task " + taskToTake.getTaskId() + " taken successfully"));
-        
+        }
+        catch(NoEnoughBufferForHelperException|TaskTimeClashException ex){
+            System.err.println("*********** ERROR: " + ex.getMessage());
+        }
     }
     
     /**

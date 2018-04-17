@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        
+        
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+
+            <p:layoutUnit position="north" style="overflow: auto; max-height: 50px;" >
+                
+                    <h:form>
+                        
+                        <p:toolbar>
+                            <f:facet name="left">
+                                <h:outputText style="margin-left: 20px; font-size: 28px; font-family: fantasy" value="Care Task Pro" />
+                            </f:facet>
+                            <f:facet name="right">
+                                <p:menubar>                    
+                                    <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Requester HomePage" outcome="RequesterWeb/requesterHome" />
+                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Helper login" outcome="PublicPageWeb/helperLogin"  />
+                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Administrative staff HomePage" outcome="AdminWeb/adminHome" />
+
+                                </p:menubar>
+                            </f:facet>
+                        </p:toolbar>
+                        
+                    </h:form>
+
+            </p:layoutUnit>
+
+            
+
+            <p:layoutUnit position="center" >
+                <ui:insert name="center">
+                    <br/><br/>
+                    <h2>Page is not found.</h2>
+                    
+                    
+                </ui:insert>
+                
+            </p:layoutUnit>
+
+          <p:layoutUnit position="south"> 
+                
+                <p:panelGrid style="width: 100%; ">
+                    <p:row style="border: none">
+                        <p:column style=" border: none;">&nbsp;</p:column>
+                        <p:column style="text-align: right;  border:none">Contact</p:column>
+                        
+                    </p:row>
+
+                    <p:row style="border: none">
+                        <p:column style="border: none;">&nbsp;</p:column>
+                        <p:column style="text-align: right;  border:none">xxxaddress</p:column>
+                        
+                    </p:row>
+                    
+                    
+                    <p:row style="border: none">
+                        <p:column style="text-align: center; border: none;">&nbsp;</p:column>
+                        <p:column style="text-align: right;  border:none">+65 xxxxxxxx</p:column>
+                        
+                    </p:row>
+                    
+                    
+                    <p:row style="border-style: none;">
+                        <p:column style="text-align: left; border-style: none;"><h6>&copy; 2018 HomeCare. All Rights Reserved.</h6></p:column>
+                        <p:column style="text-align: right; border-style: none;"><p:clock pattern="h:mm:ss a, E, dd/MM/yyyy" mode="server" /></p:column>
+                    </p:row>
+                    
+                </p:panelGrid>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+
+</html>

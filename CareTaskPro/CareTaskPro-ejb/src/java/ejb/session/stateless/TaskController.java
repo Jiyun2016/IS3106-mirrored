@@ -115,8 +115,8 @@ public class TaskController implements TaskControllerLocal {
     @Override
     public List<TaskEntity> retrieveTaskInProcessByAssignedHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
-        tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.assignedHelper.id = :helperId AND task.taskStatus = :status")
-                .setParameter("helperId", helperId.toString())
+        tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.helperEntity.helperId = :helperId AND task.taskStatus = :status")
+                .setParameter("helperId", helperId)
                 .setParameter("status", TaskStatusString.ASSIGNED)
                 .getResultList();
 
@@ -135,8 +135,8 @@ public class TaskController implements TaskControllerLocal {
     public List<TaskEntity> retrieveTaskCompletedByHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
-        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.assignedHelper.id = :helperId AND task.taskStatus = :status")
-                .setParameter("helperId", helperId.toString())
+        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t WHERE t.helperEntity.helperId = :helperId AND t.taskStatus = :status")
+                .setParameter("helperId", helperId)
                 .setParameter("status", TaskStatusString.COMPLETED)
                 .getResultList();
 
@@ -155,7 +155,7 @@ public class TaskController implements TaskControllerLocal {
     public List<TaskEntity> retrieveTaskByPreferredHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
-        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t, IN (t.preferredHelpers) p WHERE p.id = :helperId")
+        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t, IN (t.preferredHelpers) p WHERE p.helperId = :helperId")
                 .setParameter("helperId", helperId)
                 .getResultList();
 
@@ -343,11 +343,14 @@ public class TaskController implements TaskControllerLocal {
             throw new TaskTimeClashException("Tasks with ID" + clashedTaskIds + " clash with current task!");
         }
 
+        
+        System.err.println("********** TaskController HERE 1");
         task.setHelperEntity(helper);
         task.setTaskStatus(TaskStatusString.ASSIGNED);
         helper.getTaskEntities().add(task);
-        em.merge(task);
-        em.merge(helper);
+        System.err.println("********** TaskController HERE 2");        
+        
+        
         PaymentEntity payment = paymentControllerLocal.createPaymentEntity(task);
         task = em.find(TaskEntity.class, taskId);
 

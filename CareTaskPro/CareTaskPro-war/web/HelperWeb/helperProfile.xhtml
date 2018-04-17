@@ -9,7 +9,7 @@
 
     <ui:define name="center">
         <h:form id="formViewProfile">
-            <p:panel header="Profile information">
+            <p:panel id="panelViewProfile" header="Profile information">
                 <p:panelGrid >
                     <p:row  style="border: none">
                         <p:column  style="border: none">
@@ -125,7 +125,7 @@
 
                     <p:row>
                         <p:column colspan="3">
-                            <p:commandButton id="updateAddress" value="Save" icon="ui-icon-disk" update="@form formViewProfile" actionListener="#{helperProfileManagedBean.saveHelper(event)}" oncomplete="PF('dialogUpdateAddress').show();" />
+                            <p:commandButton id="updateAddress" value="Save" icon="ui-icon-disk" update="@form :formViewProfile:panelViewProfile" actionListener="#{helperProfileManagedBean.saveHelper}" oncomplete="PF('dialogUpdateAddress').show();" />
                         </p:column>
                     </p:row>
                 </p:panelGrid>
@@ -157,7 +157,7 @@
 
                     <p:row>
                         <p:column colspan="3">
-                            <p:commandButton id="updateEmail" value="Save" icon="ui-icon-disk" update="@form formViewProfile" actionListener="#{helperProfileManagedBean.saveHelper(event)}" oncomplete="PF('dialogUpdateEmail').show();" />
+                            <p:commandButton id="updateEmail" value="Save" icon="ui-icon-disk" update="@form :formViewProfile" actionListener="#{helperProfileManagedBean.saveHelper}" oncomplete="PF('dialogUpdateEmail').show();" />
                         </p:column>
                     </p:row>
                 </p:panelGrid>
@@ -189,7 +189,7 @@
 
                     <p:row>
                         <p:column colspan="3">
-                            <p:commandButton id="updateEmail" value="Save" icon="ui-icon-disk" update="@form formViewProfile" actionListener="#{helperProfileManagedBean.saveHelper(event)}" oncomplete="PF('dialogUpdateBankAccountNumber').show();" />
+                            <p:commandButton id="updateEmail" value="Save" icon="ui-icon-disk" update="@form formViewProfile" actionListener="#{helperProfileManagedBean.saveHelper}" oncomplete="PF('dialogUpdateBankAccountNumber').show();" />
                         </p:column>
                     </p:row>
                 </p:panelGrid>

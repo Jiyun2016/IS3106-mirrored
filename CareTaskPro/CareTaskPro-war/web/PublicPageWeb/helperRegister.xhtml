@@ -108,13 +108,31 @@ and open the template in the editor.
                             <p:selectOneRadio id="identity" value="#{helperRegisterManagedBean.newHelper.helperRole}">
                                 <f:selectItem itemLabel="Professional Nurse" itemValue="PROFESSIONAL" />
                                 <f:selectItem itemLabel="Volunteer" itemValue="NONPROFESSIONAL" />
-
+                                <p:ajax listener="#{helperRegisterManagedBean.updateProfessionalNurseControls}" update="@form" />
                             </p:selectOneRadio>
                         </p:column>
                         <p:message for="identity"/>
                     </p:row>
 
-
+                    <p:row rendered="#{helperRegisterManagedBean.renderProfessionalNurseControls}">
+                        <p:column>
+                            <p:outputLabel for="certNum" value="Certification Number: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="certNum" value="#{helperRegisterManagedBean.newHelper.certNum}" required="true" requiredMessage="CertNum is required" />
+                        </p:column>
+                        <p:message for="certNum"/>
+                    </p:row>
+                    
+                    <p:row rendered="#{helperRegisterManagedBean.renderProfessionalNurseControls}">
+                        <p:column>
+                            <p:outputLabel for="certName" value="Certification Name: " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="certName" value="#{helperRegisterManagedBean.newHelper.certName}" required="true" requiredMessage="CertName is required" />
+                        </p:column>
+                        <p:message for="certName"/>
+                    </p:row>
 
                     <p:row >
                         <p:column colspan="3">

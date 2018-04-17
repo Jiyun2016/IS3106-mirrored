@@ -27,12 +27,31 @@ public class helperRegisterManagedBean implements Serializable {
     private HelperControllerLocal helperController;
     
     private HelperEntity newHelper;
+    
+    private Boolean renderProfessionalNurseControls;
+    
 
     public helperRegisterManagedBean(HelperEntity newHelper) {
         this.newHelper = newHelper;
     }
 
     public helperRegisterManagedBean() {
+        newHelper = new HelperEntity();
+        renderProfessionalNurseControls = false;
+    }
+    
+    
+    
+    public void updateProfessionalNurseControls()
+    {
+        if(this.newHelper.getHelperRole().equals("PROFESSIONAL"))
+        {
+            this.renderProfessionalNurseControls = true;
+        }
+        else
+        {
+            this.renderProfessionalNurseControls = false;
+        }
     }
     
     
@@ -59,5 +78,19 @@ public class helperRegisterManagedBean implements Serializable {
      */
     public void setNewHelper(HelperEntity newHelper) {
         this.newHelper = newHelper;
+    }
+
+    /**
+     * @return the renderProfessionalNurseControls
+     */
+    public Boolean getRenderProfessionalNurseControls() {
+        return renderProfessionalNurseControls;
+    }
+
+    /**
+     * @param renderProfessionalNurseControls the renderProfessionalNurseControls to set
+     */
+    public void setRenderProfessionalNurseControls(Boolean renderProfessionalNurseControls) {
+        this.renderProfessionalNurseControls = renderProfessionalNurseControls;
     }
 }

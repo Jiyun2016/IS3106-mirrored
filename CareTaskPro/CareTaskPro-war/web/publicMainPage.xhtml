@@ -27,9 +27,9 @@
                             </f:facet>
                             <f:facet name="right">
                                 <p:menubar>                    
-                                    <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Requester HomePage" outcome="RequesterWeb/requesterHome" />
-                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Helper login" outcome="PublicPageWeb/helperLogin"  />
-                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Administrative staff HomePage" outcome="AdminWeb/adminHome" />
+                                    <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Requester Portal" outcome="RequesterWeb/requesterHome" />
+                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Helper Portal" outcome="PublicPageWeb/helperLogin"  />
+                                    <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Administrative staff Portal" outcome="AdminWeb/adminHome" />
 
                                 </p:menubar>
                             </f:facet>
@@ -42,11 +42,15 @@
             
 
             <p:layoutUnit position="center" >
-                <ui:insert name="center">
-                    center
+
                     
-                </ui:insert>
-                
+                <p:contentFlow value="#{imagesViewManagedBean.images}" var="image">
+                        <p:graphicImage value="images/#{image}" styleClass="content" />
+                        <div class="caption">#{image}</div>
+                    </p:contentFlow>
+
+
+
             </p:layoutUnit>
 
           <p:layoutUnit position="south"> 

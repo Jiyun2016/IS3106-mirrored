@@ -29,7 +29,7 @@ import util.exception.TaskEntityNotFoundException;
  */
 @Named(value = "helperViewUpcomingTasksManagedBean")
 @ViewScoped
-public class helperViewUpcomingTasksManagedBean implements Serializable{
+public class helperViewTasksManagedBean implements Serializable{
 
     @EJB
     private TaskControllerLocal taskController;
@@ -46,12 +46,12 @@ public class helperViewUpcomingTasksManagedBean implements Serializable{
  
     private ScheduleEvent event = new DefaultScheduleEvent();
 
-    public helperViewUpcomingTasksManagedBean() {
+    public helperViewTasksManagedBean() {
         this.taskToView = new TaskEntity();
     }
     
     
-    public helperViewUpcomingTasksManagedBean(List<TaskEntity> tasks, HelperEntity helper,TaskEntity taskToView) {
+    public helperViewTasksManagedBean(List<TaskEntity> tasks, HelperEntity helper,TaskEntity taskToView) {
         this.helper = helper;
         this.tasks = tasks;
         this.taskToView = taskToView;

@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class TaskStatusString {
    
     public static final String ASSIGNED = "ASSIGNED";
-    public static final String  PENDING = " PENDING";
+    public static final String PENDING = "PENDING";
     public static final String COMPLETED = "COMPLETED";
     public static final String COMPLAINED = "COMPLAINED";
     public static final String CANCELLED = "CANCELLED";

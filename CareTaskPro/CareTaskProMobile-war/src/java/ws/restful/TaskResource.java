@@ -61,7 +61,17 @@ public class TaskResource {
                     helper.setRecommendedTaskEntities(null);
                 }
                 task.getRequesterEntity().setTaskEntities(null);
-            }            
+                
+                if(task.getHelperEntity() != null) {
+                    task.getHelperEntity().setTaskEntities(null);
+                }
+                if(task.getReviewEntity() != null) {
+                    task.getReviewEntity().setTaskEntity(null);
+                }
+                if(task.getPaymentEntity() != null) {
+                    task.getPaymentEntity().setTaskEntity(null);
+                }
+            }      
             
             return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskEntities)).build();
         }
@@ -78,15 +88,25 @@ public class TaskResource {
     public Response retrieveTasksByStatus(@PathParam("status") String status) {
         try {
             List<TaskEntity> taskEntities = taskControllerLocal.retrieveTasksByStatus(status);
-            
+
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(TaskEntity task: taskEntities) {
                 for(HelperEntity helper: task.getPreferredHelpers()) {
                     helper.setRecommendedTaskEntities(null);
                 }
                 task.getRequesterEntity().setTaskEntities(null);
+                
+                if(task.getHelperEntity() != null) {
+                    task.getHelperEntity().setTaskEntities(null);
+                }
+                if(task.getReviewEntity() != null) {
+                    task.getReviewEntity().setTaskEntity(null);
+                }
+                if(task.getPaymentEntity() != null) {
+                    task.getPaymentEntity().setTaskEntity(null);
+                }
             }
-            
+
             return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskEntities)).build();
         } 
         catch(Exception ex) {
@@ -109,6 +129,16 @@ public class TaskResource {
                     helper.setRecommendedTaskEntities(null);
                 }
                 task.getRequesterEntity().setTaskEntities(null);
+                
+                if(task.getHelperEntity() != null) {
+                    task.getHelperEntity().setTaskEntities(null);
+                }
+                if(task.getReviewEntity() != null) {
+                    task.getReviewEntity().setTaskEntity(null);
+                }
+                if(task.getPaymentEntity() != null) {
+                    task.getPaymentEntity().setTaskEntity(null);
+                }
             }
             
             return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskEntities)).build();
@@ -133,6 +163,16 @@ public class TaskResource {
                     helper.setRecommendedTaskEntities(null);
                 }
                 task.getRequesterEntity().setTaskEntities(null);
+                
+                if(task.getHelperEntity() != null) {
+                    task.getHelperEntity().setTaskEntities(null);
+                }
+                if(task.getReviewEntity() != null) {
+                    task.getReviewEntity().setTaskEntity(null);
+                }
+                if(task.getPaymentEntity() != null) {
+                    task.getPaymentEntity().setTaskEntity(null);
+                }
             }
             
             return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskEntities)).build();
@@ -184,7 +224,8 @@ public class TaskResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
         }
     }
-  
+    
+    @Path("updateTask")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -206,7 +247,29 @@ public class TaskResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
         }
     }    
-
+    @Path("assignHelperToTask")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response assignHelperToTask(JAXBElement<UpdateTaskReq> jaxbUpdateTaskReq) {
+        if((jaxbUpdateTaskReq != null) && (jaxbUpdateTaskReq.getValue() != null)) {
+            try {
+                UpdateTaskReq updateTaskReq = jaxbUpdateTaskReq.getValue();
+                taskControllerLocal.assignHelperToTask(updateTaskReq.getTask().getHelperEntity().getHelperId(),
+                                                        updateTaskReq.getTask().getTaskId());      
+                return Response.status(Response.Status.OK).build();
+            } 
+            catch(Exception ex) {
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+                return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            }
+        }
+        else {
+            ErrorRsp errorRsp = new ErrorRsp("Invalid update task request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        }
+    }       
+    
     private TaskControllerLocal lookupTaskControllerLocal() {
         try {
             javax.naming.Context c = new InitialContext();

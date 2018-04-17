@@ -53,7 +53,7 @@ public class RequesterHomeManagedBean {
         try {
             RequesterEntity currentRequesterEntity = requesterControllerLocal.loginRequester(phone, password);
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("requesterIsLogin", true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentRequesterEntity", currentRequesterEntity);
             FacesContext.getCurrentInstance().getExternalContext().redirect("requesterHome.xhtml");
 

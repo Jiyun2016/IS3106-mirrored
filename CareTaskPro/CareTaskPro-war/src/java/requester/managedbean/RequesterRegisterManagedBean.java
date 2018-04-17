@@ -51,7 +51,7 @@ public class RequesterRegisterManagedBean {
             RequesterEntity re = requesterControllerLocal.createNewRequester(getRequesterEntity());
             setRequesterEntity(new RequesterEntity());
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New requester registered successfully (Product ID: " + re.getRequesterId() + ")", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New requester registered successfully (Requester ID: " + re.getRequesterId() + ")", null));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while registering the new requester: " + ex.getMessage(), null));
         }

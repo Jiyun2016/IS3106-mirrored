@@ -6,7 +6,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
-        <h:panelGroup rendered="#{sessionScope['isLogin']}">          
+        <h:panelGroup rendered="#{sessionScope['requesterIsLogin']}">          
             <h3>Task Assigned</h3>
             <br/>
 
@@ -33,7 +33,7 @@
             </p:dataTable>
         </h:panelGroup>
 
-        <h:panelGroup rendered="#{!sessionScope['isLogin']}">
+        <h:panelGroup rendered="#{!sessionScope['requesterIsLogin']}">
 
             <h3>Welcome</h3>
             <p>

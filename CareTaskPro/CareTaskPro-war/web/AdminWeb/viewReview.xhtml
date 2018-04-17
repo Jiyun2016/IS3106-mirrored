@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/adminTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h:panelGroup >          
+            <h3>Reviews of the Helper</h3>
+            <br/>
+
+            <ui:repeat value="#{adminReviewManagedBean.reviewEntities}" var="re">
+
+                <p:panel id="review" header="Review ID: #{re.reviewId}" footer="Review Rating : #{re.ratings}" style="margin-bottom:20px">
+
+                    <p:panelGrid columns="2">
+                   
+                        <h:outputText value="Task ID:" />
+                        <h:outputText value="#{re.taskEntity.taskId}" />
+                   
+                        <h:outputText value="Task Description:" />
+                        <h:outputText value="#{re.taskEntity.description}" />
+                    
+                        <h:outputText value="StartTime:" />
+                        <h:outputText value="#{re.taskEntity.startDateTime}" />
+                    
+                        <h:outputText value="EndTime:" />
+                        <h:outputText value="#{re.taskEntity.endDateTime}" />
+                    
+                    </p:panelGrid>
+                    
+                    <br/><br/>
+                    
+                        <h:outputText  value="Review Remarks: #{re.reviewRemarks}"  />
+                    
+
+                </p:panel>
+
+                <br/>
+
+            </ui:repeat>
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>

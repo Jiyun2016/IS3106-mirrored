@@ -13,14 +13,14 @@
     <!-- IMPLEMENTATION -->
     <cc:implementation>
         <div style="text-align: right;">
-           <h:panelGroup rendered="#{sessionScope['isLogin']}">
+           <h:panelGroup rendered="#{sessionScope['adminIsLogin']}">
 
                 <h:outputText value="You are login as #{sessionScope['currentAdminEntity'].firstName} #{sessionScope['currentAdminEntity'].lastName}" />
 
             </h:panelGroup>
             
             
-            <h:panelGroup rendered="#{!sessionScope['isLogin']}">
+            <h:panelGroup rendered="#{!sessionScope['adminIsLogin']}">
                                 
                 <h:form id="contentLoginForm">
                     

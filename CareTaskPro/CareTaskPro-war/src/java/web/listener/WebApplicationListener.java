@@ -26,7 +26,8 @@ public class WebApplicationListener implements ServletContextListener, HttpSessi
     @Override
     public void sessionCreated(HttpSessionEvent se) 
     {
-        se.getSession().setAttribute("isLogin", false);
+        se.getSession().setAttribute("adminIsLogin", false);
+        se.getSession().setAttribute("requesterIsLogin", false);
     }
 
     

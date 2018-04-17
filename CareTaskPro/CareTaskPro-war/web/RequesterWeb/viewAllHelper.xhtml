@@ -52,10 +52,20 @@
                 </p:column>
 
 
+                <p:column headerText="Action" >
+
+                    <p:commandButton value="View Review" actionListener="#{requesterHelperManagedBean.viewReview}" icon="ui-icon-document">
+                        <f:attribute name="helperIdToViewReview" value="#{helperEntity.helperId}" /> 
+
+                    </p:commandButton>
+
+                </p:column>
             </p:dataTable>
 
 
         </h:form>
+
+
     </ui:define>
 
 </ui:composition>

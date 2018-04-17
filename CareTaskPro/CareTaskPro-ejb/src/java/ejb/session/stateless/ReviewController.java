@@ -1,6 +1,7 @@
 package ejb.session.stateless;
 
 import entity.ReviewEntity;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,6 +33,24 @@ public class ReviewController implements ReviewControllerLocal {
         } else {
             throw new ReviewNotFoundException("Review with id " + reviewId + " does not exist!");
         }
+    }
+    
+    @Override
+    public List<ReviewEntity> retrieveReviewByHelperId(Long helperId) throws ReviewNotFoundException {
+        
+        List<ReviewEntity> reviews;
+        reviews = em.createQuery("SELECT r FROM ReviewEntity r WHERE r.taskEntity.helperEntity.helperId = :inId" )
+                .setParameter("inId", helperId)
+                .getResultList();
+        if (reviews != null && !reviews.isEmpty()) {
+            for (ReviewEntity r : reviews) {
+                r.getReviewId();
+            }
+            return reviews;
+        } else {
+            throw new ReviewNotFoundException("No reivew found for helper with id "+helperId);
+        }
+       
     }
     
     @Override

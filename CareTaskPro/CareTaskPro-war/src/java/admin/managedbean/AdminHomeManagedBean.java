@@ -46,7 +46,7 @@ public class AdminHomeManagedBean {
         try {
             AdminEntity currentAdminEntity = adminControllerLoccal.adminLogin(username, password);
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("adminIsLogin", true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentAdminEntity", currentAdminEntity);
             FacesContext.getCurrentInstance().getExternalContext().redirect("adminHome.xhtml");
 

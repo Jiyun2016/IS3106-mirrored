@@ -51,9 +51,55 @@
                     <h:outputText value="#{helperEntity.phone}" />
                 </p:column>
 
+                <p:column headerText="Action" >
+
+                    <p:commandButton value="Details" update="formViewHelper" oncomplete="PF('dialogViewHelper').show()" icon="ui-icon-document" >
+                        <f:setPropertyActionListener value="#{helperEntity}" target="#{adminHelperManagementManagedBean.helperEntity}" />
+                    </p:commandButton>
+
+                    <p:commandButton value="View Review" actionListener="#{adminHelperManagementManagedBean.viewReview}" icon="ui-icon-document">
+                        <f:attribute name="helperIdToViewReview" value="#{helperEntity.helperId}" /> 
+
+                    </p:commandButton>
+
+
+
+                </p:column>
+
 
             </p:dataTable>
 
+
+        </h:form>
+
+        <h:form id="formViewHelper">
+
+            <p:dialog id="dialogViewHelper" widgetVar="dialogViewHelper" header="View Helper" closable="true">
+
+                <p:panelGrid>
+
+
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Helper ID: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminHelperManagementManagedBean.helperEntity.helperId}" />
+                        </p:column>
+                    </p:row>
+                    
+                    
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Helper name: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{adminHelperManagementManagedBean.helperEntity.firstName}" />
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+            </p:dialog>
 
         </h:form>
     </ui:define>

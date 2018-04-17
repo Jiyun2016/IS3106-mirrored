@@ -51,6 +51,7 @@ public class HelperEntity implements Serializable {
     private String bankAccountNumber;
     @Column(nullable = false)
     private String helperRole;
+    @Column(nullable = false, precision = 11, scale = 3)
     private BigDecimal chargeRate;
     
     @OneToMany(mappedBy = "helperEntity")

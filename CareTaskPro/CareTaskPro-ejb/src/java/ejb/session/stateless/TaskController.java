@@ -248,17 +248,22 @@ public class TaskController implements TaskControllerLocal {
 
     @Override
     public TaskEntity updateTaskEntityByRequester(TaskEntity ta, Long taId) {
-        System.err.println("1^^^^^taskentity is "+ta.getTaskId()+" and taId is "+ taId.toString());
+        System.err.println("1^^^^^taskentity ta is " + ta.getTaskStatus() + " and taId is " + taId.toString());
         TaskEntity t = em.find(TaskEntity.class, taId);
-        System.err.println("2^^^^^taskentity is "+ta.getTaskId()+" and taId is "+ taId.toString()+ " and t is "+t.getTaskId());
+        System.err.println("2^^^^^taskentity ta is " + ta.getTaskStatus() + " and taId is " + taId.toString() + " and t is " + t.getTaskStatus());
         t.setCategory(ta.getCategory());
         t.setDescription(ta.getDescription());
         t.setEndDateTime(ta.getEndDateTime());
         t.setPreferredHelpers(ta.getPreferredHelpers());
         t.setStartDateTime(ta.getStartDateTime());
+        em.merge(t);
+        t = em.find(TaskEntity.class, taId);
+        System.err.println("2^^^^^taskentity is " + ta.getTaskId() + " and taId is " + taId.toString() + " and t is " + t.getTaskStatus());
 
         return t;
     }
+    
+    
 
     @Override
     public TaskEntity updateTaskEntity(TaskEntity ta) {

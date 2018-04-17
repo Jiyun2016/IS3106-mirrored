@@ -7,11 +7,13 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-         <h3>Edit My Profile</h3>
+        <h3>Edit My Profile</h3>
         <h:form id="formEditAdmin">
 
 
-            <p:panelGrid>
+            <p:panelGrid rendered="#{adminRegisterManagedBean.adminEntity ne null}">
+
+                <p:messages id="messagesUpdateProfile" redisplay="false" />
 
                 <p:row>
                     <p:column>
@@ -50,10 +52,10 @@
                 </p:row>
 
 
-        
+
                 <p:row>
                     <p:column>
-                        <p:outputLabel for="password" value="Password " />
+                        <p:outputLabel for="password" value="Password: " />
                     </p:column>
                     <p:column>
                         <p:inputText id="password" value="#{adminProfileManagedBean.adminEntity.password}" required="true" requiredMessage="Password is required"  >
@@ -65,16 +67,18 @@
                     </p:column>
                 </p:row>
 
-              
+
 
                 <p:row>
                     <p:column colspan="3">
                         <p:commandButton type="reset" value="Clear" />&nbsp;
-                        <p:commandButton value="Update"  actionListener="#{adminProfileManagedBean.updateProfile}"  />
+                        <p:commandButton value="Update" update="@form formEditAdmin" actionListener="#{adminProfileManagedBean.updateProfile}"  />
                     </p:column>
                 </p:row>
 
             </p:panelGrid>
+
+        </h:form>
 
     </ui:define>
 

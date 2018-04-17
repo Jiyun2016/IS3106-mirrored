@@ -26,10 +26,11 @@
                 <h:form>
                     <p:menubar >
                         <p:menuitem style="padding-right: 10px; padding-left: 10px"  value="AdminHome" outcome="adminHome" />
-                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile"  rendered="#{sessionScope['isLogin']}" />
-                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  rendered="#{sessionScope['isLogin']}"/>
-                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Create new admin"  rendered="#{sessionScope['isLogin']}"/>
-                        <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Logout" actionListener="#{adminHomeManagedBean.logout}" icon="ui-icon-unlocked" rendered="#{sessionScope['isLogin']}"/>
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile"  outcome="adminProfile" rendered="#{sessionScope['adminIsLogin']}" />
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  outcome="editAdminProfile" rendered="#{sessionScope['adminIsLogin']}"/>
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Create new admin"  outcome="createAdmin" rendered="#{sessionScope['adminIsLogin']}"/>
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="BackToMainHome"  outcome="/publicMainPage" />
+                        <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Logout" actionListener="#{adminHomeManagedBean.logout}" icon="ui-icon-unlocked" rendered="#{sessionScope['adminIsLogin']}"/>
 
                     </p:menubar>
                 </h:form>
@@ -44,20 +45,20 @@
                     <p:menu style="width: 100%; height:70%">
 
 
-                        <p:submenu label="Management" rendered="#{sessionScope['isLogin']}">
-                            <p:menuitem style="padding-bottom: 10px" value="View All Admins"  icon="ui-icon-calendar" />
+                        <p:submenu label="Management" rendered="#{sessionScope['adminIsLogin']}">
+                            <p:menuitem style="padding-bottom: 10px" value="View All Admins" outcome="viewAllAdmin" icon="ui-icon-calendar" />
 
 
-                            <p:menuitem style="padding-bottom: 10px" value="View All Tasks" icon="ui-icon-comment"/>
+                            <p:menuitem style="padding-bottom: 10px" value="View All Tasks" outcome="viewAllTasks" icon="ui-icon-comment"/>
 
 
-                            <p:menuitem style="padding-bottom: 10px" value="View All Helpers"  icon="ui-icon-document-b"/>
+                            <p:menuitem style="padding-bottom: 10px" value="View All Helpers"  outcome="viewAllHelpers" icon="ui-icon-document-b"/>
 
 
-                            <p:menuitem style="padding-bottom: 10px" value="View All Requesters"  icon="ui-icon-document-b"/>
+                            <p:menuitem style="padding-bottom: 10px" value="View All Requesters"  outcome="viewAllRequesters" icon="ui-icon-document-b"/>
 
 
-                            <p:menuitem style="padding-bottom: 10px" value="View payment history"  icon="ui-icon-document-b"/>
+                            <p:menuitem style="padding-bottom: 10px" value="View payment history"  outcome="viewAllPayments" icon="ui-icon-document-b"/>
                         </p:submenu>
 
 

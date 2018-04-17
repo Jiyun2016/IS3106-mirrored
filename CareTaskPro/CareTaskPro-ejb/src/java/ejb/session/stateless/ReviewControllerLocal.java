@@ -7,6 +7,7 @@ package ejb.session.stateless;
 
 import entity.ReviewEntity;
 import entity.TaskEntity;
+import java.util.List;
 import javax.ejb.Local;
 import util.exception.ReviewNotFoundException;
 
@@ -24,5 +25,7 @@ public interface ReviewControllerLocal {
     public ReviewEntity updateReview(ReviewEntity reviewEntity);
 
     public void deleteReview(Long reviewId) throws ReviewNotFoundException;
+
+    public List<ReviewEntity> retrieveReviewByHelperId(Long helperId) throws ReviewNotFoundException;
     
 }

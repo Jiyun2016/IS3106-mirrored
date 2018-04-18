@@ -1,10 +1,46 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../template/helperTemplate.xhtml">
+                template="./../template/helperTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="center">
-        reviews associated with tasks that the helper takes on before
+       <h:panelGroup >          
+            <h2>My Reviews</h2>
+            <br/>
+
+            <ui:repeat  value="#{helperViewReviewManagedBean.reviews}" var="re">
+                <p:panel id="review"  header="Review ID: #{review.reviewId}" footer="Review Rating : #{review.ratings}" style="margin-bottom:20px">
+
+                    <p:panelGrid columns="2">
+
+                        <h:outputText value="Task ID:" />
+                        <h:outputText value="#{review.taskEntity.taskId}" />
+
+                        <h:outputText value="Task Description:" />
+                        <h:outputText value="#{review.taskEntity.description}" />
+
+                        <h:outputText value="StartTime:" />
+                        <h:outputText value="#{review.taskEntity.startDateTime}" />
+
+                        <h:outputText value="EndTime:" />
+                        <h:outputText value="#{review.taskEntity.endDateTime}" />
+
+                    </p:panelGrid>
+
+                    <br/><br/>
+
+                    <h:outputText  value="Review Remarks: #{review.reviewRemarks}"  />
+
+
+                </p:panel>
+
+                <br/>
+
+            </ui:repeat>
+        </h:panelGroup>
     </ui:define>
 
 </ui:composition>

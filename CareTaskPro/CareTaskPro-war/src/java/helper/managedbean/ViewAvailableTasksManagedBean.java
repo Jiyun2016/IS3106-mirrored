@@ -9,6 +9,7 @@ import ejb.session.stateless.TaskControllerLocal;
 import entity.HelperEntity;
 import entity.TaskEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -36,7 +37,8 @@ public class ViewAvailableTasksManagedBean implements Serializable {
     private TaskEntity task;
     private TaskEntity selectedTaskToView;
     private List<TaskEntity> tasksNotAssigned;
-    private List<TaskEntity> filteredTasks;
+    private List<TaskEntity> filteredTasks1;
+    private List<TaskEntity> filteredTasks2;
     private List<TaskEntity> tasksChoosenAsPreferredHelper;
     private HelperEntity helper;
     private TaskEntity preferredTask;
@@ -53,7 +55,7 @@ public class ViewAvailableTasksManagedBean implements Serializable {
     public ViewAvailableTasksManagedBean(TaskEntity task, List<TaskEntity> tasksNotAssigned, List<TaskEntity> filteredTasks, List<TaskEntity> tasksChoosenAsPreferredHelper, HelperEntity helper, TaskEntity preferredTask) {
         this.task = task;
         this.tasksNotAssigned = tasksNotAssigned;
-        this.filteredTasks = filteredTasks;
+        this.filteredTasks1 = filteredTasks;
         this.tasksChoosenAsPreferredHelper = tasksChoosenAsPreferredHelper;
         this.helper = helper;
         this.preferredTask = preferredTask;
@@ -68,9 +70,28 @@ public class ViewAvailableTasksManagedBean implements Serializable {
         try{
             System.err.println("********* Post Construct");
         tasksNotAssigned = taskControllerLocal.retrieveTaskNotAssigned();
+        
+       
         helper = (HelperEntity)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity");
         tasksChoosenAsPreferredHelper = taskControllerLocal.retrieveTaskByPreferredHelperId(helper.getHelperId());
-            System.err.println("!!!!!!!!!!!this is the first task"+tasksNotAssigned.get(0).getTaskId());
+   //         System.err.println("!!!!!!!!!!!this is the first task"+tasksNotAssigned.get(0).getTaskId());
+        
+          filteredTasks1 = new ArrayList<>();
+        
+        for(TaskEntity te:tasksNotAssigned)
+        {
+            filteredTasks1.add(te);
+        }
+        
+          filteredTasks2 = new ArrayList<>();
+        
+        for(TaskEntity te:tasksChoosenAsPreferredHelper)
+        {
+            filteredTasks2.add(te);
+        }
+        
+        
+        
         }catch(TaskEntityNotFoundException ex){
         
         }
@@ -145,15 +166,29 @@ public class ViewAvailableTasksManagedBean implements Serializable {
     /**
      * @return the filteredTasks
      */
-    public List<TaskEntity> getFilteredTasks() {
-        return filteredTasks;
+    public List<TaskEntity> getFilteredTasks1() {
+        return filteredTasks1;
     }
 
     /**
      * @param filteredTasks the filteredTasks to set
      */
-    public void setFilteredTasks(List<TaskEntity> filteredTasks) {
-        this.filteredTasks = filteredTasks;
+    public void setFilteredTasks1(List<TaskEntity> filteredTasks) {
+        this.filteredTasks1 = filteredTasks;
+    }
+    
+     /**
+     * @return the filteredTasks
+     */
+    public List<TaskEntity> getFilteredTasks2() {
+        return filteredTasks2;
+    }
+
+    /**
+     * @param filteredTasks the filteredTasks to set
+     */
+    public void setFilteredTasks2(List<TaskEntity> filteredTasks) {
+        this.filteredTasks2 = filteredTasks;
     }
 
     /**

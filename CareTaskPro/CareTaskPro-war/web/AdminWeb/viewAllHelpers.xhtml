@@ -51,7 +51,7 @@
                     <h:outputText value="#{helperEntity.phone}" />
                 </p:column>
 
-                <p:column headerText="Action" >
+                <p:column headerText="Action" colspan="2" >
 
                     <p:commandButton value="Details" update="formViewHelper" oncomplete="PF('dialogViewHelper').show()" icon="ui-icon-document" >
                         <f:setPropertyActionListener value="#{helperEntity}" target="#{adminHelperManagementManagedBean.helperEntity}" />

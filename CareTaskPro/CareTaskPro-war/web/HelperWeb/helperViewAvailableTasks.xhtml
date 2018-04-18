@@ -10,7 +10,7 @@
         <h:form id="preferredTasksDataTable">
             <p:dataTable id="dataTablePreferredTasks" widgetVar="dataTablePreferredTasks" value="#{viewAvailableTasksManagedBean.tasksChoosenAsPreferredHelper}" 
                          var="preferredTask" emptyMessage="No tasks choosen as preferred helper for now"
-                         rowKey="#{preferredTask.taskId}" rowIndexVar="row" 
+                         rowKey="#{preferredTask.taskId}" rowIndexVar="row" filteredValue="#{viewAvailableTasksManagedBean.filteredTasks2}"
                          rows="10" paginator="true" 
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                          rowsPerPageTemplate="10,20,50">  
@@ -34,7 +34,7 @@
                 
                 <p:column headerText="Action" >
                     <p:commandButton update="formViewDescription" oncomplete="PF('dialogViewDescription').show()" icon="ui-icon-document" title="View">
-                        <f:setPropertyActionListener value="#{preferredTask.description}" target="#{viewAvailableTasksManagedBean.selectedTaskToView}" />
+                        <f:setPropertyActionListener value="#{preferredTask}" target="#{viewAvailableTasksManagedBean.selectedTaskToView}" />
                     </p:commandButton>
  
                 </p:column>
@@ -45,7 +45,7 @@
         <h:form id="tasksDataTable">
             <p:dataTable id="dataTableTasks" widgetVar="dataTableTasks" value="#{viewAvailableTasksManagedBean.tasksNotAssigned}" 
                          var="task"
-                         rowKey="#{task.taskId}" rowIndexVar="row" 
+                         rowKey="#{task.taskId}" rowIndexVar="row" filteredValue="#{viewAvailableTasksManagedBean.filteredTasks1}"
                          rows="10" paginator="true" 
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                          rowsPerPageTemplate="10,20,50">  
@@ -69,7 +69,7 @@
 
                 <p:column headerText="Action" >
                     <p:commandButton update="formViewDescription" oncomplete="PF('dialogViewDescription').show()" icon="ui-icon-document" title="View">
-                        <f:setPropertyActionListener value="#{task.description}" target="#{viewAvailableTasksManagedBean.selectedTaskToView}" />
+                        <f:setPropertyActionListener value="#{task}" target="#{viewAvailableTasksManagedBean.selectedTaskToView}" />
                     </p:commandButton>
                     
                     <p:growl id="message" showDetail="true" />

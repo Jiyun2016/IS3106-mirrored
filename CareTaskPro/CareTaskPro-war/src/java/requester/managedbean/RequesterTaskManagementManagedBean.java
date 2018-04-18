@@ -95,7 +95,14 @@ public class RequesterTaskManagementManagedBean implements Serializable{
         viewAssignedTask();
         viewComplainedTask();
         viewCompletedTask();
-
+        
+//        filteredTaskEntities = new ArrayList<>();
+//        
+//        for(TaskEntity te:taskEntitiesPending)
+//        {
+//            filteredTaskEntities.add(te);
+//        }
+        
         List<HelperEntity> helperEntities = helperControllerLocal.retrieveAllHelpers();
         for (HelperEntity helperEntity : helperEntities) {
             getSelectItemsHelperEntities().add(new SelectItem(helperEntity, helperEntity.getFirstName(), helperEntity.getLastName()));

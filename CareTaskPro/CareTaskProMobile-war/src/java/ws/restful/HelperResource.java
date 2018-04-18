@@ -58,12 +58,15 @@ public class HelperResource {
             
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(HelperEntity helper: helperEntities) {
-                for(TaskEntity task: helper.getTaskEntities()) {
-                    task.setHelperEntity(null);
-                }
-                for(TaskEntity task: helper.getRecommendedTaskEntities()) {
-                    task.setHelperEntity(null);
-                }
+                helper.getTaskEntities().clear();
+                helper.getRecommendedTaskEntities().clear();
+                
+//                for(TaskEntity task: helper.getTaskEntities()) {
+//                    task.setHelperEntity(null);
+//                }
+//                for(TaskEntity task: helper.getRecommendedTaskEntities()) {
+//                    task.setHelperEntity(null);
+//                }
             }
             return Response.status(Status.OK).entity(new RetrieveAllHelpersRsp(helperEntities)).build();
         } 
@@ -79,7 +82,10 @@ public class HelperResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveHelper(@PathParam("helperId") Long helperId) {
         try {
-            return Response.status(Status.OK).entity(new RetrieveHelperRsp(helperControllerLocal.retrieveHelperById(helperId))).build();
+            HelperEntity helper = helperControllerLocal.retrieveHelperById(helperId);
+            helper.getTaskEntities().clear();
+            helper.getRecommendedTaskEntities().clear();
+            return Response.status(Status.OK).entity(new RetrieveHelperRsp(helper)).build();
         } 
         catch(HelperNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -159,6 +165,8 @@ public class HelperResource {
     public Response loginHelper(@QueryParam("phone") String phone, @QueryParam("password") String password) {
         try {
             HelperEntity helper = helperControllerLocal.loginHelper(phone, password);
+            helper.getTaskEntities().clear();
+            helper.getRecommendedTaskEntities().clear();
             return Response.status(Status.OK).entity(new RetrieveHelperRsp(helper)).build();
         } 
         catch(WrongCredentialException ex) {

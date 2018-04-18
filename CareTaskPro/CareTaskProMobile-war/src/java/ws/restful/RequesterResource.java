@@ -58,9 +58,12 @@ public class RequesterResource {
             
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(RequesterEntity requester: requesterEntities) {
-                for(TaskEntity task: requester.getTaskEntities()) {
-                    task.setRequesterEntity(null);
-                }
+                requester.getTaskEntities().clear();           
+            
+//            for(RequesterEntity requester: requesterEntities) {
+//                for(TaskEntity task: requester.getTaskEntities()) {
+//                    task.setRequesterEntity(null);
+//                }
             }
             
             return Response.status(Status.OK).entity(new RetrieveAllRequestersRsp(requesterEntities)).build();
@@ -77,7 +80,9 @@ public class RequesterResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveRequester(@PathParam("requesterId") Long requesterId) {
         try {
-            return Response.status(Status.OK).entity(new RetrieveRequesterRsp(requesterControllerLocal.retrieveRequesterById(requesterId))).build();
+            RequesterEntity requester = requesterControllerLocal.retrieveRequesterById(requesterId);
+            requester.getTaskEntities().clear();  
+            return Response.status(Status.OK).entity(new RetrieveRequesterRsp(requester)).build();
         } 
         catch(RequesterNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -160,9 +165,10 @@ public class RequesterResource {
             RequesterEntity requester = requesterControllerLocal.loginRequester(phone, password);
 
             //to prevent cyclic relationship checks when marshalling/unmarshalling
-            for(TaskEntity task: requester.getTaskEntities()) {
-                task.setRequesterEntity(null);
-            }
+            requester.getTaskEntities().clear();  
+//            for(TaskEntity task: requester.getTaskEntities()) {
+//                task.setRequesterEntity(null);
+//            }
                             
             return Response.status(Status.OK).entity(new RetrieveRequesterRsp(requester)).build();
         } 

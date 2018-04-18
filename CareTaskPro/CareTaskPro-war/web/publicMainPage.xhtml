@@ -10,6 +10,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="default.css"/>
         <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <title>CareTaskPro Homepage</title>
         
         
     </h:head>
@@ -43,11 +44,25 @@
 
             <p:layoutUnit position="center" >
 
-                    
-                <p:contentFlow value="#{imagesViewManagedBean.images}" var="image">
-                        <p:graphicImage value="images/#{image}" styleClass="content" />
+                <p:layout>
+                    <p:layoutUnit position="north" size="450">
+                       <p:contentFlow value="#{imagesViewManagedBean.images}" var="image">
+                        <p:graphicImage  value="images/#{image}" styleClass="content" />
                         <div class="caption">#{image}</div>
-                    </p:contentFlow>
+                </p:contentFlow>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="west">
+                        west
+                    </p:layoutUnit>
+                    <p:layoutUnit position="center">
+                        center
+                    </p:layoutUnit>
+                    <p:layoutUnit position="east">
+                        east
+                    </p:layoutUnit>
+                    
+                    
+                </p:layout>
 
 
 

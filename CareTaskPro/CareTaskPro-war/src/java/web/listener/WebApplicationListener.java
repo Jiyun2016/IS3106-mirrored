@@ -28,6 +28,7 @@ public class WebApplicationListener implements ServletContextListener, HttpSessi
     {
         se.getSession().setAttribute("adminIsLogin", false);
         se.getSession().setAttribute("requesterIsLogin", false);
+        se.getSession().setAttribute("helperIsLogin", false);
     }
 
     

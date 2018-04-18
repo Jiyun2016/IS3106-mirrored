@@ -97,7 +97,7 @@ public class TaskController implements TaskControllerLocal {
     @Override
     public List<TaskEntity> retrieveTaskByStatusByHelperId(Long helperId, String status) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
-        tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status AND task.requesterEntity.requesterId = :helperId")
+        tasks = em.createQuery("SELECT task FROM TaskEntity task WHERE task.taskStatus = :status AND task.helperEntity.helperId = :helperId")
                 .setParameter("status", status)
                 .setParameter("helperId", helperId)
                 .getResultList();
@@ -336,7 +336,7 @@ public class TaskController implements TaskControllerLocal {
         TaskEntity task = em.find(TaskEntity.class, taskId);
 
         if (!checkEnoughBufferTimeForHelper(task)) {
-            throw new NoEnoughBufferForHelperException("The task to accept needs to be more than " + TimeConstant.TIME_BUFFER_FOR_HELPER_BEFORE_TASKSTART + " minites from now.");
+            throw new NoEnoughBufferForHelperException("The task to accept needs to be more than " + TimeConstant.TIME_BUFFER_FOR_HELPER_BEFORE_TASKSTART + " minutes from now.");
         }
 
         List<TaskEntity> clashedTask = checkTimeClashForHelper(task, helperId);

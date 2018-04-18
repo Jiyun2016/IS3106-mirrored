@@ -103,7 +103,7 @@ public class DataInitSessionBean {
 
         // Create Pending Tasks
         taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 60000 * 2000)), new Date((System.currentTimeMillis() + 2700 * 60000)), TaskStatusString.PENDING, r));
-        taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 8 * 60000)), TaskStatusString.PENDING, r));
+        taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 60000 * 2800)), new Date((System.currentTimeMillis() + 60000 * 3000)), TaskStatusString.PENDING, r));
         taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HEALTHCARE, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 10 * 60000)), TaskStatusString.PENDING, r));
         taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 12 * 60000)), TaskStatusString.PENDING, r));
         taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 300000)), new Date((System.currentTimeMillis() + 16 * 60000)), TaskStatusString.PENDING, r));

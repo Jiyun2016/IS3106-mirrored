@@ -31,8 +31,11 @@
                     <p:outputLabel for="to" value="To:" />
                     <h:outputText id="to" value="#{helperViewUpcomingTasksManagedBean.event.endDate}"/>
                     
-                    <p:outputLabel for="address" value="Address:" />
+                    <p:outputLabel for="address" value=" Requester Address:" />
                     <h:outputText id="address" value="#{helperViewUpcomingTasksManagedBean.event.data.address}"/>
+                    
+                    <p:outputLabel for="phone" value=" Requester Contact Number:" />
+                    <h:outputText id="phone" value="#{helperViewUpcomingTasksManagedBean.event.data.phone}"/>
 
                 </h:panelGrid>
             </p:dialog>  

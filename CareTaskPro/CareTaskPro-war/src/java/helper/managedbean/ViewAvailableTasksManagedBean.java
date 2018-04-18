@@ -74,6 +74,7 @@ public class ViewAvailableTasksManagedBean implements Serializable {
        
         helper = (HelperEntity)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity");
         tasksChoosenAsPreferredHelper = taskControllerLocal.retrieveTaskByPreferredHelperId(helper.getHelperId());
+
    //         System.err.println("!!!!!!!!!!!this is the first task"+tasksNotAssigned.get(0).getTaskId());
         
           filteredTasks1 = new ArrayList<>();
@@ -91,7 +92,7 @@ public class ViewAvailableTasksManagedBean implements Serializable {
         }
         
         
-        
+
         }catch(TaskEntityNotFoundException ex){
         
         }

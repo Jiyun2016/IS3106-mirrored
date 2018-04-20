@@ -10,12 +10,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="default.css"/>
         <h:outputStylesheet library="css" name="cssLayout.css"/>
-        
+
         <title>
-                HelperHome
+            HelperHome
         </title>
 
-        
+
     </h:head>
 
     <h:body>
@@ -24,7 +24,7 @@
             <p:layoutUnit position="north" style="overflow: auto; max-height: 50px;" >
                 <ui:insert name="north">
                     <h:form>
-                        
+
                         <p:toolbar>
                             <f:facet name="left">
                                 <h:outputText style="margin-left: 20px; font-size: 28px; font-family: fantasy" value="HomeCare by you" />
@@ -34,15 +34,13 @@
                                     <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Home" outcome="HelperHomepage" />
                                     <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Manage my account" outcome="helperAccount" />
                                     <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Manage my profile" outcome="helperProfile"  />
-                                    
 
-                                    <f:facet name="options">
-                                        <p:commandButton type="button" actionListener="#{helperHomepageLogoutManagedBean.logout}" value="Logout" icon="ui-icon-extlink" />
-                                    </f:facet>
+
+
                                 </p:menubar>
                             </f:facet>
                         </p:toolbar>
-                        
+
                     </h:form>
 
                 </ui:insert>
@@ -54,6 +52,7 @@
                     <h2>Main Menu</h2>
                     <h:form  style="padding-right:10px"> 
                         <p:menu style="width: 100%; height:70%">
+                           
                             <p:submenu label="Manage My Task">
                                 <p:menuitem style="padding-bottom: 10px" value="View schedule of all my tasks" outcome="helperViewTasks" icon="ui-icon-calendar" />
                             </p:submenu>
@@ -62,6 +61,10 @@
                             </p:submenu>
                             <p:submenu label="Manage my salary">
                                 <p:menuitem style="padding-bottom: 10px" value="View salary transaction history"  icon="ui-icon-document-b"/>
+                            </p:submenu>
+                            
+                             <p:submenu label="General">
+                                <p:menuitem style="padding-bottom: 10px"  actionListener="#{helperHomepageLogoutManagedBean.logout}" value="Logout" icon="ui-icon-extlink" />
                             </p:submenu>
                         </p:menu>
                     </h:form>
@@ -72,39 +75,39 @@
             <p:layoutUnit position="center" >
                 <ui:insert name="center">
                     center
-                    
+
                 </ui:insert>
-                
+
             </p:layoutUnit>
 
-          <p:layoutUnit position="south"> 
-                
+            <p:layoutUnit position="south"> 
+
                 <p:panelGrid style="width: 100%; ">
                     <p:row style="border: none">
                         <p:column style=" border: none;">&nbsp;</p:column>
                         <p:column style="text-align: right;  border:none">Contact</p:column>
-                        
+
                     </p:row>
 
                     <p:row style="border: none">
                         <p:column style="border: none;">&nbsp;</p:column>
                         <p:column style="text-align: right;  border:none">xxxaddress</p:column>
-                        
+
                     </p:row>
-                    
-                    
+
+
                     <p:row style="border: none">
                         <p:column style="text-align: center; border: none;">&nbsp;</p:column>
                         <p:column style="text-align: right;  border:none">+65 xxxxxxxx</p:column>
-                        
+
                     </p:row>
-                    
-                    
+
+
                     <p:row style="border-style: none;">
                         <p:column style="text-align: left; border-style: none;"><h6>&copy; 2018 HomeCare. All Rights Reserved.</h6></p:column>
                         <p:column style="text-align: right; border-style: none;"><p:clock pattern="h:mm:ss a, E, dd/MM/yyyy" mode="server" /></p:column>
                     </p:row>
-                    
+
                 </p:panelGrid>
             </p:layoutUnit>
         </p:layout>

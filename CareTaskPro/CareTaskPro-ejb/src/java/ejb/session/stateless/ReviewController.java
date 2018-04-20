@@ -48,10 +48,27 @@ public class ReviewController implements ReviewControllerLocal {
             }
             return reviews;
         } else {
-            throw new ReviewNotFoundException("No reivew found for helper with id "+helperId);
+            throw new ReviewNotFoundException("No review found for helper with id "+helperId);
         }
        
     }
+    
+    @Override
+    public ReviewEntity retrieveReviewByTaskId(Long taskId) throws ReviewNotFoundException {
+        
+        ReviewEntity review;
+        review = (ReviewEntity)em.createQuery("SELECT r FROM ReviewEntity r WHERE r.taskEntity.taskId = :inId" )
+                .setParameter("inId", taskId)
+                .getResultList().get(0);
+        if (review != null) {
+            review.getReviewId();
+            return review;
+        }
+        else {
+            throw new ReviewNotFoundException("No reivew found for task with id "+ taskId);
+        }
+       
+    }    
     
     @Override
     public ReviewEntity updateReview(ReviewEntity reviewEntity) {

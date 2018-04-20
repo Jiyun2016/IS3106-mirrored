@@ -1,6 +1,8 @@
 package ws.restful;
 
 import ejb.session.stateless.PaymentControllerLocal;
+import entity.PaymentEntity;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -38,13 +40,41 @@ public class PaymentResource {
     public PaymentResource() {
     }
 
+    @Path("retrieveAllPayments")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllPayments() {
+        try {
+            List<PaymentEntity> paymentEntities = paymentControllerLocal.retrieveAllPayment();
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(PaymentEntity payment: paymentEntities) {            
+                payment.setTaskEntity(null);
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllPaymentsRsp(paymentEntities)).build();
+        } 
+        catch(Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    } 
+    
     @Path("retrieveAllPaymentsByHelperId/{helperId}")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllPaymentsByHelperId(@PathParam("helperId") Long helperId) {
         try {
-            return Response.status(Status.OK).entity(new RetrieveAllPaymentsRsp(paymentControllerLocal.retrievePaymentByHelperId(helperId))).build();
+            List<PaymentEntity> paymentEntities = paymentControllerLocal.retrievePaymentByHelperId(helperId);
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(PaymentEntity payment: paymentEntities) {            
+                payment.setTaskEntity(null);
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllPaymentsRsp(paymentEntities)).build();
         } 
         catch(PaymentEntityNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -62,7 +92,14 @@ public class PaymentResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllPaymentsByRequesterId(@PathParam("requesterId") Long requesterId) {
         try {
-            return Response.status(Status.OK).entity(new RetrieveAllPaymentsRsp(paymentControllerLocal.retrievePaymentByHelperId(requesterId))).build();
+            List<PaymentEntity> paymentEntities = paymentControllerLocal.retrievePaymentByHelperId(requesterId);
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(PaymentEntity payment: paymentEntities) {            
+                payment.setTaskEntity(null);
+            }           
+            
+            return Response.status(Status.OK).entity(new RetrieveAllPaymentsRsp(paymentEntities)).build();
         } 
         catch(PaymentEntityNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -77,7 +114,7 @@ public class PaymentResource {
     private PaymentControllerLocal lookupPaymentControllerLocal() {
         try {
             javax.naming.Context c = new InitialContext();
-            return (PaymentControllerLocal) c.lookup("java:global/CarePaymentPro/CarePaymentPro-ejb/PaymentController!ejb.session.stateless.PaymentControllerLocal");
+            return (PaymentControllerLocal) c.lookup("java:global/CareTaskPro/CareTaskPro-ejb/PaymentController!ejb.session.stateless.PaymentControllerLocal");
         } 
         catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);

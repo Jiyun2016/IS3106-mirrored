@@ -29,6 +29,8 @@ public class helperProfileManagedBean implements Serializable{
     
     private HelperEntity helperToView;
     
+    private Boolean renderProfessionalNurseControls;
+    
     
 
     
@@ -39,6 +41,7 @@ public class helperProfileManagedBean implements Serializable{
     public void init()
     {
         helperToView = (HelperEntity)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity");
+        setRenderProfessionalNurseControls((Boolean) helperToView.getHelperRole().equalsIgnoreCase("professional"));
     }
 
     public void saveHelper(ActionEvent event)
@@ -59,6 +62,20 @@ public class helperProfileManagedBean implements Serializable{
      */
     public void setHelperToView(HelperEntity helperToView) {
         this.helperToView = helperToView;
+    }
+
+    /**
+     * @return the renderProfessionalNurseControls
+     */
+    public Boolean getRenderProfessionalNurseControls() {
+        return renderProfessionalNurseControls;
+    }
+
+    /**
+     * @param renderProfessionalNurseControls the renderProfessionalNurseControls to set
+     */
+    public void setRenderProfessionalNurseControls(Boolean renderProfessionalNurseControls) {
+        this.renderProfessionalNurseControls = renderProfessionalNurseControls;
     }
     
     

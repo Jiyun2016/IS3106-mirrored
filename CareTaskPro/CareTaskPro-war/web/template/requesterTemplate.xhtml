@@ -17,27 +17,24 @@
 
         <p:layout fullPage="true">
             <p:layoutUnit position="north">
-                <p:toolbar>
-                    <f:facet name="left">
-                        <h:outputText style="margin-left: 20px; font-size: 28px; font-family: fantasy" value="Requester Home" />
-                        <ezcomp:RequesterLoginForm />
-                    </f:facet>
-                    <f:facet name="right">
-                        <h:form>
 
-                            <p:menubar >
-                                <p:menuitem style="padding-right: 10px; padding-left: 10px"  value="RequesterHome" outcome="requesterHome" />
-                                <p:menuitem style="padding-right: 10px; padding-left: 10px"  value="RequesterRegister" outcome="requesterRegister" rendered="#{!sessionScope['requesterIsLogin']}"/>
-                                <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile" outcome = "requesterProfile" rendered="#{sessionScope['requesterIsLogin']}" />
-                                <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  outcome = "editRequesterProfile" rendered="#{sessionScope['requesterIsLogin']}"/>
-                                <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="BackToMainHome"  outcome="/publicMainPage.xhtml" />
-                                <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Logout" actionListener="#{requesterHomeManagedBean.logout}" icon="ui-icon-unlocked" rendered="#{sessionScope['requesterIsLogin']}"/>
+                <h:outputText style="margin-left: 20px; font-size: 28px; font-family: fantasy" value="Requester Home" />
+                <ezcomp:RequesterLoginForm />
 
-                            </p:menubar>
+                <h:form>
 
-                        </h:form>
-                    </f:facet>
-                </p:toolbar>
+                    <p:menubar >
+                        <p:menuitem style="padding-right: 10px; padding-left: 10px"  value="RequesterHome" outcome="requesterHome" />
+                        <p:menuitem style="padding-right: 10px; padding-left: 10px"  value="RequesterRegister" outcome="requesterRegister" rendered="#{!sessionScope['requesterIsLogin']}"/>
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile" outcome = "requesterProfile" rendered="#{sessionScope['requesterIsLogin']}" />
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  outcome = "editRequesterProfile" rendered="#{sessionScope['requesterIsLogin']}"/>
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="BackToMainHome"  outcome="/publicMainPage.xhtml" />
+                        <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Logout" actionListener="#{requesterHomeManagedBean.logout}" icon="ui-icon-unlocked" rendered="#{sessionScope['requesterIsLogin']}"/>
+
+                    </p:menubar>
+
+                </h:form>
+
 
             </p:layoutUnit>
 

@@ -5,8 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp">
 
     <h:head>
         <title>AdminHome</title>  
@@ -18,25 +17,21 @@
 
         <p:layout fullPage="true">
             <p:layoutUnit position="north">
-                <p:toolbar>
-                    <f:facet name="left">
-                        <h:outputText style="margin-left: 20px; font-size: 28px; font-family: fantasy; background-color:#b8dbc6" value="HomeCare Management" />
-                        <ezcomp:AdminLoginForm/>
-                    </f:facet>
-                    <f:facet name="right">
-                        <h:form>
-                            <p:menubar >
-                                <p:menuitem style="padding-right: 10px; padding-left: 10px"  value="AdminHome" outcome="adminHome" />
-                                <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile"  outcome="adminProfile" rendered="#{sessionScope['adminIsLogin']}" />
-                                <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  outcome="editAdminProfile" rendered="#{sessionScope['adminIsLogin']}"/>
-                                <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Create new admin"  outcome="createAdmin" rendered="#{sessionScope['adminIsLogin']}"/>
-                                <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="BackToMainHome"  outcome="/publicMainPage" />
-                                <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Logout" actionListener="#{adminHomeManagedBean.logout}" icon="ui-icon-unlocked" rendered="#{sessionScope['adminIsLogin']}"/>
 
-                            </p:menubar>
-                        </h:form>
-                    </f:facet>
-                </p:toolbar>
+                <h:outputText style="margin-left: 20px; font-size: 28px; font-family: fantasy" value="HomeCare Management" />
+                <ezcomp:AdminLoginForm/>
+
+                <h:form>
+                    <p:menubar >
+                        <p:menuitem style="padding-right: 10px; padding-left: 10px"  value="AdminHome" outcome="adminHome" />
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile"  outcome="adminProfile" rendered="#{sessionScope['adminIsLogin']}" />
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  outcome="editAdminProfile" rendered="#{sessionScope['adminIsLogin']}"/>
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Create new admin"  outcome="createAdmin" rendered="#{sessionScope['adminIsLogin']}"/>
+                        <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="BackToMainHome"  outcome="/publicMainPage" />
+                        <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Logout" actionListener="#{adminHomeManagedBean.logout}" icon="ui-icon-unlocked" rendered="#{sessionScope['adminIsLogin']}"/>
+
+                    </p:menubar>
+                </h:form>
 
 
             </p:layoutUnit>

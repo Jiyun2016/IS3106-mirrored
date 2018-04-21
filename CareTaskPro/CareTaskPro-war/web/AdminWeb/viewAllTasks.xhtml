@@ -120,15 +120,6 @@
                         </p:column>
                     </p:row>
 
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Requester Id: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.requesterEntity.requesterId}" />
-                        </p:column>
-                    </p:row>
-
                 </p:panelGrid>
                 <p:dataList value="#{adminTaskManagementManagedBean.taskEntityToView.preferredHelpers}" var="h" type="ordered">
                     <f:facet name="header">
@@ -273,139 +264,6 @@
 
         </h:form>
 
-        <h4>Cancelled Tasks </h4>
-        <br/>
-
-
-        <h:form id="formAllCancelledTasks">
-
-            <p:messages id="messages" redisplay="false" closable="true" />
-
-            <p:dataTable id="dataTableAllCancelledTasks" widgetVar="dataTableAllCancelledTasks" value="#{adminTaskManagementManagedBean.taskEntitiesCancelled}" var="taskEntity" rowKey="#{taskEntity.taskId}" rowIndexVar="row"
-                         filteredValue="#{adminTaskManagementManagedBean.filteredTaskEntities}"
-                         rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
-
-                <f:facet name="header">
-                    <p:outputPanel style="text-align: right;">
-                        <h:outputText value="Search all fields:" />
-                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllPendingTasks').filter()" style="width:300px" placeholder="Enter keyword"/>
-                    </p:outputPanel>
-                </f:facet>
-
-                <p:column headerText="Task ID" sortBy="#{taskEntity.taskId}" filterBy="#{taskEntity.taskId}" filterMatchMode="contains">
-                    <h:outputText value="#{taskEntity.taskId}" />
-                </p:column>
-
-                <p:column headerText="Category" sortBy="#{taskEntity.category}" filterBy="#{taskEntity.category}" filterMatchMode="contains">
-                    <h:outputText value="#{taskEntity.category}" />
-                </p:column>
-
-                <p:column headerText="Start Time" sortBy="#{taskEntity.startDateTime}" filterBy="#{taskEntity.startDateTime}" filterMatchMode="gt">
-                    <h:outputText value="#{taskEntity.startDateTime}" />
-                </p:column>
-
-                <p:column headerText="Action" colspan="2" >
-                    <p:commandButton value="Details" update="formViewTaskCancelled" oncomplete="PF('dialogViewTaskCancelled').show()" icon="ui-icon-document" title="View">
-                        <f:setPropertyActionListener value="#{taskEntity}" target="#{adminTaskManagementManagedBean.taskEntityToView}" />
-                    </p:commandButton>
-
-
-                </p:column>
-
-            </p:dataTable>
-
-
-        </h:form>
-
-
-
-        <h:form id="formViewTaskCancelled">
-
-            <p:dialog id="dialogViewTaskCancelled" widgetVar="dialogViewTaskCancelled" header="View Task" closable="true">
-
-                <p:panelGrid>
-
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Task ID: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.taskId}" />
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Task Category: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.category}" />
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Task Description: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.description}" />
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Start Time: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.startDateTime}" />
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="End Time: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.endDateTime}" />
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Status: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.taskStatus}" />
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Requester Id: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.requesterEntity.requesterId}" />
-                        </p:column>
-                    </p:row>
-
-                </p:panelGrid>
-                <p:dataList value="#{adminTaskManagementManagedBean.taskEntityToView.preferredHelpers}" var="h" type="ordered">
-                    <f:facet name="header">
-                        Preferred Helpers
-                    </f:facet>
-                    #{h.helperId}, #{h.firstName}
-                </p:dataList>
-
-            </p:dialog>
-
-        </h:form>
-
-
-
-
-
-
-
         <br/><br/>       
         <h4>Complained Tasks </h4>
         <br/>
@@ -502,8 +360,8 @@
                             <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.endDateTime}" />
                         </p:column>
                     </p:row>
-
-                    <p:row>
+                    
+                     <p:row>
                         <p:column>
                             <h:outputLabel value="Helper: " />
                         </p:column>
@@ -511,7 +369,7 @@
                             <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.helperEntity.helperId}" />
                         </p:column>
                     </p:row>
-
+                    
                     <p:row>
                         <p:column>
                             <h:outputLabel value="Requester: " />
@@ -527,15 +385,6 @@
                         </p:column>
                         <p:column>
                             <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.taskStatus}" />
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Requester Id: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.requesterEntity.requesterId}" />
                         </p:column>
                     </p:row>
 
@@ -648,7 +497,7 @@
                             <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.endDateTime}" />
                         </p:column>
                     </p:row>
-
+                    
                     <p:row>
                         <p:column>
                             <h:outputLabel value="Helper: " />
@@ -657,7 +506,7 @@
                             <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.helperEntity.helperId}" />
                         </p:column>
                     </p:row>
-
+                    
                     <p:row>
                         <p:column>
                             <h:outputLabel value="Requester: " />
@@ -673,15 +522,6 @@
                         </p:column>
                         <p:column>
                             <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.taskStatus}" />
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column>
-                            <h:outputLabel value="Requester Id: " />
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{adminTaskManagementManagedBean.taskEntityToView.requesterEntity.requesterId}" />
                         </p:column>
                     </p:row>
 

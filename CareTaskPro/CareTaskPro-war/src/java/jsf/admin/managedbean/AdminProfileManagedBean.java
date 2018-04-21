@@ -8,7 +8,6 @@ package jsf.admin.managedbean;
 import ejb.session.stateless.AdminControllerLocal;
 import entity.AdminEntity;
 import java.io.IOException;
-import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -16,15 +15,14 @@ import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author panjiyun
  */
 @Named(value = "adminProfileManagedBean")
-@ViewScoped
-public class AdminProfileManagedBean implements Serializable {
+@Dependent
+public class AdminProfileManagedBean {
 
      @EJB(name = "AdminControllerLocal")
     private AdminControllerLocal adminControllerLocal;

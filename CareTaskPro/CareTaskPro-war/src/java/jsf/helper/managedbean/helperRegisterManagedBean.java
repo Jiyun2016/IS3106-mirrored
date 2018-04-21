@@ -7,20 +7,21 @@ package jsf.helper.managedbean;
 
 import ejb.session.stateless.HelperControllerLocal;
 import entity.HelperEntity;
-import java.math.BigDecimal;
+import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author Amber
  */
 @Named(value = "helperRegisterManagedBean")
-@RequestScoped
-public class helperRegisterManagedBean{
+@ViewScoped
+public class helperRegisterManagedBean implements Serializable {
 
     @EJB
     private HelperControllerLocal helperController;
@@ -46,42 +47,24 @@ public class helperRegisterManagedBean{
         if(this.newHelper.getHelperRole().equals("PROFESSIONAL"))
         {
             this.renderProfessionalNurseControls = true;
-            
-                    
         }
         else
         {
             this.renderProfessionalNurseControls = false;
-     
-                    
         }
     }
     
     
     
-    public void saveNewHelper()
+    public void saveNewHelper(ActionEvent event)
     {
-        try{
-            if(newHelper.getHelperRole().equalsIgnoreCase("professional")){
-                newHelper.setChargeRate(new BigDecimal(0.5));
-                newHelper.setIsCertified(true);
-            }
-            else{
-                newHelper.setChargeRate(new BigDecimal(0.4));
-                newHelper.setIsCertified(false);
-            }
-            
-        HelperEntity he = helperController.createNewHelper(getNewHelper());
+        setNewHelper(helperController.createNewHelper(getNewHelper()));
+        getNewHelper().setHelperId(getNewHelper().getHelperId());
        
-        setNewHelper(he);
-       
+        setNewHelper(new HelperEntity());
         
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New helper " + getNewHelper().getFirstName() +" "+ getNewHelper().getLastName() + " created successfully", null));
-    }catch(Exception ex){
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while registering the new helper: " + ex.getMessage(), null));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New helper " + getNewHelper().getFirstName() + getNewHelper().getLastName() + " created successfully", null));
     }
-    }
-
 
     /**
      * @return the newHelper

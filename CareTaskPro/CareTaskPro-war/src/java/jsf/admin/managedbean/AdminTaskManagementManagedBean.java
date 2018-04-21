@@ -56,6 +56,7 @@ public class AdminTaskManagementManagedBean implements Serializable {
     private List<TaskEntity> taskEntitiesAssigned;
     private List<TaskEntity> taskEntitiesCompleted;
     private List<TaskEntity> taskEntitiesComplained;
+    private List<TaskEntity> taskEntitiesCancelled;
 
     private List<TaskEntity> filteredTaskEntities;
 
@@ -77,8 +78,7 @@ public class AdminTaskManagementManagedBean implements Serializable {
         setTaskEntitiesComplained(taskControllerLocal.retrieveTasksByStatus((TaskStatusString.COMPLAINED)));
         taskEntitiesAssigned = taskControllerLocal.retrieveTasksByStatus(TaskStatusString.ASSIGNED);
         taskEntitiesCompleted = taskControllerLocal.retrieveTasksByStatus(TaskStatusString.COMPLETED);
-        
-        
+        setTaskEntitiesCancelled(taskControllerLocal.retrieveTasksByStatus(TaskStatusString.CANCELLED));
         
         categories = new String[]{CategoryString.COMPANIONSHIP, CategoryString.HEALTHCARE, CategoryString.HOUSEWORK};
         setTaskStatuses(new String[]{TaskStatusString.ASSIGNED, TaskStatusString.PENDING, TaskStatusString.COMPLETED, TaskStatusString.CANCELLED, TaskStatusString.COMPLAINED});
@@ -319,6 +319,20 @@ public class AdminTaskManagementManagedBean implements Serializable {
      */
     public void setTaskStatuses(String[] taskStatuses) {
         this.taskStatuses = taskStatuses;
+    }
+
+    /**
+     * @return the taskEntitiesCancelled
+     */
+    public List<TaskEntity> getTaskEntitiesCancelled() {
+        return taskEntitiesCancelled;
+    }
+
+    /**
+     * @param taskEntitiesCancelled the taskEntitiesCancelled to set
+     */
+    public void setTaskEntitiesCancelled(List<TaskEntity> taskEntitiesCancelled) {
+        this.taskEntitiesCancelled = taskEntitiesCancelled;
     }
 
 }

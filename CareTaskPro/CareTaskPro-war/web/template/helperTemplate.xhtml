@@ -31,10 +31,9 @@
                             </f:facet>
                             <f:facet name="right">
                                 <p:menubar>
-                                    <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Helper Home" outcome="HelperHomepage" />
+                                    <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Home" outcome="HelperHomepage" />
                                     <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Manage my account" outcome="helperAccount" />
                                     <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Manage my profile" outcome="helperProfile"  />
-                                    <p:menuitem style="padding-right: 10px"  actionListener="#{helperHomepageLogoutManagedBean.logout}" value="Public Main Page" icon="ui-icon-home" />
 
 
 
@@ -55,7 +54,6 @@
                         <p:menu style="width: 100%; height:70%">
                            
                             <p:submenu label="Manage My Task">
-                                <p:menuitem style="padding-bottom: 10px" outcome="helperViewAvailableTasks" value="View available tasks" icon="ui-icon-plus"/>
                                 <p:menuitem style="padding-bottom: 10px" value="View schedule of all my tasks" outcome="helperViewTasks" icon="ui-icon-calendar" />
                             </p:submenu>
                             <p:submenu label="Manage My Reviews">

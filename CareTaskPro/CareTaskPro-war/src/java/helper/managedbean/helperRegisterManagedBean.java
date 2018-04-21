@@ -7,23 +7,21 @@ package helper.managedbean;
 
 import ejb.session.stateless.HelperControllerLocal;
 import entity.HelperEntity;
-import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author Amber
  */
 @Named(value = "helperRegisterManagedBean")
-@ViewScoped
-public class helperRegisterManagedBean implements Serializable {
+@RequestScoped
+public class helperRegisterManagedBean{
 
-    @EJB
+    @EJB(name="HelperControllerLocal")
     private HelperControllerLocal helperController;
     
     private HelperEntity newHelper;
@@ -32,7 +30,7 @@ public class helperRegisterManagedBean implements Serializable {
     
 
     public helperRegisterManagedBean(HelperEntity newHelper) {
-        this.newHelper = newHelper;
+        
     }
 
     public helperRegisterManagedBean() {
@@ -56,14 +54,17 @@ public class helperRegisterManagedBean implements Serializable {
     
     
     
-    public void saveNewHelper(ActionEvent event)
+    public void saveNewHelper()
     {
-        setNewHelper(helperController.createNewHelper(getNewHelper()));
-        getNewHelper().setHelperId(getNewHelper().getHelperId());
+        try{
+        HelperEntity he = helperController.createNewHelper(getNewHelper());
        
         setNewHelper(new HelperEntity());
         
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New helper " + getNewHelper().getFirstName() + getNewHelper().getLastName() + " created successfully", null));
+    }catch(Exception ex){
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while registering the new helper: " + ex.getMessage(), null));
+    }
     }
 
     /**

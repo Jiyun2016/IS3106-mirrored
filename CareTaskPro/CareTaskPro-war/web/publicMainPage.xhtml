@@ -15,9 +15,9 @@
     </h:head>
 
     <h:body>
-        <p:layout style="height:1200px">
+        <p:layout style="height:1200px; ">
 
-            <p:layoutUnit position="north" style="overflow: auto;height:50px; "  >
+            <p:layoutUnit position="north" style="overflow: auto;height:50px; border:none"  >
 
                 <h:form style="border:none">
 
@@ -41,63 +41,73 @@
 
 
 
-            <p:layoutUnit position="center" size="30%">
+            <p:layoutUnit position="center" size="30%" style="border:one">
 
                 <p:layout>
                     <p:layoutUnit position="north" size="350" style="border:none">
                         <p:contentFlow style="border:none" value="#{imagesViewManagedBean.images}" var="image">
                             <p:graphicImage  style="border:none" value="images/#{image}" styleClass="content" />
-                            <div class="caption">#{image}</div>
+                            <div style="border:none" class="caption">#{image}</div>
                         </p:contentFlow>
                     </p:layoutUnit>
 
-                    <p:layoutUnit position="center">
-                        <p:layout style="height:600px">
-                            <p:layoutUnit position="west" style="height:200px" size="50%">
+                    <p:layoutUnit position="center" style="height:300px;">
+                        <p:layout>
+                            <p:layoutUnit position="west" style="height:100%" size="50%">
 
-                                <p:separator style="width:400px;height:12px; margin-top:30px;" />
-                                <p:outputPanel style="position:relative; left: 160px;font-family: fantasy">
-                                    <h2 style="margin-bottom: 0px">When your loved ones</h2>
-                                    <br/>
-                                    <h2 style="margin:0px">need help</h2>
-                                    <br></br>
-                                    <h2 style="margin:0px">But you are not around</h2>
+                                 <h:panelGroup  style="height: 100%; display:block; background-repeat:no-repeat; text-align:center;background-image:url('images\\left.png');background-size:100% 100%; background-position:center">
+                            <p:outputPanel style="position:relative; top:30px; left: 160px;font-family: fantasy">
+                                <h2 style="margin-top:0px;margin-bottom: 0px">When your loved ones</h2>
+                                <br/>
+                                <h2 style="margin:0px">need help</h2>
+                                <br></br>
+                                <h2 style="margin:0px">But you are not around</h2>
 
-                                    <br></br>
-                                    <h2 style="margin:0px; color:green">Become a requester!</h2>
-                                    <p:button outcome="RequesterWeb/requesterRegister" value="Sign up here"></p:button>
-                                </p:outputPanel>
+                                <br></br>
+                                <h2 style="margin:0px; color:green">Become a REQUESTER</h2>
+                                <p:button outcome="RequesterWeb/requesterRegister" value="Sign up here"></p:button>
+                            </p:outputPanel>
+                        </h:panelGroup>
 
 
                             </p:layoutUnit>
-                            <p:layoutUnit position="center" style="height:200px">
+                            <p:layoutUnit position="center" style="height:100%">
 
-                                <p:separator style="width:400px;height:12px; margin-top:30px;" />
-                                <p:outputPanel style="position:relative; left: 160px;font-family: fantasy">
-                                    <h2 style="margin-bottom: 0px">If you have nursing expertise</h2>
-                                    <br/>
-                                    <h2 style="margin:0px">or a warm heart</h2>
-                                    <br></br>
-                                    <h2 style="margin:0px">and want to spread your love</h2>
+                                <h:panelGroup  style="height: 100%; display:block; background-repeat:no-repeat; text-align:center;background-image:url('images\\rightnew.png');background-size:100% 100%; background-position:center">
+                            <p:outputPanel style="position:relative;top:30px; right:160px; font-family: fantasy">
+                                <h2 style="margin-top:0px;margin-bottom: 0px">When your loved ones</h2>
+                                <br/>
+                                <h2 style="margin:0px">need help</h2>
+                                <br></br>
+                                <h2 style="margin:0px">But you are not around</h2>
 
-                                    <br></br>
-                                    <h2 style="margin:0px; color:green">Become a Helper!</h2>
-                                    <p:button outcome="PublicPageWeb/helperRegister" value="Sign up here"></p:button>
-                                </p:outputPanel>
+                                <br></br>
+                                <h2 style="margin:0px; color:green">Become a HELPER</h2>
+                                <p:button outcome="PublicPageWeb/helperRegister" value="Sign up here"></p:button>
+                            </p:outputPanel>
+                        </h:panelGroup>
                             </p:layoutUnit>
 
                         </p:layout>
 
 
                     </p:layoutUnit>
-                    
-                    
-                    <p:layoutUnit position="south" size="30%"  style="background-image:url('images\\green.jpg')">
-                        <p:outputPanel style="position:relative; left:40%; width:50%" >
-                            text
-                        </p:outputPanel>
 
 
+                    <p:layoutUnit position="south" size="30%" style="height:150px"  >
+                        <h:panelGroup style="height: 100%; display:block; background-repeat:no-repeat; text-align:center; background-image:url('images\\woodnew.png');background-size:100% 100%; background-position:center">
+                                  <p:outputPanel style="position:relative;top:30px; font-family: fantasy">
+                                <h2 style="margin-top:0px;margin-bottom: 0px; color:green">Help with daily life</h2>
+                                <br/>
+                                <h2 style="margin:0px">- Housework</h2>
+                                <br></br>
+                                <h2 style="margin:0px">- Companionship</h2>
+                                <br></br>
+                                <h2 style="margin:0px">- Healthcare</h2>
+                                <br></br>
+                                
+                            </p:outputPanel>
+ </h:panelGroup>
                     </p:layoutUnit>
 
 
@@ -112,26 +122,26 @@
                 <p:panelGrid style="width: 100%; ">
                     <p:row style="border: none">
                         <p:column style=" border: none;">&nbsp;</p:column>
-                        <p:column style="text-align: right;  border:none">Contact</p:column>
+                        <p:column style="text-align: right;font-size:20px; font-family: fantasy; border:none">Contact</p:column>
 
                     </p:row>
 
                     <p:row style="border: none">
                         <p:column style="border: none;">&nbsp;</p:column>
-                        <p:column style="text-align: right;  border:none">xxxaddress</p:column>
+                        <p:column style="text-align: right; font-size:20px; font-family: fantasy; border:none">xxxaddress</p:column>
 
                     </p:row>
 
 
                     <p:row style="border: none">
                         <p:column style="text-align: center; border: none;">&nbsp;</p:column>
-                        <p:column style="text-align: right;  border:none">+65 xxxxxxxx</p:column>
+                        <p:column style="text-align: right; font-size:20px;font-family: fantasy;  border:none">+65 xxxxxxxx</p:column>
 
                     </p:row>
 
 
                     <p:row style="border-style: none;">
-                        <p:column style="text-align: left; border-style: none;"><h6>&copy; 2018 HomeCare. All Rights Reserved.</h6></p:column>
+                        <p:column style="text-align: left;font-size:20px;font-family: fantasy;  border-style: none;"><h6>&copy; 2018 HomeCare. All Rights Reserved.</h6></p:column>
                         <p:column style="text-align: right; border-style: none;"><p:clock pattern="h:mm:ss a, E, dd/MM/yyyy" mode="server" /></p:column>
                     </p:row>
 

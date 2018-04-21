@@ -1,6 +1,7 @@
 package ejb.session.stateless;
 
 import entity.ReviewEntity;
+import entity.TaskEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,6 +23,13 @@ public class ReviewController implements ReviewControllerLocal {
         em.persist(reviewEntity);
         em.flush();
         em.refresh(reviewEntity);
+        
+        Long taId = reviewEntity.getTaskEntity().getTaskId();
+        TaskEntity ta = em.find(TaskEntity.class,taId);
+        ta.setReviewEntity(reviewEntity);
+     
+        em.merge(ta);
+        
         return reviewEntity;
     }
 
@@ -48,10 +56,27 @@ public class ReviewController implements ReviewControllerLocal {
             }
             return reviews;
         } else {
-            throw new ReviewNotFoundException("No reivew found for helper with id "+helperId);
+            throw new ReviewNotFoundException("No review found for helper with id "+helperId);
         }
        
     }
+    
+    @Override
+    public ReviewEntity retrieveReviewByTaskId(Long taskId) throws ReviewNotFoundException {
+        
+        ReviewEntity review;
+        review = (ReviewEntity)em.createQuery("SELECT r FROM ReviewEntity r WHERE r.taskEntity.taskId = :inId" )
+                .setParameter("inId", taskId)
+                .getResultList().get(0);
+        if (review != null) {
+            review.getReviewId();
+            return review;
+        }
+        else {
+            throw new ReviewNotFoundException("No reivew found for task with id "+ taskId);
+        }
+       
+    }    
     
     @Override
     public ReviewEntity updateReview(ReviewEntity reviewEntity) {

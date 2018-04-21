@@ -58,12 +58,14 @@ public class TaskResource {
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(TaskEntity task: taskEntities) {
                 for(HelperEntity helper: task.getPreferredHelpers()) {
-                    helper.setRecommendedTaskEntities(null);
+                    helper.getRecommendedTaskEntities().clear();
+                    helper.getTaskEntities().clear();
                 }
-                task.getRequesterEntity().setTaskEntities(null);
+                task.getRequesterEntity().getTaskEntities().clear();
                 
                 if(task.getHelperEntity() != null) {
-                    task.getHelperEntity().setTaskEntities(null);
+                    task.getHelperEntity().getRecommendedTaskEntities().clear();
+                    task.getHelperEntity().getTaskEntities().clear();
                 }
                 if(task.getReviewEntity() != null) {
                     task.getReviewEntity().setTaskEntity(null);
@@ -92,12 +94,14 @@ public class TaskResource {
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(TaskEntity task: taskEntities) {
                 for(HelperEntity helper: task.getPreferredHelpers()) {
-                    helper.setRecommendedTaskEntities(null);
+                    helper.getRecommendedTaskEntities().clear();
+                    helper.getTaskEntities().clear();
                 }
-                task.getRequesterEntity().setTaskEntities(null);
+                task.getRequesterEntity().getTaskEntities().clear();
                 
                 if(task.getHelperEntity() != null) {
-                    task.getHelperEntity().setTaskEntities(null);
+                    task.getHelperEntity().getRecommendedTaskEntities().clear();
+                    task.getHelperEntity().getTaskEntities().clear(); 
                 }
                 if(task.getReviewEntity() != null) {
                     task.getReviewEntity().setTaskEntity(null);
@@ -115,6 +119,42 @@ public class TaskResource {
         }
     }        
     
+    @Path("retrieveTasksByPreferredHelperId/{helperId}")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveTasksByStatusByHelperId(@PathParam("helperId") Long helperId) {
+        try {
+            List<TaskEntity> taskEntities = taskControllerLocal.retrieveTaskByPreferredHelperId(helperId);
+            
+            //to prevent cyclic relationship checks when marshalling/unmarshalling
+            for(TaskEntity task: taskEntities) {
+                for(HelperEntity helper: task.getPreferredHelpers()) {
+                    helper.getRecommendedTaskEntities().clear();
+                    helper.getTaskEntities().clear();
+                }
+                task.getRequesterEntity().getTaskEntities().clear();
+                
+                if(task.getHelperEntity() != null) {
+                    task.getHelperEntity().getRecommendedTaskEntities().clear();
+                    task.getHelperEntity().getTaskEntities().clear();
+                }
+                if(task.getReviewEntity() != null) {
+                    task.getReviewEntity().setTaskEntity(null);
+                }
+                if(task.getPaymentEntity() != null) {
+                    task.getPaymentEntity().setTaskEntity(null);
+                }
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveAllTasksRsp(taskEntities)).build();
+        } 
+        catch(Exception ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());  
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }           
+    
     @Path("retrieveTasksByStatusByHelperId/{helperId}/{status}")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
@@ -126,12 +166,14 @@ public class TaskResource {
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(TaskEntity task: taskEntities) {
                 for(HelperEntity helper: task.getPreferredHelpers()) {
-                    helper.setRecommendedTaskEntities(null);
+                    helper.getRecommendedTaskEntities().clear();
+                    helper.getTaskEntities().clear();
                 }
-                task.getRequesterEntity().setTaskEntities(null);
+                task.getRequesterEntity().getTaskEntities().clear();
                 
                 if(task.getHelperEntity() != null) {
-                    task.getHelperEntity().setTaskEntities(null);
+                    task.getHelperEntity().getRecommendedTaskEntities().clear();
+                    task.getHelperEntity().getTaskEntities().clear();
                 }
                 if(task.getReviewEntity() != null) {
                     task.getReviewEntity().setTaskEntity(null);
@@ -160,12 +202,14 @@ public class TaskResource {
             //to prevent cyclic relationship checks when marshalling/unmarshalling
             for(TaskEntity task: taskEntities) {
                 for(HelperEntity helper: task.getPreferredHelpers()) {
-                    helper.setRecommendedTaskEntities(null);
+                    helper.getRecommendedTaskEntities().clear();
+                    helper.getTaskEntities().clear();
                 }
-                task.getRequesterEntity().setTaskEntities(null);
+                task.getRequesterEntity().getTaskEntities().clear();
                 
                 if(task.getHelperEntity() != null) {
-                    task.getHelperEntity().setTaskEntities(null);
+                    task.getHelperEntity().getRecommendedTaskEntities().clear();
+                    task.getHelperEntity().getTaskEntities().clear();
                 }
                 if(task.getReviewEntity() != null) {
                     task.getReviewEntity().setTaskEntity(null);
@@ -189,7 +233,25 @@ public class TaskResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveTask(@PathParam("taskId") Long taskId) {
         try {
-            return Response.status(Status.OK).entity(new RetrieveTaskRsp(taskControllerLocal.retrieveTaskById(taskId))).build();
+            TaskEntity task = taskControllerLocal.retrieveTaskById(taskId);
+            for(HelperEntity helper: task.getPreferredHelpers()) {
+                helper.getRecommendedTaskEntities().clear();
+                helper.getTaskEntities().clear();
+            }
+            task.getRequesterEntity().getTaskEntities().clear();
+                
+            if(task.getHelperEntity() != null) {
+                task.getHelperEntity().getRecommendedTaskEntities().clear();
+                task.getHelperEntity().getTaskEntities().clear();
+            }
+            if(task.getReviewEntity() != null) {
+                task.getReviewEntity().setTaskEntity(null);
+            }
+            if(task.getPaymentEntity() != null) {
+                task.getPaymentEntity().setTaskEntity(null);
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveTaskRsp(task)).build();
         } 
         catch(TaskEntityNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());

@@ -27,5 +27,7 @@ public interface ReviewControllerLocal {
     public void deleteReview(Long reviewId) throws ReviewNotFoundException;
 
     public List<ReviewEntity> retrieveReviewByHelperId(Long helperId) throws ReviewNotFoundException;
+
+    public ReviewEntity retrieveReviewByTaskId(Long taskId) throws ReviewNotFoundException;
     
 }

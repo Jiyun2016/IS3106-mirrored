@@ -44,7 +44,7 @@ public class helperLoginManagedBean {
         {
             HelperEntity currentHelperEntity = helperControllerLocal.loginHelper(getPhone(), getPassword());
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("helperIsLogin", true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentHelperEntity", currentHelperEntity);
             FacesContext.getCurrentInstance().getExternalContext().redirect("../HelperWeb/HelperHomepage.xhtml");            
         }

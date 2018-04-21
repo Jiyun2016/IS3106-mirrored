@@ -45,7 +45,7 @@ public class helperProfileManagedBean implements Serializable{
     {
        helperController.updateHelper(helperToView);
         
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Book " + helperToView.getHelperId() + " updated successfully", null));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Helper " + helperToView.getHelperId() + " updated successfully", null));
     }
     /**
      * @return the helperToView

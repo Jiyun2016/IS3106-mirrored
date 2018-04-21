@@ -1,6 +1,7 @@
 package ejb.session.stateless;
 
 import entity.ReviewEntity;
+import entity.TaskEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,6 +23,13 @@ public class ReviewController implements ReviewControllerLocal {
         em.persist(reviewEntity);
         em.flush();
         em.refresh(reviewEntity);
+        
+        Long taId = reviewEntity.getTaskEntity().getTaskId();
+        TaskEntity ta = em.find(TaskEntity.class,taId);
+        ta.setReviewEntity(reviewEntity);
+     
+        em.merge(ta);
+        
         return reviewEntity;
     }
 

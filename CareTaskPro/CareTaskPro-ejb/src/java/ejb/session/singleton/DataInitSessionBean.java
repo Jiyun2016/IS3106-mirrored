@@ -96,8 +96,8 @@ public class DataInitSessionBean {
     
     private void initializeTaskData() {
 
-        RequesterEntity r = requesterControllerLocal.createNewRequester(new RequesterEntity("firstName1", "lastName1", "MALE", "email1", "61119111", "password1", "address1", "5541", "creditCardName1", "1", "2021", "001"));
-        HelperEntity h = helperControllerLocal.createNewHelper(new HelperEntity("firstName1", "lastName1", "MALE", "email1", "91116111", "password1", "address1", true, "certName1", "certNum1", "bankAcct1"));
+        RequesterEntity r = requesterControllerLocal.createNewRequester(new RequesterEntity("firstName1", "lastName1", "MALE", "remail1@mail.com", "61119111", "password1", "address1", "5541", "creditCardName1", "1", "2021", "001"));
+        HelperEntity h = helperControllerLocal.createNewHelper(new HelperEntity("firstName1", "lastName1", "MALE", "hemail1@mail.com", "91116111", "password1", "address1", true, "certName1", "certNum1", "bankAcct1"));
 
         // Create Pending Tasks
         taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "some housework", new Date((System.currentTimeMillis() + 60000 * 2000)), new Date((System.currentTimeMillis() + 2700 * 60000)), TaskStatusString.PENDING, r));
@@ -107,19 +107,12 @@ public class DataInitSessionBean {
         taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "some companionship", new Date((System.currentTimeMillis() + 60000 * 12)), new Date((System.currentTimeMillis() + 30 * 60000)), TaskStatusString.PENDING, r));
 
         // Create Assigned Tasks with Pending Payments
-<<<<<<< HEAD
-        TaskEntity t1 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "some housework", new Date((System.currentTimeMillis() + 5 * 60000)), new Date((System.currentTimeMillis() + 30 * 60000)), TaskStatusString.ASSIGNED, r, h));
-        TaskEntity t2 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "some companionship", new Date((System.currentTimeMillis() + 40 * 60000)), new Date((System.currentTimeMillis() + 90 * 60000)), TaskStatusString.ASSIGNED, r, h));
+        TaskEntity t1 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "some housework", new Date((System.currentTimeMillis() + 30 * 60000)), new Date((System.currentTimeMillis() + 60 * 60000)), TaskStatusString.ASSIGNED, r, h));
+        TaskEntity t2 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "some companionship", new Date((System.currentTimeMillis() + 70 * 60000)), new Date((System.currentTimeMillis() + 90 * 60000)), TaskStatusString.ASSIGNED, r, h));
         TaskEntity t3 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HEALTHCARE, "some healthcare", new Date((System.currentTimeMillis() + 100 * 60000)), new Date((System.currentTimeMillis() + 150 * 60000)), TaskStatusString.ASSIGNED, r, h));
         TaskEntity t4 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "some housework", new Date((System.currentTimeMillis() + 160 * 60000)), new Date((System.currentTimeMillis() + 230 * 60000)), TaskStatusString.ASSIGNED, r, h));
         TaskEntity t5 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "some companionship", new Date((System.currentTimeMillis() + 240 * 60000)), new Date((System.currentTimeMillis() + 300 * 60000)), TaskStatusString.ASSIGNED, r, h));
-=======
-        TaskEntity t1 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 30 * 60000)), new Date((System.currentTimeMillis() + 60 * 60000)), TaskStatusString.ASSIGNED, r, h));
-        TaskEntity t2 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 40 * 60000)), new Date((System.currentTimeMillis() + 90 * 60000)), TaskStatusString.ASSIGNED, r, h));
-        TaskEntity t3 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HEALTHCARE, "housework", new Date((System.currentTimeMillis() + 100 * 60000)), new Date((System.currentTimeMillis() + 150 * 60000)), TaskStatusString.ASSIGNED, r, h));
-        TaskEntity t4 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 160 * 60000)), new Date((System.currentTimeMillis() + 230 * 60000)), TaskStatusString.ASSIGNED, r, h));
-        TaskEntity t5 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 240 * 60000)), new Date((System.currentTimeMillis() + 300 * 60000)), TaskStatusString.ASSIGNED, r, h));
->>>>>>> 05f05a3803559dec09bf199602a45a3b3243ff0a
+
 
         paymentControllerLocal.createPaymentEntity(t1);
         paymentControllerLocal.createPaymentEntity(t2);
@@ -127,23 +120,14 @@ public class DataInitSessionBean {
         paymentControllerLocal.createPaymentEntity(t4);
         paymentControllerLocal.createPaymentEntity(t5);
 
-<<<<<<< HEAD
+
         // Create Completed Tasks with Completed Payments and Completed Reviews
-        TaskEntity t6 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "some housework", new Date((System.currentTimeMillis() + 5 * 60000)), new Date((System.currentTimeMillis() + 30 * 60000)), TaskStatusString.COMPLETED, r, h));
-        TaskEntity t7 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "some companionship", new Date((System.currentTimeMillis() + 40 * 60000)), new Date((System.currentTimeMillis() + 90 * 60000)), TaskStatusString.COMPLETED, r, h));
+        TaskEntity t6 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "some housework", new Date((System.currentTimeMillis() + 20 * 60000)), new Date((System.currentTimeMillis() + 50 * 60000)), TaskStatusString.COMPLETED, r, h));
+        TaskEntity t7 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "some companionship", new Date((System.currentTimeMillis() + 60 * 60000)), new Date((System.currentTimeMillis() + 90 * 60000)), TaskStatusString.COMPLETED, r, h));
         TaskEntity t8 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HEALTHCARE, "some healthcare", new Date((System.currentTimeMillis() + 100 * 60000)), new Date((System.currentTimeMillis() + 150 * 60000)), TaskStatusString.COMPLETED, r, h));
         TaskEntity t9 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "some housework", new Date((System.currentTimeMillis() + 160 * 60000)), new Date((System.currentTimeMillis() + 230 * 60000)), TaskStatusString.COMPLETED, r, h));
         TaskEntity t10 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "some companionship", new Date((System.currentTimeMillis() + 240 * 60000)), new Date((System.currentTimeMillis() + 300 * 60000)), TaskStatusString.COMPLETED, r, h));
-=======
 
-
-        // Create Completed Tasks with Completed Payments
-        TaskEntity t6 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 20 * 60000)), new Date((System.currentTimeMillis() + 50 * 60000)), TaskStatusString.COMPLETED, r, h));
-        TaskEntity t7 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 40 * 60000)), new Date((System.currentTimeMillis() + 90 * 60000)), TaskStatusString.COMPLETED, r, h));
-        TaskEntity t8 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HEALTHCARE, "housework", new Date((System.currentTimeMillis() + 100 * 60000)), new Date((System.currentTimeMillis() + 150 * 60000)), TaskStatusString.COMPLETED, r, h));
-        TaskEntity t9 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 160 * 60000)), new Date((System.currentTimeMillis() + 230 * 60000)), TaskStatusString.COMPLETED, r, h));
-        TaskEntity t10 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 240 * 60000)), new Date((System.currentTimeMillis() + 300 * 60000)), TaskStatusString.COMPLETED, r, h));
->>>>>>> 05f05a3803559dec09bf199602a45a3b3243ff0a
 
         PaymentEntity p6 = paymentControllerLocal.createPaymentEntity(t6);
         PaymentEntity p7 = paymentControllerLocal.createPaymentEntity(t7);
@@ -167,16 +151,16 @@ public class DataInitSessionBean {
     }
 
     private void initializeRequesterData() {
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName2", "lastName2", "FEMALE", "email2", "62229222", "password2", "address2", "5542", "creditCardName2", "2", "2022", "002"));
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName3", "lastName3", "MALE", "email3", "63339333", "password3", "address3", "5543", "creditCardName3", "3", "2023", "003"));
-        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName4", "lastName4", "MALE", "email4", "64449444", "password4", "address4", "5544", "creditCardName4", "4", "2024", "004"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName2", "lastName2", "FEMALE", "remail2@mail.com", "62229222", "password2", "address2", "5542", "creditCardName2", "2", "2022", "002"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName3", "lastName3", "MALE", "remail3@mail.com", "63339333", "password3", "address3", "5543", "creditCardName3", "3", "2023", "003"));
+        requesterControllerLocal.createNewRequester(new RequesterEntity("firstName4", "lastName4", "MALE", "remail4@mail.com", "64449444", "password4", "address4", "5544", "creditCardName4", "4", "2024", "004"));
 
     }
 
     private void initializeHelperData() {
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName2", "lastName2", "FEMALE", "email2", "92226222", "password2", "address2", false, "certName2", "certNum2", "bankAcct2"));
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName3", "lastName3", "MALE", "email3", "93336333", "password3", "address3", true, "certName3", "certNum3", "bankAcct3"));
-        helperControllerLocal.createNewHelper(new HelperEntity("firstName4", "lastName4", "MALE", "email4", "94446444", "password4", "address4", true, "certName4", "certNum5", "bankAcct4"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName2", "lastName2", "FEMALE", "hemail2@mail.com", "92226222", "password2", "address2", false, "certName2", "certNum2", "bankAcct2"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName3", "lastName3", "MALE", "hemail3@mail.com", "93336333", "password3", "address3", true, "certName3", "certNum3", "bankAcct3"));
+        helperControllerLocal.createNewHelper(new HelperEntity("firstName4", "lastName4", "MALE", "hemail4@mail.com", "94446444", "password4", "address4", true, "certName4", "certNum5", "bankAcct4"));
 
     }
 

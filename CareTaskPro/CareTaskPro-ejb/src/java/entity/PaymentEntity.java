@@ -36,7 +36,7 @@ public class PaymentEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date paymentTime;
-    @Column(precision = 18, scale = 2,nullable = false)
+    @Column(precision = 3, scale = 2,nullable = false)
     private BigDecimal companyRevenue;
  
     @OneToOne(optional = false)

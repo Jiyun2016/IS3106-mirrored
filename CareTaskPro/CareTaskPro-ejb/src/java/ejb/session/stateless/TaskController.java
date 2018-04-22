@@ -155,8 +155,9 @@ public class TaskController implements TaskControllerLocal {
     public List<TaskEntity> retrieveTaskByPreferredHelperId(Long helperId) throws TaskEntityNotFoundException {
         List<TaskEntity> tasks;
 
-        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t, IN (t.preferredHelpers) p WHERE p.helperId = :helperId")
+        tasks = em.createQuery("SELECT DISTINCT t FROM TaskEntity t, IN (t.preferredHelpers) p WHERE p.helperId = :helperId AND t.taskStatus = :inStatus")
                 .setParameter("helperId", helperId)
+                .setParameter("inStatus", TaskStatusString.PENDING)
                 .getResultList();
 
         if (tasks != null && !tasks.isEmpty()) {

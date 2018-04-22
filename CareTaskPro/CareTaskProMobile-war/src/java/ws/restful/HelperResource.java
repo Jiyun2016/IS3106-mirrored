@@ -3,6 +3,7 @@ package ws.restful;
 import ejb.session.stateless.HelperControllerLocal;
 import entity.HelperEntity;
 import entity.TaskEntity;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,8 +104,19 @@ public class HelperResource {
     public Response createHelper(JAXBElement<CreateHelperReq> jaxbCreateHelperReq) {
         if((jaxbCreateHelperReq != null) && (jaxbCreateHelperReq.getValue() != null)) {
             try {
-                CreateHelperReq createHelperReq = jaxbCreateHelperReq.getValue();               
-                HelperEntity helper = helperControllerLocal.createNewHelper(createHelperReq.getHelper());
+                CreateHelperReq createHelperReq = jaxbCreateHelperReq.getValue(); 
+                HelperEntity helper = createHelperReq.getHelper();
+                
+                if(helper.getIsCertified()) {
+                    helper.setHelperRole("PROFESSIONAL");
+                    helper.setChargeRate(new BigDecimal(0.5));
+                }
+                else {
+                    helper.setHelperRole("NONPROFESSIONAL");
+                    helper.setChargeRate(new BigDecimal(0.4));
+                }
+                
+                helper = helperControllerLocal.createNewHelper(helper);
                 CreateHelperRsp createHelperRsp = new CreateHelperRsp(helper.getHelperId());
                 
                 return Response.status(Response.Status.OK).entity(createHelperRsp).build();

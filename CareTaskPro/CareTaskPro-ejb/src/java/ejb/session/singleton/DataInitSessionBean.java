@@ -111,7 +111,7 @@ public class DataInitSessionBean {
        
         
         // Create Assigned Tasks with Pending Payments
-        TaskEntity t1 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 5 * 60000)), new Date((System.currentTimeMillis() + 30 * 60000)), TaskStatusString.ASSIGNED, r, h));
+        TaskEntity t1 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 30 * 60000)), new Date((System.currentTimeMillis() + 60 * 60000)), TaskStatusString.ASSIGNED, r, h));
         TaskEntity t2 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 40 * 60000)), new Date((System.currentTimeMillis() + 90 * 60000)), TaskStatusString.ASSIGNED, r, h));
         TaskEntity t3 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HEALTHCARE, "housework", new Date((System.currentTimeMillis() + 100 * 60000)), new Date((System.currentTimeMillis() + 150 * 60000)), TaskStatusString.ASSIGNED, r, h));
         TaskEntity t4 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 160 * 60000)), new Date((System.currentTimeMillis() + 230 * 60000)), TaskStatusString.ASSIGNED, r, h));
@@ -126,7 +126,7 @@ public class DataInitSessionBean {
 
 
         // Create Completed Tasks with Completed Payments
-        TaskEntity t6 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 5 * 60000)), new Date((System.currentTimeMillis() + 30 * 60000)), TaskStatusString.COMPLETED, r, h));
+        TaskEntity t6 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 20 * 60000)), new Date((System.currentTimeMillis() + 50 * 60000)), TaskStatusString.COMPLETED, r, h));
         TaskEntity t7 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.COMPANIONSHIP, "housework", new Date((System.currentTimeMillis() + 40 * 60000)), new Date((System.currentTimeMillis() + 90 * 60000)), TaskStatusString.COMPLETED, r, h));
         TaskEntity t8 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HEALTHCARE, "housework", new Date((System.currentTimeMillis() + 100 * 60000)), new Date((System.currentTimeMillis() + 150 * 60000)), TaskStatusString.COMPLETED, r, h));
         TaskEntity t9 = taskControllerLocal.createNewTask(new TaskEntity(CategoryString.HOUSEWORK, "housework", new Date((System.currentTimeMillis() + 160 * 60000)), new Date((System.currentTimeMillis() + 230 * 60000)), TaskStatusString.COMPLETED, r, h));

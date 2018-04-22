@@ -35,12 +35,31 @@
 
         <h:panelGroup rendered="#{!sessionScope['isLogin']}">
             <br/><br/>
-            <h2>Welcome to Admin Home!</h2>
+            <h1>Welcome to Admin Home!</h1>
             <br/>
+            <p:layout>
+                
+                <p:layoutUnit position="west" size="250" style="border: none">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <h2>Keep Calm</h2>
+                    <br></br>
+                    <h3>And</h3>
+                    <br></br>
+                    <h2>Have A Nice Day</h2>
+                    <br></br>
+                    <br></br>
+                    <br></br>
 
+                </p:layoutUnit>
 
-            <img style="height:80%; width:80%" src="/CareTaskPro-war/images/adminHomeImage2.jpg"></img>
+                <p:layoutUnit position="center" style="border: none">
 
+                    <img style="height:65%; width:80%" src="/CareTaskPro-war/images/adminHomeImage1.png"></img>
+
+                </p:layoutUnit>
+            </p:layout>
 
         </h:panelGroup>
     </ui:define>

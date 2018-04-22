@@ -35,12 +35,40 @@
 
         <h:panelGroup rendered="#{!sessionScope['requesterIsLogin']}">
             <br/><br/>
-            <h2>Welcome To Requester Home!</h2>
-            <br/><br/>
+            <h1>Welcome To Requester Home!</h1>
+            <br/><br/><br/>
+            <p:layout>
+                
+                <p:layoutUnit position="west" size="350" style="border: none">
+                    <br></br>
+                    <br></br>
+                    <h2>  Post A Request</h2>
+                    <br></br>
+                    <br></br>
+                    <h3>  When you need help...</h3>
+                    <br></br>
+                    <h3>  When your loved one needs help...</h3>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <h2>  Services we provide</h2>
+                    <br></br>
+                    <br></br>
+                    <h3>  - Housework</h3>
+                    <br></br>
+                    <h3>  - Healthcare</h3>
+                    <br></br>
+                    <h3>  - Companionship</h3>
+                    <br></br>
 
-            <img style="height:60%; width:60%" src="/CareTaskPro-war/images/requesterHomeImage1.jpg"></img>
+                </p:layoutUnit>
 
+                <p:layoutUnit position="center" style="border: none">
+                    <img style="height:50%; width:75%" src="/CareTaskPro-war/images/requesterHomeImage1.jpg"></img>
+                </p:layoutUnit>
 
+            </p:layout>
         </h:panelGroup>
     </ui:define>
 

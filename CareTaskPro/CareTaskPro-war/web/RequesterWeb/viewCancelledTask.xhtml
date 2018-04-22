@@ -7,25 +7,24 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        content
-        can review here
+        
 
-        <h3>View My Complained Tasks</h3>
+        <h3>View My Cancelled Tasks</h3>
         <br/>
 
 
-        <h:form id="formAllComplainedTasks">
+        <h:form id="formAllCancelledTasks">
 
             <p:messages id="messages" redisplay="false" closable="true" />
 
-            <p:dataTable id="dataTableAllComplainedTasks" widgetVar="dataTableAllComplainedTasks" value="#{requesterTaskManagementManagedBean.taskEntitiesComplained}" var="taskEntity" rowKey="#{taskEntity.taskId}" rowIndexVar="row"
-                         filteredValue="#{requesterTaskManagementManagedBean.filteredTaskEntitiesComplained}"
+            <p:dataTable id="dataTableAllCancelledTasks" widgetVar="dataTableAllCancelledTasks" value="#{requesterTaskManagementManagedBean.taskEntitiesCancelled}" var="taskEntity" rowKey="#{taskEntity.taskId}" rowIndexVar="row"
+                         filteredValue="#{requesterTaskManagementManagedBean.filteredTaskEntitiesCancelled}"
                          rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
 
                 <f:facet name="header">
                     <p:outputPanel style="text-align: right;">
                         <h:outputText value="Search all fields:" />
-                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllComplainedTasks').filter()" style="width:300px" placeholder="Enter keyword"/>
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllCancelledTasks').filter()" style="width:300px" placeholder="Enter keyword"/>
                     </p:outputPanel>
                 </f:facet>
 

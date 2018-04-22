@@ -117,6 +117,7 @@ public class ViewAvailableTasksManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Task " + taskToTake.getTaskId() + " taken successfully", "Task " + taskToTake.getTaskId() + " taken successfully"));
         }
         catch(NoEnoughBufferForHelperException|TaskTimeClashException ex){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(),null));
             System.err.println("*********** ERROR: " + ex.getMessage());
         }
     }

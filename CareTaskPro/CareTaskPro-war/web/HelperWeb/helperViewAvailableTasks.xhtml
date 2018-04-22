@@ -6,7 +6,10 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
+
     <ui:define name="center">
+        <h3>Recommended Tasks</h3>
+        <br/>
         <h:form id="preferredTasksDataTable">
             <p:dataTable id="dataTablePreferredTasks" widgetVar="dataTablePreferredTasks" value="#{viewAvailableTasksManagedBean.tasksChoosenAsPreferredHelper}" 
                          var="preferredTask" emptyMessage="No tasks choosen as preferred helper for now"
@@ -14,7 +17,7 @@
                          rows="10" paginator="true" 
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                          rowsPerPageTemplate="10,20,50">  
-                
+
 
                 <p:column headerText="Task ID" sortBy="#{preferredTask.taskId}" filterBy="#{preferredTask.taskId}" filterMatchMode="contains">
                     <h:outputText value="#{preferredTask.taskId}" />
@@ -31,17 +34,20 @@
                 <p:column headerText="Task Ending Date/Time" sortBy="#{preferredTask.endDateTime}" filterBy="#{preferredTask.endDateTime}" filterMatchMode="contains">
                     <h:outputText value="#{preferredTask.endDateTime}" />
                 </p:column>
-                
+
                 <p:column headerText="Action" >
                     <p:commandButton update="formViewDescription" oncomplete="PF('dialogViewDescription').show()" icon="ui-icon-document" title="View">
                         <f:setPropertyActionListener value="#{preferredTask}" target="#{viewAvailableTasksManagedBean.selectedTaskToView}" />
                     </p:commandButton>
- 
+
                 </p:column>
 
             </p:dataTable>
 
         </h:form>
+        <br/> <br/>
+        <h3>All Available Tasks</h3>
+        <br/>
         <h:form id="tasksDataTable">
             <p:dataTable id="dataTableTasks" widgetVar="dataTableTasks" value="#{viewAvailableTasksManagedBean.tasksNotAssigned}" 
                          var="task"
@@ -71,7 +77,7 @@
                     <p:commandButton update="formViewDescription" oncomplete="PF('dialogViewDescription').show()" icon="ui-icon-document" title="View">
                         <f:setPropertyActionListener value="#{task}" target="#{viewAvailableTasksManagedBean.selectedTaskToView}" />
                     </p:commandButton>
-                    
+
                     <p:growl id="message" showDetail="true" />
 
                     <p:commandButton value="TAKE" actionListener="#{viewAvailableTasksManagedBean.helperTakeTask}" update="message">
@@ -89,12 +95,12 @@
             </p:dataTable>
 
         </h:form>
-        
+
         <h:form id="formViewDescription">
 
             <p:dialog id="dialogViewDescription" widgetVar="dialogViewDescription" header="View Description" closable="true">
 
-              
+
 
                 <p:panelGrid>
 
@@ -105,10 +111,10 @@
                         <p:column>
                             <h:outputText id="description" value="#{viewAvailableTasksManagedBean.selectedTaskToView.description}"  />
                         </p:column>
-                       
+
                     </p:row>
 
-                   
+
                 </p:panelGrid>
 
             </p:dialog>

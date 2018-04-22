@@ -22,8 +22,8 @@ import javax.faces.validator.ValidatorException;
 
 public class StartDateValidator implements Validator {
     
-    private static final Long MINI_IN_MILLISEC = new Long(600000);
-    private static final Long MIN_BUFFER = new Long(2);
+    
+    private static final Long MIN_BUFFER = new Long(2*600000);
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
@@ -31,8 +31,8 @@ public class StartDateValidator implements Validator {
 
             Long startDateTime = ((Date) value).getTime();
 
-            if ((startDateTime-System.currentTimeMillis()) <= MIN_BUFFER) {
-                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Start datetime needs to be at least "+MIN_BUFFER+" minites later.", null));
+            if ((startDateTime-System.currentTimeMillis()) <= MIN_BUFFER ) {
+                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Start datetime needs to be at least "+(MIN_BUFFER/60000)+" minites later.", null));
             }
 
         }

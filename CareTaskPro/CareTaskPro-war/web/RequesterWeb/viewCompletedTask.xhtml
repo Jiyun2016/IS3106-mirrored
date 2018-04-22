@@ -19,7 +19,7 @@
             <p:messages id="messages" redisplay="false" closable="true" />
 
             <p:dataTable id="dataTableAllCompletedTasks" widgetVar="dataTableAllCompletedTasks" value="#{requesterTaskManagementManagedBean.taskEntitiesCompleted}" var="taskEntity" rowKey="#{taskEntity.taskId}" rowIndexVar="row"
-                         filteredValue="#{requesterTaskManagementManagedBean.filteredTaskEntities}"
+                         filteredValue="#{requesterTaskManagementManagedBean.filteredTaskEntitiesCompleted}"
                          rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
 
                 <f:facet name="header">
@@ -118,6 +118,15 @@
                         </p:column>
                         <p:column>
                             <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.helperEntity}" />
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel value="Helper Phone: " />
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{requesterTaskManagementManagedBean.taskEntityToView.helperEntity.phone}" />
                         </p:column>
                     </p:row>
 

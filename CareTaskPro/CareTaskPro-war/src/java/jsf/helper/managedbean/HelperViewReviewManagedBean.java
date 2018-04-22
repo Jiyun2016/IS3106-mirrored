@@ -42,6 +42,7 @@ public class HelperViewReviewManagedBean implements Serializable{
     @PostConstruct
     public void postConstruct(){
         helper = (HelperEntity)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity");
+        System.err.println("...helper:"+helper.getHelperId());
          setHelperIdToViewReview(helper.getHelperId());
          System.err.println(".....ReviewMB: helperIdToReview: "+getHelperIdToViewReview());
          try{

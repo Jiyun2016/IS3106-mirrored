@@ -56,8 +56,14 @@ public class AdminTaskManagementManagedBean implements Serializable {
     private List<TaskEntity> taskEntitiesAssigned;
     private List<TaskEntity> taskEntitiesCompleted;
     private List<TaskEntity> taskEntitiesComplained;
+    private List<TaskEntity> taskEntitiesCancelled;
 
     private List<TaskEntity> filteredTaskEntities;
+    private List<TaskEntity> filteredTaskEntitiesPending;
+    private List<TaskEntity> filteredTaskEntitiesAssigned;
+    private List<TaskEntity> filteredTaskEntitiesCompleted;
+    private List<TaskEntity> filteredTaskEntitiesComplained;
+    private List<TaskEntity> filteredTaskEntitiesCancelled;
 
     private List<SelectItem> selectItemsHelperEntities;
 
@@ -71,15 +77,41 @@ public class AdminTaskManagementManagedBean implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        setFilteredTaskEntities(taskEntities);
+    //    setFilteredTaskEntities(taskEntities);
 
         setTaskEntitiesPending(taskControllerLocal.retrieveTasksByStatus((TaskStatusString.PENDING)));
         setTaskEntitiesComplained(taskControllerLocal.retrieveTasksByStatus((TaskStatusString.COMPLAINED)));
         taskEntitiesAssigned = taskControllerLocal.retrieveTasksByStatus(TaskStatusString.ASSIGNED);
         taskEntitiesCompleted = taskControllerLocal.retrieveTasksByStatus(TaskStatusString.COMPLETED);
+        setTaskEntitiesCancelled(taskControllerLocal.retrieveTasksByStatus(TaskStatusString.CANCELLED));
+        
+        setFilteredTaskEntitiesPending(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesPending) {
+            getFilteredTaskEntitiesPending().add(te);
+        }
+        
+        setFilteredTaskEntitiesComplained(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesComplained) {
+            getFilteredTaskEntitiesComplained().add(te);
+        }
+        
+        setFilteredTaskEntitiesCompleted(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesCompleted) {
+            getFilteredTaskEntitiesCompleted().add(te);
+        }
+        
+        setFilteredTaskEntitiesAssigned(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesAssigned) {
+            getFilteredTaskEntitiesAssigned().add(te);
+        }
+        
+        setFilteredTaskEntitiesCancelled(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesCancelled) {
+            getFilteredTaskEntitiesCancelled().add(te);
+        }
         
         
-        
+
         categories = new String[]{CategoryString.COMPANIONSHIP, CategoryString.HEALTHCARE, CategoryString.HOUSEWORK};
         setTaskStatuses(new String[]{TaskStatusString.ASSIGNED, TaskStatusString.PENDING, TaskStatusString.COMPLETED, TaskStatusString.CANCELLED, TaskStatusString.COMPLAINED});
 
@@ -101,7 +133,7 @@ public class AdminTaskManagementManagedBean implements Serializable {
 
     public void updateTask(ActionEvent event) throws IOException {
         try {
-            System.err.println(".....task to update:" + taskEntityToUpdate.getTaskId()+" "+ taskEntityToUpdate.getTaskStatus().toString());
+            System.err.println(".....task to update:" + taskEntityToUpdate.getTaskId() + " " + taskEntityToUpdate.getTaskStatus().toString());
             taskIdToUpdate = taskEntityToUpdate.getTaskId();
             taskControllerLocal.updateTaskEntity(getTaskEntityToUpdate());
 
@@ -320,5 +352,91 @@ public class AdminTaskManagementManagedBean implements Serializable {
     public void setTaskStatuses(String[] taskStatuses) {
         this.taskStatuses = taskStatuses;
     }
+
+    /**
+     * @return the taskEntitiesCancelled
+     */
+    public List<TaskEntity> getTaskEntitiesCancelled() {
+        return taskEntitiesCancelled;
+    }
+
+    /**
+     * @param taskEntitiesCancelled the taskEntitiesCancelled to set
+     */
+    public void setTaskEntitiesCancelled(List<TaskEntity> taskEntitiesCancelled) {
+        this.taskEntitiesCancelled = taskEntitiesCancelled;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesPending
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesPending() {
+        return filteredTaskEntitiesPending;
+    }
+
+    /**
+     * @param filteredTaskEntitiesPending the filteredTaskEntitiesPending to set
+     */
+    public void setFilteredTaskEntitiesPending(List<TaskEntity> filteredTaskEntitiesPending) {
+        this.filteredTaskEntitiesPending = filteredTaskEntitiesPending;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesAssigned
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesAssigned() {
+        return filteredTaskEntitiesAssigned;
+    }
+
+    /**
+     * @param filteredTaskEntitiesAssigned the filteredTaskEntitiesAssigned to set
+     */
+    public void setFilteredTaskEntitiesAssigned(List<TaskEntity> filteredTaskEntitiesAssigned) {
+        this.filteredTaskEntitiesAssigned = filteredTaskEntitiesAssigned;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesCompleted
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesCompleted() {
+        return filteredTaskEntitiesCompleted;
+    }
+
+    /**
+     * @param filteredTaskEntitiesCompleted the filteredTaskEntitiesCompleted to set
+     */
+    public void setFilteredTaskEntitiesCompleted(List<TaskEntity> filteredTaskEntitiesCompleted) {
+        this.filteredTaskEntitiesCompleted = filteredTaskEntitiesCompleted;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesComplained
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesComplained() {
+        return filteredTaskEntitiesComplained;
+    }
+
+    /**
+     * @param filteredTaskEntitiesComplained the filteredTaskEntitiesComplained to set
+     */
+    public void setFilteredTaskEntitiesComplained(List<TaskEntity> filteredTaskEntitiesComplained) {
+        this.filteredTaskEntitiesComplained = filteredTaskEntitiesComplained;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesCancelled
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesCancelled() {
+        return filteredTaskEntitiesCancelled;
+    }
+
+    /**
+     * @param filteredTaskEntitiesCancelled the filteredTaskEntitiesCancelled to set
+     */
+    public void setFilteredTaskEntitiesCancelled(List<TaskEntity> filteredTaskEntitiesCancelled) {
+        this.filteredTaskEntitiesCancelled = filteredTaskEntitiesCancelled;
+    }
+    
+    
 
 }

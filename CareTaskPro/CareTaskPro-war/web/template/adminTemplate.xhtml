@@ -30,7 +30,7 @@
                                 <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="View my profile"  outcome="adminProfile" rendered="#{sessionScope['adminIsLogin']}" />
                                 <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Edit my profile"  outcome="editAdminProfile" rendered="#{sessionScope['adminIsLogin']}"/>
                                 <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="Create new admin"  outcome="createAdmin" rendered="#{sessionScope['adminIsLogin']}"/>
-                                <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="BackToMainHome"  outcome="/publicMainPage" />
+                                <p:menuitem  style="padding-right: 10px; padding-left: 10px" value="BackToMainHome"  outcome="/publicMainPage"  icon="ui-icon-home" />
                                 <p:menuitem style="padding-right: 10px; padding-left: 10px" value="Logout" actionListener="#{adminHomeManagedBean.logout}" icon="ui-icon-unlocked" rendered="#{sessionScope['adminIsLogin']}"/>
 
                             </p:menubar>
@@ -85,7 +85,7 @@
 
             <p:layoutUnit position="south">
 
-                <h6>&copy; 2018 IS3106. All Rights Reserved.</h6>
+                <h6>&copy; 2018 HomeCare. All Rights Reserved.</h6>
 
             </p:layoutUnit>
 

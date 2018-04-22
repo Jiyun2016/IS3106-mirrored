@@ -47,7 +47,7 @@ public class NoResponderAutoCloseTimerSessionBean implements NoResponderAutoClos
         Long taskId = Long.parseLong(timer.getInfo().toString());
         TaskEntity taskEntity = em.find(TaskEntity.class, taskId);
 
-        if (taskEntity.getTaskStatus().equals(TaskStatus.PENDING)) {
+        if (taskEntity.getTaskStatus().equals(TaskStatusString.PENDING)) {
 
             System.out.println("********** NoResponderAutoCloseTimer.handleTimeout(): the task to be closed is " + timer.getInfo().toString());
 

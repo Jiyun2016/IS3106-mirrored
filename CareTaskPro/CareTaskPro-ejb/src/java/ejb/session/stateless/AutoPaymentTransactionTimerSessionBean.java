@@ -55,7 +55,7 @@ public class AutoPaymentTransactionTimerSessionBean implements AutoPaymentTransa
         PaymentEntity paymentEntity = taskEntity.getPaymentEntity();
         Long paymentId = paymentEntity.getPaymentId();
 
-        if (taskEntity.getTaskStatus().equals(TaskStatus.COMPLAINED)) {
+        if (taskEntity.getTaskStatus().equals(TaskStatusString.COMPLAINED)) {
             paymentEntity.setPaymentStatus(PaymentStatusString.SUSPENDED);
             em.merge(paymentEntity);
 

@@ -248,9 +248,7 @@ public class TaskController implements TaskControllerLocal {
 
     @Override
     public TaskEntity updateTaskEntityByRequester(TaskEntity ta, Long taId) {
-        System.err.println("1^^^^^taskentity ta is " + ta.getTaskStatus() + " and taId is " + taId.toString());
-        TaskEntity t = em.find(TaskEntity.class, taId);
-        System.err.println("2^^^^^taskentity ta is " + ta.getTaskStatus() + " and taId is " + taId.toString() + " and t is " + t.getTaskStatus());
+         TaskEntity t = em.find(TaskEntity.class, taId);
         t.setCategory(ta.getCategory());
         t.setDescription(ta.getDescription());
         t.setEndDateTime(ta.getEndDateTime());
@@ -258,8 +256,7 @@ public class TaskController implements TaskControllerLocal {
         t.setStartDateTime(ta.getStartDateTime());
         em.merge(t);
         t = em.find(TaskEntity.class, taId);
-        System.err.println("2^^^^^taskentity is " + ta.getTaskId() + " and taId is " + taId.toString() + " and t is " + t.getTaskStatus());
-
+       
         return t;
     }
     
@@ -336,7 +333,7 @@ public class TaskController implements TaskControllerLocal {
         TaskEntity task = em.find(TaskEntity.class, taskId);
 
         if (!checkEnoughBufferTimeForHelper(task)) {
-            throw new NoEnoughBufferForHelperException("The task to accept needs to be more than " + TimeConstant.TIME_BUFFER_FOR_HELPER_BEFORE_TASKSTART + " minutes from now.");
+            throw new NoEnoughBufferForHelperException("The task to accept needs to be more than " + (TimeConstant.TIME_BUFFER_FOR_HELPER_BEFORE_TASKSTART/60000 )+ " minutes from now.");
         }
 
         List<TaskEntity> clashedTask = checkTimeClashForHelper(task, helperId);

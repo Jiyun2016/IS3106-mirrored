@@ -10,8 +10,8 @@ import entity.AdminEntity;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -22,8 +22,7 @@ import javax.faces.event.ActionEvent;
  */
 @Named(value = "adminProfileManagedBean")
 @Dependent
-public class AdminProfileManagedBean {
-
+public class AdminProfileManagedBean{
      @EJB(name = "AdminControllerLocal")
     private AdminControllerLocal adminControllerLocal;
 

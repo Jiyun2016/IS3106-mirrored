@@ -37,7 +37,7 @@ import util.stringConstant.TaskStatusString;
  */
 @Named(value = "requesterTaskManagementManagedBean")
 @ViewScoped
-public class RequesterTaskManagementManagedBean implements Serializable{
+public class RequesterTaskManagementManagedBean implements Serializable {
 
     @EJB(name = "HelperControllerLocal")
     private HelperControllerLocal helperControllerLocal;
@@ -70,8 +70,14 @@ public class RequesterTaskManagementManagedBean implements Serializable{
     private List<TaskEntity> taskEntitiesAssigned;
     private List<TaskEntity> taskEntitiesCompleted;
     private List<TaskEntity> taskEntitiesComplained;
+    private List<TaskEntity> taskEntitiesCancelled;
 
     private List<TaskEntity> filteredTaskEntities;
+    private List<TaskEntity> filteredTaskEntitiesPending;
+    private List<TaskEntity> filteredTaskEntitiesAssigned;
+    private List<TaskEntity> filteredTaskEntitiesCompleted;
+    private List<TaskEntity> filteredTaskEntitiesComplained;
+    private List<TaskEntity> filteredTaskEntitiesCancelled;
 
     private List<SelectItem> selectItemsHelperEntities;
 
@@ -79,7 +85,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
 
         filteredTaskEntities = new ArrayList<TaskEntity>();
         selectItemsHelperEntities = new ArrayList<SelectItem>();
-   //     taskEntityToUpdate = new TaskEntity();
+        //     taskEntityToUpdate = new TaskEntity();
 
     }
 
@@ -87,34 +93,53 @@ public class RequesterTaskManagementManagedBean implements Serializable{
     public void postConstruct() {
         setRequesterEntity((RequesterEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRequesterEntity"));
         setRequesterId(getRequesterEntity().getRequesterId());
-        setFilteredTaskEntities(taskEntities);
-        categories = new String[]{CategoryString.COMPANIONSHIP,CategoryString.HEALTHCARE,CategoryString.HOUSEWORK};
-
+        //       setFilteredTaskEntities(taskEntities);
+        categories = new String[]{CategoryString.COMPANIONSHIP, CategoryString.HEALTHCARE, CategoryString.HOUSEWORK};
 
         viewPendingTask();
         viewAssignedTask();
         viewComplainedTask();
         viewCompletedTask();
+        viewCancelledTask();
+
+        setFilteredTaskEntitiesPending(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesPending) {
+            getFilteredTaskEntitiesPending().add(te);
+        }
+
+        setFilteredTaskEntitiesComplained(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesComplained) {
+            getFilteredTaskEntitiesComplained().add(te);
+        }
+
+        setFilteredTaskEntitiesCompleted(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesCompleted) {
+            getFilteredTaskEntitiesCompleted().add(te);
+        }
+
+        setFilteredTaskEntitiesAssigned(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesAssigned) {
+            getFilteredTaskEntitiesAssigned().add(te);
+        }
         
-//        filteredTaskEntities = new ArrayList<>();
-//        
-//        for(TaskEntity te:taskEntitiesPending)
-//        {
-//            filteredTaskEntities.add(te);
-//        }
-        
+         setFilteredTaskEntitiesCancelled(new ArrayList<>());
+        for (TaskEntity te : taskEntitiesCancelled) {
+            getFilteredTaskEntitiesCancelled().add(te);
+        }
+
         List<HelperEntity> helperEntities = helperControllerLocal.retrieveAllHelpers();
         for (HelperEntity helperEntity : helperEntities) {
-            getSelectItemsHelperEntities().add(new SelectItem(helperEntity,helperEntity.getHelperId().toString(), helperEntity.getFirstName()));
+            getSelectItemsHelperEntities().add(new SelectItem(helperEntity, helperEntity.getHelperId().toString(), helperEntity.getFirstName()));
         }
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("HelperEntityConverter.helperEntities", helperEntities);
 
     }
 
-      @PreDestroy
+    @PreDestroy
     public void preDestroy() {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("HelperEntityConverter.helperEntities", null);
     }
+
     public void onChange() {
     }
 
@@ -130,7 +155,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
 
     public void viewAssignedTask() {
         try {
-              setTaskEntitiesAssigned(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatusString.ASSIGNED));
+            setTaskEntitiesAssigned(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatusString.ASSIGNED));
 
         } catch (TaskEntityNotFoundException ex) {
             //          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No task found: " + ex.getMessage(), null));
@@ -155,6 +180,16 @@ public class RequesterTaskManagementManagedBean implements Serializable{
         } catch (TaskEntityNotFoundException ex) {
             //         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No task found: " + ex.getMessage(), null));
             taskEntitiesComplained = new ArrayList<TaskEntity>();
+        }
+    }
+    
+    public void viewCancelledTask() {
+        try {
+            setTaskEntitiesCancelled(taskControllerLocal.retrieveTaskByStatusByRequesterId(getRequesterId(), TaskStatusString.CANCELLED));
+
+        } catch (TaskEntityNotFoundException ex) {
+            //         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No task found: " + ex.getMessage(), null));
+            taskEntitiesCancelled = new ArrayList<TaskEntity>();
         }
     }
 
@@ -210,7 +245,7 @@ public class RequesterTaskManagementManagedBean implements Serializable{
 
     public void addReviewToTask(ActionEvent event) throws IOException {
         setTaskIdToReview((Long) event.getComponent().getAttributes().get("taskIdToReview"));
-        System.err.println(".....taskIdToReview: "+taskIdToReview);
+        System.err.println(".....taskIdToReview: " + taskIdToReview);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("taskIdToView", getTaskIdToReview());
         FacesContext.getCurrentInstance().getExternalContext().redirect("createReview.xhtml");
 
@@ -494,6 +529,93 @@ public class RequesterTaskManagementManagedBean implements Serializable{
      */
     public void setTaskEntitiesComplained(List<TaskEntity> taskEntitiesComplained) {
         this.taskEntitiesComplained = taskEntitiesComplained;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesPending
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesPending() {
+        return filteredTaskEntitiesPending;
+    }
+
+    /**
+     * @param filteredTaskEntitiesPending the filteredTaskEntitiesPending to set
+     */
+    public void setFilteredTaskEntitiesPending(List<TaskEntity> filteredTaskEntitiesPending) {
+        this.filteredTaskEntitiesPending = filteredTaskEntitiesPending;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesAssigned
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesAssigned() {
+        return filteredTaskEntitiesAssigned;
+    }
+
+    /**
+     * @param filteredTaskEntitiesAssigned the filteredTaskEntitiesAssigned to
+     * set
+     */
+    public void setFilteredTaskEntitiesAssigned(List<TaskEntity> filteredTaskEntitiesAssigned) {
+        this.filteredTaskEntitiesAssigned = filteredTaskEntitiesAssigned;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesCompleted
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesCompleted() {
+        return filteredTaskEntitiesCompleted;
+    }
+
+    /**
+     * @param filteredTaskEntitiesCompleted the filteredTaskEntitiesCompleted to
+     * set
+     */
+    public void setFilteredTaskEntitiesCompleted(List<TaskEntity> filteredTaskEntitiesCompleted) {
+        this.filteredTaskEntitiesCompleted = filteredTaskEntitiesCompleted;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesComplained
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesComplained() {
+        return filteredTaskEntitiesComplained;
+    }
+
+    /**
+     * @param filteredTaskEntitiesComplained the filteredTaskEntitiesComplained
+     * to set
+     */
+    public void setFilteredTaskEntitiesComplained(List<TaskEntity> filteredTaskEntitiesComplained) {
+        this.filteredTaskEntitiesComplained = filteredTaskEntitiesComplained;
+    }
+
+    /**
+     * @return the taskEntitiesCancelled
+     */
+    public List<TaskEntity> getTaskEntitiesCancelled() {
+        return taskEntitiesCancelled;
+    }
+
+    /**
+     * @param taskEntitiesCancelled the taskEntitiesCancelled to set
+     */
+    public void setTaskEntitiesCancelled(List<TaskEntity> taskEntitiesCancelled) {
+        this.taskEntitiesCancelled = taskEntitiesCancelled;
+    }
+
+    /**
+     * @return the filteredTaskEntitiesCancelled
+     */
+    public List<TaskEntity> getFilteredTaskEntitiesCancelled() {
+        return filteredTaskEntitiesCancelled;
+    }
+
+    /**
+     * @param filteredTaskEntitiesCancelled the filteredTaskEntitiesCancelled to set
+     */
+    public void setFilteredTaskEntitiesCancelled(List<TaskEntity> filteredTaskEntitiesCancelled) {
+        this.filteredTaskEntitiesCancelled = filteredTaskEntitiesCancelled;
     }
 
 }

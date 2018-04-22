@@ -49,7 +49,8 @@ public class HelperPaymentManagedBean {
 
     @PostConstruct
     public void postConstruct() {
-        setHelperEntity((HelperEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity"));
+        helperEntity = (HelperEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentHelperEntity");
+        System.err.println("...helper:"+helperEntity.getHelperId());
         setHelperId(getHelperEntity().getHelperId());
         try {
             setPaymentEntities(paymentControllerLocal.retrievePaymentByRequesterId(getHelperId()));

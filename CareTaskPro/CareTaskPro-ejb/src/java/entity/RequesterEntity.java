@@ -73,14 +73,20 @@ public class RequesterEntity implements Serializable {
         this.creditCardCVC = creditCardCVC;
     }
 
-    public Long getrequesterId() {
-        return getRequesterId();
+    /**
+     * @return the requesterId
+     */
+    public Long getRequesterId() {
+        return requesterId;
     }
 
-    public void setId(Long requesterId) {
-        this.setRequesterId(requesterId);
+    /**
+     * @param requesterId the requesterId to set
+     */
+    public void setRequesterId(Long requesterId) {
+        this.requesterId = requesterId;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -104,20 +110,6 @@ public class RequesterEntity implements Serializable {
     @Override
     public String toString() {
         return "entity.RequesterEntity[ requesterId=" + getRequesterId() + " ]";
-    }
-
-    /**
-     * @return the requesterId
-     */
-    public Long getRequesterId() {
-        return requesterId;
-    }
-
-    /**
-     * @param requesterId the requesterId to set
-     */
-    public void setRequesterId(Long requesterId) {
-        this.requesterId = requesterId;
     }
 
     /**

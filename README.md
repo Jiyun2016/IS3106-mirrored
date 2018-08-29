@@ -1,1 +1,8 @@
-# IS3106
+# IS3106 CareTaskPro
+Our team is developing a task sourcing system, CareTaskPro, that allows the user to submit a home-care service task or pick a home-care service task. Users and admin can access CareTaskPro with full web page or mobile display.
+The task sourcing system will include 3 interfaces:
+1.	Two User interface: There are 2 types of users, the healthcare service requester (elderly, working adults, disabled, handicapped) and the healthcare service helper (professional nurse and non-professionals (students, retirees)). The healthcare service requester will request for a scheduled request, choose helpers without limit from a list of preferred helpers. The preferred helpers will choose to accept or reject the task. If accepted, task status will be assigned. The task status will remain pending until any helper accept the task and cancelled 1 hr before the start time reaches. Once task is completed, requester will provide a review for the requester and timer will automatically deduct payment after 3 days if there are no complaints. Otherwise, payment will be suspended, admin will proceed to deduct payment once complaints are resolved. 
+2.	One Admin interface: Employees of CareTaskPro can access the admin interface which allows them view a user,  modify and assign task created by all users.
+
+# Value Proposition
+We are targeting at a niche market by providing services to seniors and physically disabled people. To better meet the needs of the target group, our system will provide an elderly-friendly user interface for our web and mobile application which will be easy to read and operate. With the features and functions as stated above, our system would be able to better improve the quality of life of the elderly and disabled people, reduce the burden on family and create more jobs for the society.
